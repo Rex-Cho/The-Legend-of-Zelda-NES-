@@ -27,6 +27,33 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	if (
+		(character.Top() + character.Height() > chest_and_key.Top()) &&
+		(character.Left() + character.Width() > chest_and_key.Left()) &&
+		(character.Top() < chest_and_key.Top() + chest_and_key.Height()) &&
+		(character.Left() < chest_and_key.Left() + chest_and_key.Width())
+		)
+	{
+		chest_and_key.SelectShowBitmap(1);
+		//chest_and_key.GetSelectShowBitmap() = 1;
+		//chest_and_key.GetFilterColor() = RGB(255, 255, 255);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		if (phase == 5 &&
+			(character.Top() + character.Height() > door[i].Top()) &&
+			(character.Left() + character.Width() > door[i].Left()) &&
+			(character.Top() < door[i].Top() + door[i].Height()) &&
+			(character.Left() < door[i].Left() + door[i].Width())
+			)
+		{
+			door[i].SelectShowBitmap(1);
+		}
+	}
+	if (phase == 6)
+	{
+		
+	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -47,7 +74,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	});
 	background.SetTopLeft(0, 0);
 
-	character.LoadBitmapByString({ "resources/gray.bmp" });
+	character.LoadBitmapByString({ "resources/giraffe.bmp" });
 	character.SetTopLeft(150, 265);
 
 	chest_and_key.LoadBitmapByString({ "resources/chest.bmp", "resources/chest_ignore.bmp" }, RGB(255, 255, 255));
@@ -55,6 +82,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	bee.LoadBitmapByString({ "resources/bee_1.bmp", "resources/bee_2.bmp" });
 	bee.SetTopLeft(462, 265);
+	bee.SetAnimation(100, false);
 
 	ball.LoadBitmapByString({ "resources/ball-3.bmp", "resources/ball-2.bmp", "resources/ball-1.bmp", "resources/ball-ok.bmp" });
 	ball.SetTopLeft(150, 430);
@@ -67,6 +95,19 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	int step = 40;
+	if (nChar == VK_UP) {
+		character.SetTopLeft(character.Left(),character.Top() - step);
+	}
+	else if (nChar == VK_DOWN) {
+		character.SetTopLeft(character.Left(), character.Top() + step);
+	}
+	else if (nChar == VK_LEFT) {
+		character.SetTopLeft(character.Left() - step, character.Top());
+	}
+	else if (nChar == VK_RIGHT) {
+		character.SetTopLeft(character.Left() + step, character.Top());
+	}
 	if (nChar == VK_RETURN) {
 		if (phase == 1) {
 			if (sub_phase == 1) {
@@ -107,6 +148,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			else if (sub_phase == 2) {
 				sub_phase = 1;
 				phase += 1;
+				ball.SetAnimation(500, true);
+				ball.ToggleAnimation();
 			}
 		}else if (phase == 6) {
 			if (sub_phase == 1) {
@@ -191,6 +234,7 @@ void CGameStateRun::show_text_by_phase() {
 		CTextDraw::Print(pDC, 205, 128, "幫你準備了一個寶箱");
 		CTextDraw::Print(pDC, 68, 162, "設計程式讓長頸鹿摸到寶箱後，將寶箱消失！");
 		CTextDraw::Print(pDC, 68, 196, "記得寶箱要去背，使用 RGB(255, 255, 255)");
+		CTextDraw::Print(pDC, 68, 196, "");
 		CTextDraw::Print(pDC, 373, 537, "按下 Enter 鍵來驗證");
 	} else if (phase == 4 && sub_phase == 1) {
 		CTextDraw::Print(pDC, 173, 128, "幫你準備了一個蜜蜂好朋友");
