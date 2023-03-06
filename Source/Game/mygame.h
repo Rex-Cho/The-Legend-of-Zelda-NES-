@@ -50,6 +50,8 @@ namespace game_framework {
 		AUDIO_NTUT				// 2
 	};
 
+	
+	
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
@@ -57,6 +59,7 @@ namespace game_framework {
 
 	class CGameStateInit : public CGameState {
 	public:
+		double scale = 1;	//所有物件的縮放，用於計算放大後物體位置，物體移動距離加成。
 		CGameStateInit(CGame *g);
 		void OnInit();  								// 遊戲的初值及圖形設定
 		void OnBeginState();							// 設定每次重玩所需的變數

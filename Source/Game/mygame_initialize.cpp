@@ -30,11 +30,14 @@ void CGameStateInit::OnInit()
 	//
 	// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
 	//
-	character.LoadBitmapByString({ "resources/Link_run_f1.bmp" },RGB(255,255,255));
+	/*
+	*/
+	character.LoadBitmapByString({ "resources/Link/Link_run_f1.bmp" },RGB(255,255,255));
 	character.SetTopLeft(0, 0);
-	start_scene.LoadBitmapByString({"resources/start_scene.bmp"});
+	start_scene.LoadBitmapByString({"resources/start_scene.bmp"}, RGB(255, 255, 255));
 	start_scene.SetTopLeft(0,0);
 	Sleep(200);
+	//CDDraw::IsFullScreen();
 }
 
 void CGameStateInit::OnBeginState()
@@ -54,5 +57,5 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 void CGameStateInit::OnShow()
 {
 	start_scene.ShowBitmap();
-	character.ShowBitmap();
+	character.ShowBitmap(scale);
 }
