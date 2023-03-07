@@ -59,12 +59,13 @@ namespace game_framework {
 
 	class CGameStateInit : public CGameState {
 	public:
-		double scale = 1;	//所有物件的縮放，用於計算放大後物體位置，物體移動距離加成。
+
 		CGameStateInit(CGame *g);
 		void OnInit();  								// 遊戲的初值及圖形設定
 		void OnBeginState();							// 設定每次重玩所需的變數
 		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+		void OnKeyDown(UINT, UINT, UINT);
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
@@ -94,6 +95,14 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
+	private:
+		int map_top_offset = 80;
+		int map_width = 257;
+		int map_height = 177;
+		int map_x = 7;
+		int map_y = 7;
+		CMovingBitmap mmap,ui_bg;
+		bool collision_area[1593][4112];
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

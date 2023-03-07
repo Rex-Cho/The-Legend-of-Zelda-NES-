@@ -37,6 +37,7 @@ void CGameStateInit::OnInit()
 	start_scene.LoadBitmapByString({"resources/start_scene.bmp"}, RGB(255, 255, 255));
 	start_scene.SetTopLeft(0,0);
 	Sleep(200);
+	
 	//CDDraw::IsFullScreen();
 }
 
@@ -44,9 +45,17 @@ void CGameStateInit::OnBeginState()
 {
 }
 
+void CGameStateInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	if (nChar != NULL)
+	{
+		GotoGameState(GAME_STATE_RUN);
+	}
+}
+
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-
+	
 }
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
@@ -56,6 +65,5 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CGameStateInit::OnShow()
 {
-	start_scene.ShowBitmap();
-	character.ShowBitmap(scale);
+	start_scene.ShowBitmap(scale);
 }

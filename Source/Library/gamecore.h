@@ -127,6 +127,7 @@ namespace game_framework {
 
 	class CGameState {
 	public:
+		int scale = 4;	//所有物件的縮放，用於計算放大後物體位置，物體移動距離加成。
 		CGameState(CGame *g);
 		void OnDraw();			// Template Method
 		void OnCycle();			// Template Method
