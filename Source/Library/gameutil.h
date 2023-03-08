@@ -66,6 +66,7 @@
 // Header for STL (Standard Template Library)
 /////////////////////////////////////////////////////////////////////////////
 
+
 #include <list>
 #include <vector>
 #include <map>
@@ -80,6 +81,14 @@ namespace game_framework {
 
 	class CMovingBitmap {
 	public:
+		/*
+		//copy assiment
+		CMovingBitmap& operator= (const CMovingBitmap& data);
+		//move assiment
+		CMovingBitmap& operator= (CMovingBitmap&& data);
+		*/
+
+
 		CMovingBitmap();
 
 		/* The function for loading the bitmap. */

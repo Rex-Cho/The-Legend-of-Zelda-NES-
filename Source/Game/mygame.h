@@ -38,6 +38,8 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+//#include "monster.h"
+//#include "../../map.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -96,13 +98,8 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		int map_top_offset = 80;
-		int map_width = 257;
-		int map_height = 177;
-		int map_x = 7;
-		int map_y = 7;
 		CMovingBitmap mmap,ui_bg;
-		bool collision_area[1593][4112];
+		//Map smap;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

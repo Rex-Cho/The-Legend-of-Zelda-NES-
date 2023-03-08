@@ -20,6 +20,28 @@
 
 namespace game_framework {
 
+	/*
+	//copy assiment
+	CMovingBitmap& CMovingBitmap::operator= (const CMovingBitmap& data)
+	{
+		if (this != &data)
+		{
+			this->LoadBitmapByString({ data.imageFileName }, data.filterColor);
+		}
+		return *this;
+	}
+	//move assiment
+	CMovingBitmap& CMovingBitmap::operator= (CMovingBitmap&& data)
+	{
+		if (this != &data)
+		{
+			this->LoadBitmapByString({data.imageFileName}, data.filterColor);
+		}
+		return *this;
+	}
+	*/
+
+
 	/////////////////////////////////////////////////////////////////////////////
 	// CMovingBitmap: Moving Bitmap class
 	// 這個 class 提供可以移動的圖形

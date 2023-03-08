@@ -8,6 +8,8 @@
 #include "mygame.h"
 #include <stdio.h>
 
+
+
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -36,9 +38,11 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//collision area read
 	fopen("../../resources/collision_area.bmp", "r");
 
-
-	mmap.LoadBitmapByString({ "resources/map.bmp" }, RGB(255, 255, 255));
-	mmap.SetTopLeft(-1 * map_x * map_width * scale, -1 * map_y * map_height * scale + map_top_offset * scale);
+	/*
+	mmap.LoadBitmapByString({ "resources/Map/7_7.bmp" }, RGB(255, 255, 255));
+	mmap.SetTopLeft(scale,scale + map_top_offset * scale);
+	*/
+	//smap.set_map("resources/Map/7_7.bmp");
 	ui_bg.LoadBitmapByString({ "resources/UI_background.bmp" });
 	ui_bg.SetTopLeft(0,0);
 	Sleep(200);
@@ -76,6 +80,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
-	mmap.ShowBitmap(scale);
+	//smap.get_map().ShowBitmap();
+	//mmap.ShowBitmap(scale);
 	ui_bg.ShowBitmap(scale);
 }
