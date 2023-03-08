@@ -40,6 +40,7 @@
 
 //#include "monster.h"
 //#include "../../map.h"
+#include "../../character.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////

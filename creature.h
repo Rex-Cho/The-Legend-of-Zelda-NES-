@@ -8,7 +8,7 @@ namespace game_framework {
 	public:
 
 	protected:
-		enum MOVEMENT_REF{
+		enum MOVEMENT_REF {
 			UP,
 			DOWN,
 			LEFT,
@@ -19,15 +19,15 @@ namespace game_framework {
 
 		virtual void die() = 0;
 		virtual void spawn() = 0;
-		virtual void movement() = 0;
+		virtual void movement(MOVEMENT_REF) = 0;
 		virtual void hurt(int) = 0;
-		virtual int attack() = 0;
+		virtual int attack(MOVEMENT_REF) = 0;
 		virtual void set_movement_animation(string) = 0;
 		virtual void set_dead_animation(string) = 0;
 		virtual void set_attack_animation(string) = 0;
 		virtual void set_hurt_animation(string) = 0;
 		virtual void set_spawn_animation(string) = 0;
-		virtual void show(MOVEMENT_REF) = 0;
+		virtual void show() = 0;
 
 		int _life = 2;
 		int _damage = 1;

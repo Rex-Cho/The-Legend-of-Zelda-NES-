@@ -1,3 +1,5 @@
+#ifndef GAMEUTIL_H
+#define GAMEUTIL_H
 /*
  * gamelib.h: 本檔案儲遊戲相關的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -65,6 +67,9 @@
 /////////////////////////////////////////////////////////////////////////////
 // Header for STL (Standard Template Library)
 /////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
 #include <list>
@@ -165,3 +170,4 @@ namespace game_framework {
 	};
 
 }
+#endif // !GAMEUTIL_H
