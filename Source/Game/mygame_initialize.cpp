@@ -65,5 +65,5 @@ void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CGameStateInit::OnShow()
 {
-	start_scene.ShowBitmap(scale);
+	start_scene.ShowBitmap(scale_all);
 }

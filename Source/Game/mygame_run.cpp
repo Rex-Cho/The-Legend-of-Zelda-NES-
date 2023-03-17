@@ -6,8 +6,8 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
-#include <stdio.h>
 
+//#include "../../Source/Library/gameutil.h"
 
 
 using namespace game_framework;
@@ -30,19 +30,30 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	
+	/*
+	if(character.isWalk())
+	{
+		switch(character.getFace())
+		{
+		case UP:
+		case DOWN:
+		case LEFT:
+		case RIGHT:
+		default:
+		}
+	}
+	*/
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//collision area read
-	fopen("../../resources/collision_area.bmp", "r");
+	//fopen("../../resources/collision_area.bmp", "r");
 
 	/*
-	mmap.LoadBitmapByString({ "resources/Map/7_7.bmp" }, RGB(255, 255, 255));
-	mmap.SetTopLeft(scale,scale + map_top_offset * scale);
 	*/
-	//smap.set_map("resources/Map/7_7.bmp");
+	mmap.LoadBitmapByString({ "resources/Map/7_7.bmp" }, RGB(255, 255, 255));
+	mmap.SetTopLeft(scale_all,scale_all + map_top_offset * scale_all);
 	ui_bg.LoadBitmapByString({ "resources/UI_background.bmp" });
 	ui_bg.SetTopLeft(0,0);
 	Sleep(200);
@@ -50,12 +61,30 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	switch (nChar)
+	{
+	case VK_UP:
+		//character.movement(UP);
+	case VK_DOWN:
+	case VK_LEFT:
+	case VK_RIGHT:
+	default:
+
+	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	switch (nChar)
+	{
+	case VK_UP:
+	case VK_DOWN:
+	case VK_LEFT:
+	case VK_RIGHT:
+		//character.stop();
+	default:
+
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -81,6 +110,6 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 void CGameStateRun::OnShow()
 {
 	//smap.get_map().ShowBitmap();
-	//mmap.ShowBitmap(scale);
-	ui_bg.ShowBitmap(scale);
+	mmap.ShowBitmap(scale_all);
+	ui_bg.ShowBitmap(scale_all);
 }

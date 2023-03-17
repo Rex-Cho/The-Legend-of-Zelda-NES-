@@ -1,5 +1,4 @@
-#ifndef GAMEUTIL_H
-#define GAMEUTIL_H
+#pragma once
 /*
  * gamelib.h: 本檔案儲遊戲相關的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -68,10 +67,6 @@
 // Header for STL (Standard Template Library)
 /////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
 #include <list>
 #include <vector>
 #include <map>
@@ -86,14 +81,6 @@ namespace game_framework {
 
 	class CMovingBitmap {
 	public:
-		/*
-		//copy assiment
-		CMovingBitmap& operator= (const CMovingBitmap& data);
-		//move assiment
-		CMovingBitmap& operator= (CMovingBitmap&& data);
-		*/
-
-
 		CMovingBitmap();
 
 		/* The function for loading the bitmap. */
@@ -150,7 +137,7 @@ namespace game_framework {
 		bool isBitmapLoaded = false;	// whether a bitmap has been loaded
 		//! 儲存物件動畫是否為單次動畫
 		bool isOnce = false;
-		CRect    location;			// location of the bitmap
+		vector<CRect>    locations;			// location of the bitmap
 		vector<unsigned> surfaceID;
 		clock_t last_time = clock();
 		//! 儲存物件讀取的圖片路徑
@@ -170,4 +157,3 @@ namespace game_framework {
 	};
 
 }
-#endif // !GAMEUTIL_H

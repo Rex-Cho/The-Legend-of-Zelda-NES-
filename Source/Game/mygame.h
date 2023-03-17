@@ -1,3 +1,4 @@
+#pragma once
 /*
  * mygame.h: 本檔案儲遊戲本身的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -37,6 +38,9 @@
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
+#ifndef MYGAME_H
+#define MYGAME_H
+
 
 //#include "monster.h"
 //#include "../../map.h"
@@ -121,3 +125,4 @@ namespace game_framework {
 	};
 
 }
+#endif // !MYGAME_H

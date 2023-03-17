@@ -1,4 +1,5 @@
 #pragma once
+
 /////////////////////////////////////////////////////////////////////////////
 // 定義CGame及CGameState所使用的三個狀態常數
 /////////////////////////////////////////////////////////////////////////////
@@ -125,14 +126,13 @@ namespace game_framework {
 	// 這個class為遊戲的各種狀態之Base class(是一個abstract class)
 	// 每個Public Interface的用法都要懂，Implementation可以不懂
 	/////////////////////////////////////////////////////////////////////////////
+
 	class CGameState {
 	public:
-		static int scale;	//所有物件的縮放，用於計算放大後物體位置，物體移動距離加成。
-		static int map_top_offset;	//UI 保留位置
-		/*
-		int scale = 4;	//所有物件的縮放，用於計算放大後物體位置，物體移動距離加成。
-		int map_top_offset = 80;	//UI 保留位置
-		*/
+		int scale_all = 4;
+		int map_top_offset = 80;
+		static int scale_all_s;
+		static int map_top_offset_s
 
 		CGameState(CGame *g);
 		void OnDraw();			// Template Method
@@ -161,8 +161,8 @@ namespace game_framework {
 		CGame *game;
 		CMovingBitmap loadingBitmap;
 	};
-	int CGameState::scale = 4;
-	int CGameState::map_top_offset = 80;
+	int CGameState::scale_all_s = 4;
+	int CGameState::map_top_offset_s = 80;
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class是遊戲的核心，控制遊戲的進行

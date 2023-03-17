@@ -4,7 +4,11 @@
 
 namespace game_framework {
 
-	Character::Character() : Creature()
+	Character::Character() : Creature(),CGameState(nullptr)
+	{
+
+	}
+	Character::Character(CGame *g) : Creature(), CGameState(g)
 	{
 
 	}
@@ -41,11 +45,12 @@ namespace game_framework {
 	{
 
 	}
-	int Character::attack(MOVEMENT_REF direction)
+	int Character::attack()
 	{
-		_attack_animation.SetAnimation(100, true);
-
+		_walking = false;
 		//attack_item and animation
+		_attack_animation.SetAnimation(100, true);
+		_walking = true;
 
 		//if hurt some one, return damage
 		return 0;
@@ -58,10 +63,30 @@ namespace game_framework {
 	{
 		if (damage == 0)
 			return;
-	}
-	void Character::movement(MOVEMENT_REF direction)
-	{
+		
 
+		if (_life == 0)
+		{
+			//dead animation
+			//reset the game
+		}
+	}
+	void Character::heal(int count)
+	{
+		if (count == 0)
+			return;
+
+	}
+	void Character::movement(MOVEMENT_DIR direction)
+	{
+		_face = direction;
+		_walking = true;
+		_movement_animation.SetAnimation(20,true);
+	}
+	void Character::stop()
+	{
+		_walking = false;
+		_movement_animation.SetAnimation(20,false);
 	}
 	void Character::show()
 	{
@@ -73,12 +98,20 @@ namespace game_framework {
 			return;
 		_decision_time = time;
 	}
+	bool Character::isWalk()
+	{
+		return _walking;
+	}
+	MOVEMENT_DIR  Character::getFace()
+	{
+		return _face;
+	}
+
 	/*
 	void Character::AI()
 	{
 
 	}
-	*/
 	void Character::drop_items(int porbability)
 	{
 		int random = rand() % 1001;
@@ -87,4 +120,5 @@ namespace game_framework {
 			//drop item
 		}
 	}
+	*/
 }
