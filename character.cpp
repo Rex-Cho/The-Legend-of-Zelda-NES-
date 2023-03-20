@@ -29,34 +29,81 @@ namespace game_framework {
 	{
 
 	}
-	void Character::set_movement_animation(string filename)
+
+	//set function
+	void Character::set_decision_time(int time)
 	{
-		this->_movement_animation.LoadBitmapByString({ filename });
-		//movement_animation = anim;
+		if (time < 0 || time > 2000)
+			return;
+		_decision_time = time;
 	}
-	void Character::set_dead_animation(string filename)
+	void Character::set_movement_animation(vector<string> filename)
 	{
-		this->_dead_animation.LoadBitmapByString({ filename });
-		//dead_animation.LoadBitmapByString({anim.GetImageFileName()}, anim.GetFilterColor());
-		//dead_animation = anim;
+		this->_movement_animation_f.LoadBitmapByString({ filename[0],filename[1] },RGB(255,255,255));
+		this->_movement_animation_b.LoadBitmapByString({ filename[2],filename[3] }, RGB(255, 255, 255));
+		this->_movement_animation_l.LoadBitmapByString({ filename[4],filename[5] }, RGB(255, 255, 255));
+		this->_movement_animation_r.LoadBitmapByString({ filename[6],filename[7] }, RGB(255, 255, 255));
 	}
-	void Character::set_attack_animation(string filename)
+	void Character::set_action_animation(vector<string> filename)
 	{
-		this->_attack_animation.LoadBitmapByString({ filename });
-		//attack_animation.LoadBitmapByString({ anim.GetImageFileName() }, anim.GetFilterColor());
-		//attack_animation = anim;
+		this->_action_animation_f.LoadBitmapByString({ filename[0] }, RGB(255, 255, 255));
+		this->_action_animation_b.LoadBitmapByString({ filename[1] }, RGB(255, 255, 255));
+		this->_action_animation_l.LoadBitmapByString({ filename[2] }, RGB(255, 255, 255));
+		this->_action_animation_r.LoadBitmapByString({ filename[3] }, RGB(255, 255, 255));
 	}
-	void Character::set_hurt_animation(string filename)
+	void Character::set_hurt_animation(vector<string> filename)
 	{
-		this->_hurt_animation.LoadBitmapByString({ filename });
-		//hurt_animation.LoadBitmapByString({ anim.GetImageFileName() }, anim.GetFilterColor());
-		//hurt_animation = anim;
+		this->_hurt_animation_f.LoadBitmapByString({ filename[0],filename[1] }, RGB(255, 255, 255));
+		this->_hurt_animation_b.LoadBitmapByString({ filename[2],filename[3] }, RGB(255, 255, 255));
+		this->_hurt_animation_l.LoadBitmapByString({ filename[4],filename[5] }, RGB(255, 255, 255));
+		this->_hurt_animation_r.LoadBitmapByString({ filename[6],filename[7] }, RGB(255, 255, 255));
 	}
-	void Character::set_spawn_animation(string filename)
+	void Character::set_dead_animation(vector<string> filename)
 	{
-		this->_spawn_animation.LoadBitmapByString({ filename });
-		//spawn_animation.LoadBitmapByString({ anim.GetImageFileName() }, anim.GetFilterColor());
-		//spawn_animation = anim;
+		this->_dead_animation.LoadBitmapByString(filename, RGB(255, 255, 255));
+	}
+	void Character::set_spawn_animation(vector<string> filename)
+	{
+		this->_spawn_animation.LoadBitmapByString(filename);
+	}
+	void Character::set_can_action(bool data)
+	{
+		_can_action = data;
+	}
+	void Character::set_can_move(bool data)
+	{
+		_can_move = data;
+	}
+	void Character::set_can_hurt(bool data)
+	{
+		_can_hurt = data;
+	}
+	//get function
+	int Character::getLife()
+	{
+		return 0;
+	}
+	bool Character::isWalk()
+	{
+		return _walking;
+	}
+	MOVEMENT_DIR  Character::getFace()
+	{
+		return _face;
+	}
+	int Character::get_hurt_time()
+	{
+		return _hurt_time;
+	}
+	int Character::get_hurt_duration()
+	{
+		return _hurt_duration;
+	}
+
+	//behavior function
+	void Character::showLayer()
+	{
+
 	}
 	void Character::spawn()
 	{
@@ -66,7 +113,7 @@ namespace game_framework {
 	{
 		_walking = false;
 		//attack_item and animation
-		_attack_animation.SetAnimation(100, true);
+		//_attack_animation.SetAnimation(100, true);
 		_walking = true;
 
 		//if hurt some one, return damage
@@ -78,6 +125,8 @@ namespace game_framework {
 	}
 	void Character::hurt(int damage)
 	{
+		_hurt_duration = clock();
+		_can_move = false;
 		if (damage == 0)
 			return;
 
@@ -96,32 +145,29 @@ namespace game_framework {
 	}
 	void Character::movement(MOVEMENT_DIR direction)
 	{
+		if (_can_move == false)
+			return;
+
 		_face = direction;
+		_layer.clear();
 		_walking = true;
-		_movement_animation.SetAnimation(20, true);
+		switch (_face)
+		{
+		case UP:
+			_layer.push_back(_movement_animation_b);
+		case DOWN:
+			_layer.push_back(_movement_animation_f);
+		case LEFT:
+			_layer.push_back(_movement_animation_l);
+		case RIGHT:
+			_layer.push_back(_movement_animation_r);
+		}
+		//_movement_animation.SetAnimation(20, true);
 	}
 	void Character::stop()
 	{
 		_walking = false;
-		_movement_animation.SetAnimation(20, false);
-	}
-	void Character::show()
-	{
-
-	}
-	void Character::set_decision_time(int time)
-	{
-		if (time < 0 || time > 2000)
-			return;
-		_decision_time = time;
-	}
-	bool Character::isWalk()
-	{
-		return _walking;
-	}
-	MOVEMENT_DIR  Character::getFace()
-	{
-		return _face;
+		//_movement_animation.SetAnimation(20, false);
 	}
 
 	/*

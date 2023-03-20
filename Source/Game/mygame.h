@@ -1,3 +1,5 @@
+#ifndef MYGAME_H
+#define MYGAME_H
 /*
  * mygame.h: 本檔案儲遊戲本身的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -38,6 +40,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+#include "../../character.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -91,6 +94,7 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		CMovingBitmap mmap, ui_bg;
+		Character link;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -111,3 +115,4 @@ namespace game_framework {
 	};
 
 }
+#endif // !MYGAME_H

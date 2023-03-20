@@ -15,6 +15,7 @@ using namespace game_framework;
 
 CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
 {
+
 }
 
 CGameStateRun::~CGameStateRun()
@@ -27,6 +28,8 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	if (clock() - link.get_hurt_time() > link.get_hurt_duration())
+		link.set_can_move(true);
 	/*
 	if(character.isWalk())
 	{
@@ -48,6 +51,13 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	mmap.SetTopLeft(scale_all, scale_all + map_top_offset * scale_all);
 	ui_bg.LoadBitmapByString({ "resources/UI_background.bmp" });
 	ui_bg.SetTopLeft(0, 0);
+
+	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
+	link.set_action_animation({"resources/Link/link_act_f.bmp", "resources/Link/link_act_b.bmp", "resources/Link/link_act_l.bmp","resources/Link/link_act_r.bmp" });
+	link.set_hurt_animation({ "resources/Link/link_run_f1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_b1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_l1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_r1.bmp" ,"resources/Link/link_hurt.bmp" });
+	link.set_dead_animation({});
+	link.set_spawn_animation({});
+
 	Sleep(200);
 }
 

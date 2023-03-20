@@ -2,16 +2,6 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include <list>
-#include <vector>
-#include <map>
-#include"windef.h"
-#include"wingdi.h"
-#include"atltypes.h"
-#include"time.h"
-#include"afxwin.h"
-#include".\Source.\Library\gameutil.h"
-
 #include"creature.h"
 
 using namespace std;
@@ -22,19 +12,31 @@ namespace game_framework {
 		//void AI();
 		/*
 		*/
-		void show();
-		void set_decision_time(int);
-		void set_movement_animation(string);
-		void set_dead_animation(string);
-		void set_attack_animation(string);
-		void set_hurt_animation(string);
-		void set_spawn_animation(string);
-		bool isWalk();
-		MOVEMENT_DIR getFace();
-	protected:
-	private:
 		Character();
 		~Character() = default;
+
+		//set function
+		void set_decision_time(int);
+		void set_movement_animation(vector<string>);
+		void set_dead_animation(vector<string>);
+		void set_action_animation(vector<string>);
+		void set_hurt_animation(vector<string>);
+		void set_spawn_animation(vector<string>);
+		void set_can_move(bool);
+		void set_can_hurt(bool);
+		void set_can_action(bool);
+
+		//get function
+		int getLife();
+		int get_hurt_time();
+		int get_hurt_duration();
+		MOVEMENT_DIR getFace();
+		bool isWalk();
+
+		//behavior function
+		void showLayer();
+	protected:
+	private:
 		/*
 		*/
 		MOVEMENT_DIR _face = DOWN;

@@ -5,6 +5,7 @@
 #include <list>
 #include <vector>
 #include <map>
+#include <time.h>
 #include"windef.h"
 #include"wingdi.h"
 #include"atltypes.h"
@@ -23,48 +24,57 @@ namespace game_framework {
 	};
 	class Creature {
 	public:
-
 	protected:
-		Creature();
+		Creature() {};
 		~Creature() = default;
 
+		//set function
+		virtual void set_movement_animation(vector<string>) = 0;
+		virtual void set_dead_animation(vector<string>) = 0;
+		virtual void set_action_animation(vector<string>) = 0;
+		virtual void set_hurt_animation(vector<string>) = 0;
+		virtual void set_spawn_animation(vector<string>) = 0;
+		virtual void set_can_move(bool) = 0;
+		virtual void set_can_hurt(bool) = 0;
+		virtual void set_can_action(bool) = 0;
+
+		//get function
+		virtual MOVEMENT_DIR getFace() = 0;
+		virtual int getLife() = 0;
+		virtual bool isWalk() = 0;
+		virtual int get_hurt_time() = 0;
+		virtual int get_hurt_duration() = 0;
+
+		//behavior function
 		virtual void die() = 0;
 		virtual void spawn() = 0;
 		virtual void movement(MOVEMENT_DIR) = 0;
 		virtual void hurt(int) = 0;
 		virtual void heal(int) = 0;
-		virtual int attack(MOVEMENT_DIR) = 0;
-		virtual void set_movement_animation(string) = 0;
-		virtual void set_dead_animation(string) = 0;
-		virtual void set_attack_animation(string) = 0;
-		virtual void set_hurt_animation(string) = 0;
-		virtual void set_spawn_animation(string) = 0;
-		virtual void show() = 0;
+		virtual int attack() = 0;
 		virtual void stop() = 0;
-		virtual bool isWalk() = 0;
-		virtual MOVEMENT_DIR getFace() = 0;
-		virtual int getLife() = 0;
+		virtual void showLayer() = 0;
 
-
-		int _decision_time = 800;
+		//variables
+		clock_t _hurt_time = 0;
+		int _hurt_duration = 200;				//ms
+		int _layer_counter = 0;
+		int _decision_time = 800;				//ms
 		int _life = 2;
 		int _damage = 1;
-		int _move_duration = 100;
+		int _move_duration = 100;				//ms
 		bool _can_move = true;
 		bool _can_hurt = true;
-		bool _can_attack = true;
+		bool _can_action = true;
 		bool _walking = false;
-		CMovingBitmap _movement_animation;
+		CMovingBitmap _movement_animation_f, _movement_animation_b, _movement_animation_l, _movement_animation_r;
 		CMovingBitmap _dead_animation;
-		CMovingBitmap _attack_animation;
-		CMovingBitmap _hurt_animation;
+		CMovingBitmap _action_animation_f, _action_animation_b, _action_animation_l, _action_animation_r;
+		CMovingBitmap _hurt_animation_f, _hurt_animation_b, _hurt_animation_l, _hurt_animation_r;
 		CMovingBitmap _spawn_animation;
+		vector<CMovingBitmap> _layer;
 	private:
 
 	};
-	Creature::Creature()
-	{
-
-	}
 }
 #endif // !CREATURE_H
