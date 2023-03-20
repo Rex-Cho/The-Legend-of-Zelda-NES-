@@ -26,36 +26,21 @@ void CGameStateInit::OnInit()
 	//
 	// 開始載入資料
 	//
-	//Sleep(1000);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
+	start_scene.LoadBitmapByString({ "resources/start_scene.bmp" }, RGB(255, 255, 255));
+	start_scene.SetTopLeft(0, 0);
+	Sleep(200);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
 	//
 	// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
 	//
-	/*
-	*/
-	character.LoadBitmapByString({ "resources/Link/Link_run_f1.bmp" },RGB(255,255,255));
-	character.SetTopLeft(0, 0);
-	start_scene.LoadBitmapByString({"resources/start_scene.bmp"}, RGB(255, 255, 255));
-	start_scene.SetTopLeft(0,0);
-	Sleep(200);
-	
-	//CDDraw::IsFullScreen();
 }
 
 void CGameStateInit::OnBeginState()
 {
 }
 
-void CGameStateInit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
-{
-	if (nChar != NULL)
-	{
-		GotoGameState(GAME_STATE_RUN);
-	}
-}
-
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+
 }
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)

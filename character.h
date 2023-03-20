@@ -1,11 +1,23 @@
 #pragma once
-#include"creature.h"
-//#include "item.h"
+#ifndef CHARACTER_H
+#define CHARACTER_H
 
+#include <list>
+#include <vector>
+#include <map>
+#include"windef.h"
+#include"wingdi.h"
+#include"atltypes.h"
+#include"time.h"
+#include"afxwin.h"
+#include".\Source.\Library\gameutil.h"
+
+#include"creature.h"
+
+using namespace std;
 
 namespace game_framework {
-
-	class Character : public Creature, public CGameState{
+	class Character : public Creature{
 	public:
 		//void AI();
 		/*
@@ -22,7 +34,6 @@ namespace game_framework {
 	protected:
 	private:
 		Character();
-		Character(CGame *g);
 		~Character() = default;
 		/*
 		*/
@@ -38,8 +49,9 @@ namespace game_framework {
 		void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
 		 */
 
-		//Item* item_set;
+		 //Item* item_set;
 
-		
+
 	};
 }
+#endif // !CHARACTER_H

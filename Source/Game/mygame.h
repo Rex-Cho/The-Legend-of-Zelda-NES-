@@ -1,4 +1,3 @@
-#pragma once
 /*
  * mygame.h: 本檔案儲遊戲本身的class的interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
@@ -38,13 +37,7 @@
  *      2. Replace the demonstration of animation as a new bouncing ball.
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
-#ifndef MYGAME_H
-#define MYGAME_H
 
-
-//#include "monster.h"
-//#include "../../map.h"
-#include "../../character.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -57,8 +50,6 @@ namespace game_framework {
 		AUDIO_NTUT				// 2
 	};
 
-	
-	
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
@@ -66,19 +57,16 @@ namespace game_framework {
 
 	class CGameStateInit : public CGameState {
 	public:
-
 		CGameStateInit(CGame *g);
 		void OnInit();  								// 遊戲的初值及圖形設定
 		void OnBeginState();							// 設定每次重玩所需的變數
 		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnKeyDown(UINT, UINT, UINT);
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		CMovingBitmap logo;								// csie的logo
 		CMovingBitmap start_scene;
-		CMovingBitmap character;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -102,9 +90,7 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
-	private:
-		CMovingBitmap mmap,ui_bg;
-		//Map smap;
+		CMovingBitmap mmap, ui_bg;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -125,4 +111,3 @@ namespace game_framework {
 	};
 
 }
-#endif // !MYGAME_H

@@ -1,7 +1,16 @@
 #pragma once
-//#include "../Library/gameutil.h"
-#include "Source/Library/gameutil.h"
-#include "Source/Library/gamecore.h"
+#ifndef CREATURE_H
+#define CREATURE_H
+
+#include <list>
+#include <vector>
+#include <map>
+#include"windef.h"
+#include"wingdi.h"
+#include"atltypes.h"
+#include"time.h"
+#include"afxwin.h"
+#include".\Source.\Library\gameutil.h"
 
 using namespace std;
 
@@ -58,3 +67,4 @@ namespace game_framework {
 
 	}
 }
+#endif // !CREATURE_H

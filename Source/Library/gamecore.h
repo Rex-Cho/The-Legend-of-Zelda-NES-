@@ -131,8 +131,6 @@ namespace game_framework {
 	public:
 		int scale_all = 4;
 		int map_top_offset = 80;
-		static int scale_all_s;
-		static int map_top_offset_s
 
 		CGameState(CGame *g);
 		void OnDraw();			// Template Method
@@ -161,8 +159,6 @@ namespace game_framework {
 		CGame *game;
 		CMovingBitmap loadingBitmap;
 	};
-	int CGameState::scale_all_s = 4;
-	int CGameState::map_top_offset_s = 80;
 
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class是遊戲的核心，控制遊戲的進行
