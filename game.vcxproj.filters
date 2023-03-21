@@ -55,6 +55,7 @@
       <Filter>MyGame</Filter>
     </ClCompile>
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -92,6 +93,7 @@
     </ClInclude>
     <ClInclude Include="creature.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="map.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc">

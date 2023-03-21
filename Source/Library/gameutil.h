@@ -110,6 +110,7 @@ namespace game_framework {
 		int   GetWidth();
 		string GetImageFileName();
 		COLORREF GetFilterColor();
+		vector<CRect> get_location();
 
 		/* Is function */
 		bool  IsAnimation();

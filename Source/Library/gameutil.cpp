@@ -275,6 +275,11 @@ namespace game_framework {
 		GAME_ASSERT(isBitmapLoaded, "A bitmap must be loaded before Width() is called !!!");
 		return locations[frameIndex].right - locations[frameIndex].left;
 	}
+
+	vector<CRect> CMovingBitmap::get_location()
+	{
+		return locations;
+	}
 	
 	//! 啟動單次動畫。
 	/*!
