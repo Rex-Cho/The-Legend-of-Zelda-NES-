@@ -53,6 +53,9 @@ namespace game_framework {
 		AUDIO_NTUT				// 2
 	};
 
+	static int scale_all = 4;
+	static int map_top_offset = 80;
+
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
@@ -95,6 +98,7 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		CMovingBitmap mmap, ui_bg;
 		Character link;
+		int key_down_count = 0;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

@@ -30,6 +30,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	if (clock() - link.get_hurt_time() > link.get_hurt_duration())
 		link.set_can_move(true);
+	link.walk();
 	/*
 	if(character.isWalk())
 	{
@@ -57,6 +58,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	link.set_hurt_animation({ "resources/Link/link_run_f1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_b1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_l1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_r1.bmp" ,"resources/Link/link_hurt.bmp" });
 	link.set_dead_animation({});
 	link.set_spawn_animation({});
+	link.set_position(128,48);
+	link.stop();
 
 	Sleep(200);
 }
@@ -66,12 +69,21 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	switch (nChar)
 	{
 	case VK_UP:
-		//character.movement(UP);
+		link.movement(UP);
+		key_down_count += 1;
+		break;
 	case VK_DOWN:
+		link.movement(DOWN);
+		key_down_count += 1;
+		break;
 	case VK_LEFT:
+		link.movement(LEFT);
+		key_down_count += 1;
+		break;
 	case VK_RIGHT:
-	default:
-		return;
+		link.movement(RIGHT);
+		key_down_count += 1;
+		break;
 	}
 }
 
@@ -83,9 +95,10 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_DOWN:
 	case VK_LEFT:
 	case VK_RIGHT:
-		//character.stop();
-	default:
-		return;
+		key_down_count -= 1;
+		if(key_down_count == 0)
+			link.stop();
+		break;
 	}
 }
 
@@ -113,4 +126,5 @@ void CGameStateRun::OnShow()
 {
 	mmap.ShowBitmap(scale_all);
 	ui_bg.ShowBitmap(scale_all);
+	link.showLayer(scale_all);
 }

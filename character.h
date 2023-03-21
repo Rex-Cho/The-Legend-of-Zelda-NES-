@@ -25,34 +25,33 @@ namespace game_framework {
 		void set_can_move(bool);
 		void set_can_hurt(bool);
 		void set_can_action(bool);
+		void set_position(int x,int y);
 
 		//get function
 		int getLife();
 		int get_hurt_time();
 		int get_hurt_duration();
+		int get_posX();
+		int get_posY();
 		MOVEMENT_DIR getFace();
 		bool isWalk();
 
 		//behavior function
-		void showLayer();
-	protected:
-	private:
-		/*
-		*/
-		MOVEMENT_DIR _face = DOWN;
+		void showLayer(int);
+		void movement(MOVEMENT_DIR);
+		void walk();
+		void stop();
 		void spawn();
 		int attack();
 		void die();
 		void hurt(int damage);
 		void heal(int count);
-		void movement(MOVEMENT_DIR);
-		void stop();
-		/*
-		void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
-		 */
+	protected:
+	private:
+
+		//void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
 
 		 //Item* item_set;
-
 
 	};
 }

@@ -208,6 +208,12 @@ namespace game_framework {
 		isOnce = once;
 		delayCount = delay;
 	}
+	void CMovingBitmap::StopAnimation()
+	{
+		isOnce = true;
+		isAnimation = false;
+		isAnimationDone = true;
+	}
 	
 	//! 顯示圖片。
 	/*!

@@ -78,7 +78,6 @@ namespace game_framework {
 	// 這個class提供動態(可以移動)的圖形
 	// 每個Public Interface的用法都要懂，Implementation可以不懂
 	/////////////////////////////////////////////////////////////////////////////
-
 	class CMovingBitmap {
 	public:
 		CMovingBitmap();
@@ -121,6 +120,8 @@ namespace game_framework {
 		
 		/* Toggle function */
 		void  ToggleAnimation();
+
+		void StopAnimation();
 
 	protected:
 		//! 當前幀的索引值。

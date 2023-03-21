@@ -129,8 +129,6 @@ namespace game_framework {
 
 	class CGameState {
 	public:
-		int scale_all = 4;
-		int map_top_offset = 80;
 
 		CGameState(CGame *g);
 		void OnDraw();			// Template Method

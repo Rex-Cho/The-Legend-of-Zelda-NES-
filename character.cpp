@@ -27,7 +27,7 @@ namespace game_framework {
 
 	Character::Character() : Creature()
 	{
-
+		_layer.clear();
 	}
 
 	//set function
@@ -78,32 +78,108 @@ namespace game_framework {
 	{
 		_can_hurt = data;
 	}
+	void Character::set_position(int x, int y)
+	{
+		if (x < 0 || x > 1024 || y < 0 || y > 1024)
+			return;
+		_posX = x;
+		_posY = y;
+	}
 	//get function
-	int Character::getLife()
-	{
-		return 0;
-	}
-	bool Character::isWalk()
-	{
-		return _walking;
-	}
-	MOVEMENT_DIR  Character::getFace()
-	{
-		return _face;
-	}
-	int Character::get_hurt_time()
-	{
-		return _hurt_time;
-	}
-	int Character::get_hurt_duration()
-	{
-		return _hurt_duration;
-	}
+	int Character::getLife(){ return 0; }
+	bool Character::isWalk(){ return _walking; }
+	MOVEMENT_DIR  Character::getFace(){ return _face; }
+	int Character::get_hurt_time(){ return _hurt_time; }
+	int Character::get_hurt_duration(){ return _hurt_duration; }
+	int Character::get_posX() { return _posX; }
+	int Character::get_posY() { return _posY; }
+
 
 	//behavior function
-	void Character::showLayer()
+	void Character::showLayer(int scale)
 	{
+		/*
+		*/
+		int temp = _layer.size();
+		for (int i = 0; i < temp; i++)
+		{
+			_layer[i].SetTopLeft(_posX * scale, _posY * scale + map_top_offset * scale);
+			_layer[i].ShowBitmap(scale);
+		}
 
+	}
+	void Character::movement(MOVEMENT_DIR direction)
+	{
+		if (_can_move == false)
+			return;
+
+		_walking = true;
+		_face = direction;
+		_layer.clear();
+		switch (_face)
+		{
+		case UP:
+			_movement_animation_b.SetAnimation(_move_duration, false);
+			_layer.push_back(_movement_animation_b);
+			break;
+		case DOWN:
+			_movement_animation_f.SetAnimation(_move_duration, false);
+			_layer.push_back(_movement_animation_f);
+			break;
+		case LEFT:
+			_movement_animation_l.SetAnimation(_move_duration, false);
+			_layer.push_back(_movement_animation_l);
+			break;
+		case RIGHT:
+			_movement_animation_r.SetAnimation(_move_duration, false);
+			_layer.push_back(_movement_animation_r);
+			break;
+		}
+		//_movement_animation.SetAnimation(20, true);
+	}
+	void Character::walk()
+	{
+		if (_walking == false)
+			return;
+		switch (_face)
+		{
+		case UP:
+			_posY -= _move_speed;
+			break;
+		case DOWN:
+			_posY += _move_speed;
+			break;
+		case LEFT:
+			_posX -= _move_speed;
+			break;
+		case RIGHT:
+			_posX += _move_speed;
+			break;
+		}
+	}
+	void Character::stop()
+	{
+		_walking = false;
+		_layer.clear();
+		switch (_face)
+		{
+		case UP:
+			_movement_animation_b.StopAnimation();
+			_layer.push_back(_movement_animation_b);
+			break;
+		case DOWN:
+			_movement_animation_f.StopAnimation();
+			_layer.push_back(_movement_animation_f);
+			break;
+		case LEFT:
+			_movement_animation_l.StopAnimation();
+			_layer.push_back(_movement_animation_l);
+			break;
+		case RIGHT:
+			_movement_animation_r.StopAnimation();
+			_layer.push_back(_movement_animation_r);
+			break;
+		}
 	}
 	void Character::spawn()
 	{
@@ -143,32 +219,7 @@ namespace game_framework {
 			return;
 
 	}
-	void Character::movement(MOVEMENT_DIR direction)
-	{
-		if (_can_move == false)
-			return;
-
-		_face = direction;
-		_layer.clear();
-		_walking = true;
-		switch (_face)
-		{
-		case UP:
-			_layer.push_back(_movement_animation_b);
-		case DOWN:
-			_layer.push_back(_movement_animation_f);
-		case LEFT:
-			_layer.push_back(_movement_animation_l);
-		case RIGHT:
-			_layer.push_back(_movement_animation_r);
-		}
-		//_movement_animation.SetAnimation(20, true);
-	}
-	void Character::stop()
-	{
-		_walking = false;
-		//_movement_animation.SetAnimation(20, false);
-	}
+	
 
 	/*
 	void Character::AI()
