@@ -19,32 +19,40 @@ using namespace std;
 namespace game_framework {
 	class Map {
 	public:
-		Map() {};
+		Map() { _collider.CreateRectRgn(0, 0, 0, 0); };
 		~Map() = default;
 	
 		//set function
 		void set_bitmap(vector<string>);
+		void set_pos(int x, int y);
+		void set_pos(int x, int y, int scale);
 
 		//get function
+		int get_posX();
+		int get_posY();
+		CRgn get_collider();
 
 		//behavior function
 		void add_collider_by_point(vector<CPoint>);
 		void add_collider_by_point(vector<CPoint>, int scale);
 		void reset_collider();
+		void show_bitmap();
+		void show_bitmap(int);
 
 		//is function
 		bool is_collide(CMovingBitmap);
 	
+		CRgn _collider;
 	protected:
 
 
 		//variables
 
 		CMovingBitmap _graph;
-		CRgn _collider;
 
 	private:
-
+		int posX = 0;
+		int posY = 80;
 	};
 }
 #endif // !CREATURE_H

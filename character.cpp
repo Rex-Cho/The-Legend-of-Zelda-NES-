@@ -93,7 +93,7 @@ namespace game_framework {
 	int Character::get_hurt_duration(){ return _hurt_duration; }
 	int Character::get_posX() { return _posX; }
 	int Character::get_posY() { return _posY; }
-
+	vector<CMovingBitmap> Character::get_layer() { return _layer; }
 
 	//behavior function
 	void Character::showLayer(int scale)

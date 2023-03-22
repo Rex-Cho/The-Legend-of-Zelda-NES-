@@ -30,29 +30,51 @@ namespace game_framework {
 	{
 		_graph.LoadBitmapByString(files, RGB(255,255,255));
 	}
+	void Map::set_pos(int x, int y)
+	{
+		posX = x;
+		posY = y;
+		_graph.SetTopLeft(posX, posY);
+	}
+	void Map::set_pos(int x, int y, int scale)
+	{
+		posX = x;
+		posY = y;
+		_graph.SetTopLeft(posX * scale, posY * scale);
+	}
 
 	//get function
+	int Map::get_posX() { return posX; }
+	int Map::get_posY() { return posY; }
 
 	//behavior function
 	void Map::add_collider_by_point(vector<CPoint> points)
 	{
-		CRgn add;
-		add.CreatePolygonRgn(&points[0], points.size(), ALTERNATE);	//ALTERNATE = 1; WINDING = 2
-		_collider.CombineRgn(&_collider, &add, RGN_OR);
+		CRgn add, combine;
+		VERIFY(add.CreatePolygonRgn(&points[0], points.size(), ALTERNATE)); //ALTERNATE = 1; WINDING = 2
+		VERIFY(_collider.CombineRgn(&_collider, &add, RGN_OR));
 	}
 	void Map::add_collider_by_point(vector<CPoint> points, int scale)
 	{
 		CRgn add;
-		for(int i = 0; i < points.size(); i++)
+		int temp = points.size();
+		for(int i = 0; i < temp; i++)
 			points[i].SetPoint(points[i].x * scale, points[i].y * scale);
 
-		add.CreatePolygonRgn(&points[0], points.size(), ALTERNATE);	//ALTERNATE = 1; WINDING = 2
-		_collider.CombineRgn(&_collider, &add, RGN_OR);
+		VERIFY(add.CreatePolygonRgn(&points[0], points.size(), ALTERNATE));	//ALTERNATE = 1; WINDING = 2
+		VERIFY(_collider.CombineRgn(&_collider, &add, RGN_OR));
 	}
-
 	void Map::reset_collider()
 	{
 		_collider.CopyRgn(new CRgn);
+	}
+	void Map::show_bitmap()
+	{
+		_graph.ShowBitmap();
+	}
+	void Map::show_bitmap(int scale)
+	{
+		_graph.ShowBitmap(scale);
 	}
 
 	//is function

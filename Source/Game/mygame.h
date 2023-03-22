@@ -41,6 +41,7 @@
 */
 
 #include "../../character.h"
+#include "../../map.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -99,6 +100,10 @@ namespace game_framework {
 		CMovingBitmap mmap, ui_bg;
 		Character link;
 		int key_down_count = 0;
+		Map m_map;
+
+		CMovingBitmap arrow,bomb;
+		bool col = false;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

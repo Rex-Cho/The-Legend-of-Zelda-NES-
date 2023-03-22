@@ -34,6 +34,9 @@ namespace game_framework {
 		int get_posX();
 		int get_posY();
 		MOVEMENT_DIR getFace();
+		vector<CMovingBitmap> get_layer();
+
+		//is function
 		bool isWalk();
 
 		//behavior function
