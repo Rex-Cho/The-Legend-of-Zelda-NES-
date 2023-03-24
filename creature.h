@@ -20,7 +20,8 @@ namespace game_framework {
 		UP,
 		DOWN,
 		LEFT,
-		RIGHT
+		RIGHT,
+		NONE
 	};
 	class Creature {
 	public:
@@ -60,8 +61,8 @@ namespace game_framework {
 		virtual void showLayer(int) = 0;
 
 		//variables
-		int _posX = 0;
-		int _posY = 0;
+		int _posX;
+		int _posY;
 		int _hurt_duration = 200;				//ms
 		int _layer_counter = 0;
 		int _decision_time = 800;				//ms

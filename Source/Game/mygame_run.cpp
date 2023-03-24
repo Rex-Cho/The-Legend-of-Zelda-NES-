@@ -30,9 +30,12 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	//link hurt disable walk
 	/*
-	*/
 	if (clock() - link.get_hurt_time() > link.get_hurt_duration())
 		link.set_can_move(true);
+	*/
+
+	col = m_map.is_collide(link);
+
 	link.walk();
 
 	//map and link collide detect
@@ -41,15 +44,17 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	{
 		if (m_map.is_collide(link.get_layer()[0]))
 		{
-			link.set_can_move(false);
 			col = true;
 		}
 		else
 		{
 			col = false;
-			link.set_can_move(true);
 		}
 	}
+	*/
+	/*
+	if (link.get_layer().size() != 0)
+		col = m_map.is_collide(link.get_layer()[0]);
 	*/
 }
 
@@ -64,7 +69,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//set map
 	m_map.set_bitmap({ "resources/Map/7_7.bmp" });
 	m_map.set_pos(0, 80, scale_all);
-	m_map.add_collider_by_point({ CPoint(144,0),CPoint(144,75) ,CPoint(157,75),CPoint(157,80),CPoint(256,0) }, scale_all);
+	m_map.add_collider_by_point({});
+	//m_map.add_collider_by_point({ CPoint(144,0),CPoint(144,75) ,CPoint(157,75),CPoint(157,80),CPoint(256,0) }, scale_all);
+	
 	/*
 	CDC *pDC = CDDraw::GetBackCDC();
 	pDC->FillRgn(&m_map._collider, &CBrush(0xFF00));
@@ -151,7 +158,7 @@ void CGameStateRun::OnShow()
 	ui_bg.ShowBitmap(scale_all);
 	link.showLayer(scale_all);
 	if(col)
-		bomb.ShowBitmap(scale_all);
-	else
 		arrow.ShowBitmap(scale_all);
+	else
+		bomb.ShowBitmap(scale_all);
 }

@@ -26,6 +26,7 @@ namespace game_framework {
 		void set_can_hurt(bool);
 		void set_can_action(bool);
 		void set_position(int x,int y);
+		void set_ban_move(MOVEMENT_DIR, bool);
 
 		//get function
 		int getLife();
@@ -51,9 +52,14 @@ namespace game_framework {
 		void heal(int count);
 	protected:
 	private:
+		//variables
+		bool ban_move_up = false;
+		bool ban_move_down = false;
+		bool ban_move_left = false;
+		bool ban_move_right = false;
+
 
 		//void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
-
 		 //Item* item_set;
 
 	};

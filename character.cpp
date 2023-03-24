@@ -85,6 +85,25 @@ namespace game_framework {
 		_posX = x;
 		_posY = y;
 	}
+	void Character::set_ban_move(MOVEMENT_DIR dir, bool set)
+	{
+		switch (dir)
+		{
+		case UP:
+			ban_move_up = set;
+			break;
+		case DOWN:
+			ban_move_down = set;
+			break;
+		case LEFT:
+			ban_move_left = set;
+			break;
+		case RIGHT:
+			ban_move_right = set;
+			break;
+		}
+	}
+
 	//get function
 	int Character::getLife(){ return 0; }
 	bool Character::isWalk(){ return _walking; }
@@ -103,7 +122,7 @@ namespace game_framework {
 		int temp = _layer.size();
 		for (int i = 0; i < temp; i++)
 		{
-			_layer[i].SetTopLeft(_posX * scale, _posY * scale + map_top_offset * scale);
+			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
 			_layer[i].ShowBitmap(scale);
 		}
 
@@ -144,18 +163,27 @@ namespace game_framework {
 		switch (_face)
 		{
 		case UP:
-			_posY -= _move_speed;
+			if(!ban_move_up)
+				_posY -= _move_speed;
 			break;
 		case DOWN:
-			_posY += _move_speed;
+			if(!ban_move_down)
+				_posY += _move_speed;
 			break;
 		case LEFT:
-			_posX -= _move_speed;
+			if(!ban_move_left)
+				_posX -= _move_speed;
 			break;
 		case RIGHT:
-			_posX += _move_speed;
+			if(!ban_move_right)
+				_posX += _move_speed;
 			break;
 		}
+		/*
+		int temp = _layer.size();
+		for(int i = 0; i < temp; i++)
+			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
+		*/
 	}
 	void Character::stop()
 	{
@@ -180,6 +208,11 @@ namespace game_framework {
 			_layer.push_back(_movement_animation_r);
 			break;
 		}
+		/*
+		int temp = _layer.size();
+		for (int i = 0; i < temp; i++)
+			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
+		*/
 	}
 	void Character::spawn()
 	{
@@ -189,7 +222,7 @@ namespace game_framework {
 	{
 		_walking = false;
 		//attack_item and animation
-		//_attack_animation.SetAnimation(100, true);
+		//_attack_animation.ToggleAnimation();
 		_walking = true;
 
 		//if hurt some one, return damage

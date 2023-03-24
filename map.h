@@ -20,7 +20,7 @@ namespace game_framework {
 	class Map {
 	public:
 		Map() { _collider.CreateRectRgn(0, 0, 0, 0); };
-		~Map() = default;
+		~Map();
 	
 		//set function
 		void set_bitmap(vector<string>);
@@ -40,6 +40,7 @@ namespace game_framework {
 		void show_bitmap(int);
 
 		//is function
+		bool is_collide(Character);
 		bool is_collide(CMovingBitmap);
 	
 		CRgn _collider;
@@ -47,7 +48,7 @@ namespace game_framework {
 
 
 		//variables
-
+		MOVEMENT_DIR last_collider_direction = NONE;
 		CMovingBitmap _graph;
 
 	private:
