@@ -10,7 +10,7 @@ namespace game_framework {
 	class Character : public Creature{
 	public:
 		//void AI();
-		/*
+		/*shit
 		*/
 		Character();
 		~Character() = default;
