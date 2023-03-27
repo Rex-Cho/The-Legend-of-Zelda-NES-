@@ -27,7 +27,7 @@ namespace game_framework {
 
 	Character::Character() : Creature()
 	{
-		_layer.clear();
+		_body_layer.clear();
 	}
 
 	//set function
@@ -65,6 +65,13 @@ namespace game_framework {
 	void Character::set_spawn_animation(vector<string> filename)
 	{
 		this->_spawn_animation.LoadBitmapByString(filename);
+	}
+	void Character::set_wapon(vector<string> filename)
+	{
+		_wapon_f.LoadBitmapByString({ filename[0] }, RGB(255, 255, 255));
+		_wapon_b.LoadBitmapByString({ filename[1] }, RGB(255, 255, 255));
+		_wapon_l.LoadBitmapByString({ filename[2] }, RGB(255, 255, 255));
+		_wapon_r.LoadBitmapByString({ filename[3] }, RGB(255, 255, 255));
 	}
 	void Character::set_can_action(bool data)
 	{
@@ -106,26 +113,83 @@ namespace game_framework {
 
 	//get function
 	int Character::getLife(){ return 0; }
-	bool Character::isWalk(){ return _walking; }
 	MOVEMENT_DIR  Character::getFace(){ return _face; }
 	int Character::get_hurt_time(){ return _hurt_time; }
 	int Character::get_hurt_duration(){ return _hurt_duration; }
+	int Character::get_attack_time(){ return _attack_time; }
+	int Character::get_attack_duration(){ return _attack_duration; }
 	int Character::get_posX() { return _posX; }
 	int Character::get_posY() { return _posY; }
-	vector<CMovingBitmap> Character::get_layer() { return _layer; }
+	vector<CMovingBitmap> Character::get_body_layer() { return _body_layer; }
+	vector<CMovingBitmap> Character::get_wapon_layer() { return _wapon_layer; }
+	vector<CMovingBitmap> Character::get_item_layer() { return _item_layer; }
 
-	//behavior function
-	void Character::showLayer(int scale)
+	//is function
+	bool Character::isWalk(){ return _walking; }
+	bool Character::isAttacking() { return _attacking; };
+	bool Character::isFrontCollide(vector<CRect> data)
 	{
-		/*
-		*/
-		int temp = _layer.size();
+		CRect coll;
+		coll = _body_layer[0].get_location()[_body_layer[0].GetFrameIndexOfBitmap()];
+		switch (_face)
+		{
+		case UP:
+			coll.InflateRect(0, 2, 0, 0);	//left top right bottom
+			break;
+		case DOWN:
+			coll.InflateRect(0, 0, 0, 2);	//left top right bottom
+			break;
+		case LEFT:
+			coll.InflateRect(2, 0, 0, 0);	//left top right bottom
+			break;
+		case RIGHT:
+			coll.InflateRect(0, 0, 2, 0);	//left top right bottom
+			break;
+		case NONE:
+			break;
+		default:
+			break;
+		}
+		CRect tester;
+		int counter = data.size();
+		for (int i = 0; i < counter; i++)
+		{
+			if (tester.IntersectRect(coll, data[i]) != 0)	//collide something
+			{
+				set_ban_move(_face, true);
+				return true;
+			}
+		}
+		set_ban_move(UP, false);
+		set_ban_move(DOWN, false);
+		set_ban_move(LEFT, false);
+		set_ban_move(RIGHT, false);
+		return false;
+	}
+	//behavior function
+	void Character::showLayers(int scale)
+	{
+		int temp = _wapon_layer.size();
+		//show wapon
 		for (int i = 0; i < temp; i++)
 		{
-			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
-			_layer[i].ShowBitmap(scale);
+			_wapon_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
+			_wapon_layer[i].ShowBitmap(scale);
 		}
-
+		//show body
+		temp = _body_layer.size();
+		for (int i = 0; i < temp; i++)
+		{
+			_body_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
+			_body_layer[i].ShowBitmap(scale);
+		}
+		//show item
+		temp = _item_layer.size();
+		for (int i = 0; i < temp; i++)
+		{
+			_item_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
+			_item_layer[i].ShowBitmap(scale);
+		}
 	}
 	void Character::movement(MOVEMENT_DIR direction)
 	{
@@ -134,32 +198,30 @@ namespace game_framework {
 
 		_walking = true;
 		_face = direction;
-		_layer.clear();
+		_body_layer.clear();
 		switch (_face)
 		{
 		case UP:
 			_movement_animation_b.SetAnimation(_move_duration, false);
-			_layer.push_back(_movement_animation_b);
+			_body_layer.push_back(_movement_animation_b);
 			break;
 		case DOWN:
 			_movement_animation_f.SetAnimation(_move_duration, false);
-			_layer.push_back(_movement_animation_f);
+			_body_layer.push_back(_movement_animation_f);
 			break;
 		case LEFT:
 			_movement_animation_l.SetAnimation(_move_duration, false);
-			_layer.push_back(_movement_animation_l);
+			_body_layer.push_back(_movement_animation_l);
 			break;
 		case RIGHT:
 			_movement_animation_r.SetAnimation(_move_duration, false);
-			_layer.push_back(_movement_animation_r);
+			_body_layer.push_back(_movement_animation_r);
 			break;
 		}
 		//_movement_animation.SetAnimation(20, true);
 	}
 	void Character::walk()
 	{
-		if (_walking == false)
-			return;
 		switch (_face)
 		{
 		case UP:
@@ -188,24 +250,24 @@ namespace game_framework {
 	void Character::stop()
 	{
 		_walking = false;
-		_layer.clear();
+		_body_layer.clear();
 		switch (_face)
 		{
 		case UP:
 			_movement_animation_b.StopAnimation();
-			_layer.push_back(_movement_animation_b);
+			_body_layer.push_back(_movement_animation_b);
 			break;
 		case DOWN:
 			_movement_animation_f.StopAnimation();
-			_layer.push_back(_movement_animation_f);
+			_body_layer.push_back(_movement_animation_f);
 			break;
 		case LEFT:
 			_movement_animation_l.StopAnimation();
-			_layer.push_back(_movement_animation_l);
+			_body_layer.push_back(_movement_animation_l);
 			break;
 		case RIGHT:
 			_movement_animation_r.StopAnimation();
-			_layer.push_back(_movement_animation_r);
+			_body_layer.push_back(_movement_animation_r);
 			break;
 		}
 		/*
@@ -218,15 +280,46 @@ namespace game_framework {
 	{
 
 	}
-	int Character::attack()
+	void Character::attack()
 	{
+		_attacking = true;
 		_walking = false;
-		//attack_item and animation
-		//_attack_animation.ToggleAnimation();
-		_walking = true;
+		_attack_time = clock();
+		_wapon_layer.clear();
 
-		//if hurt some one, return damage
-		return 0;
+		switch (_face)
+		{
+		case UP:
+			_wapon_offsetX = 0;
+			_wapon_offsetY = -8;
+			_wapon_layer.push_back(_wapon_b);
+			break;
+		case DOWN:
+			_wapon_offsetX = 0;
+			_wapon_offsetY = 0;
+			_wapon_layer.push_back(_wapon_f);
+			break;
+		case LEFT:
+			_wapon_offsetX = -8;
+			_wapon_offsetY = 0;
+			_wapon_layer.push_back(_wapon_l);
+			break;
+		case RIGHT:
+			_wapon_offsetX = 0;
+			_wapon_offsetY = 0;
+			_wapon_layer.push_back(_wapon_r);
+			break;
+		case NONE:
+			break;
+		default:
+			break;
+		}
+	}
+	void Character::attackDone()
+	{
+		_attacking = false;
+		_walking = true;
+		_wapon_layer.clear();
 	}
 	void Character::die()
 	{

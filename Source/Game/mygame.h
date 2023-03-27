@@ -101,9 +101,6 @@ namespace game_framework {
 		Character link;
 		int key_down_count = 0;
 		Map m_map;
-
-		CMovingBitmap arrow,bomb;
-		bool col = false;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

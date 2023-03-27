@@ -28,48 +28,41 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	//link hurt disable walk
+	//Timer
 	/*
+	//hurt
 	if (clock() - link.get_hurt_time() > link.get_hurt_duration())
 		link.set_can_move(true);
+	//attack
+	
 	*/
+	if (link.isAttacking())
+	{
+		//attack animation
+		//if life == max_health => fly sword
+		if (clock() - link.get_attack_time() > link.get_attack_duration())
+		{
+			link.attackDone();
+		}
+	}
 
-	col = m_map.is_collide(link);
-
-	link.walk();
+	link.isFrontCollide(m_map.get_colliders());
+	if(link.isWalk())
+		link.walk();
 
 	//map and link collide detect
 	/*
-	if (link.get_layer().size() != 0)
-	{
-		if (m_map.is_collide(link.get_layer()[0]))
-		{
-			col = true;
-		}
-		else
-		{
-			col = false;
-		}
-	}
-	*/
-	/*
-	if (link.get_layer().size() != 0)
-		col = m_map.is_collide(link.get_layer()[0]);
 	*/
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//item
-	bomb.LoadBitmapByString({"resources/Items/bomb.bmp"});
-	bomb.SetTopLeft(512,512);
-	arrow.LoadBitmapByString({"resources/Items/arrow.bmp"});
-	arrow.SetTopLeft(512,552);
 
 	//set map
 	m_map.set_bitmap({ "resources/Map/7_7.bmp" });
 	m_map.set_pos(0, 80, scale_all);
-	m_map.add_collider_by_point({});
+	m_map.add_colliders({ CRect(0,0,1024,320) });
 	//m_map.add_collider_by_point({ CPoint(144,0),CPoint(144,75) ,CPoint(157,75),CPoint(157,80),CPoint(256,0) }, scale_all);
 	
 	/*
@@ -156,9 +149,5 @@ void CGameStateRun::OnShow()
 	//mmap.ShowBitmap(scale_all);
 	m_map.show_bitmap(scale_all);
 	ui_bg.ShowBitmap(scale_all);
-	link.showLayer(scale_all);
-	if(col)
-		arrow.ShowBitmap(scale_all);
-	else
-		bomb.ShowBitmap(scale_all);
+	link.showLayers(scale_all);
 }

@@ -19,7 +19,8 @@ using namespace std;
 namespace game_framework {
 	class Map {
 	public:
-		Map() { _collider.CreateRectRgn(0, 0, 0, 0); };
+		//Map() { _collider.CreateRectRgn(0, 0, 0, 0); };
+		Map() {};
 		~Map();
 	
 		//set function
@@ -30,26 +31,29 @@ namespace game_framework {
 		//get function
 		int get_posX();
 		int get_posY();
-		CRgn get_collider();
+		//CRgn get_collider();
+		vector<CRect> get_colliders();
 
 		//behavior function
-		void add_collider_by_point(vector<CPoint>);
-		void add_collider_by_point(vector<CPoint>, int scale);
-		void reset_collider();
+		//void add_collider_by_point(vector<CPoint>);
+		//void add_collider_by_point(vector<CPoint>, int scale);
+		void clear_collider();
 		void show_bitmap();
 		void show_bitmap(int);
+		void add_colliders(vector<CRect>);
+		void add_collider(CRect);
 
 		//is function
 		bool is_collide(Character);
 		bool is_collide(CMovingBitmap);
 	
-		CRgn _collider;
 	protected:
 
 
 		//variables
-		MOVEMENT_DIR last_collider_direction = NONE;
 		CMovingBitmap _graph;
+		//CRgn _collider;
+		vector<CRect> _colliders;
 
 	private:
 		int posX = 0;
