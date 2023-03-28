@@ -39,11 +39,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (link.isAttacking())
 	{
 		//attack animation
+		clock_t attack_time = clock() - link.get_attack_time();		//clock_t == long
+		link.set_wapon_position(attack_time);		//input time
+
 		//if life == max_health => fly sword
-		if (clock() - link.get_attack_time() > link.get_attack_duration())
-		{
-			link.attackDone();
-		}
 	}
 
 	link.isFrontCollide(m_map.get_colliders());
@@ -80,6 +79,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	link.set_hurt_animation({ "resources/Link/link_run_f1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_b1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_l1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_r1.bmp" ,"resources/Link/link_hurt.bmp" });
 	link.set_dead_animation({});
 	link.set_spawn_animation({});
+	link.set_wapon({"resources/items/wood_sword_f.bmp","resources/items/wood_sword_b.bmp", "resources/items/wood_sword_l.bmp", "resources/items/wood_sword_r.bmp"});
 	link.set_position(128,48);
 	link.stop();
 
@@ -105,6 +105,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_RIGHT:
 		link.movement(RIGHT);
 		key_down_count += 1;
+		break;
+	case 0x5A:	//Z key
+		link.attack();
 		break;
 	}
 }

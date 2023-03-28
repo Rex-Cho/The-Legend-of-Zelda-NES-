@@ -29,12 +29,14 @@ namespace game_framework {
 		void set_position(int x,int y);
 		void set_ban_move(MOVEMENT_DIR, bool);
 
+		void set_wapon_position(long time);
+
 		//get function
 		int getLife();
-		int get_hurt_time();
-		int get_hurt_duration();
-		int get_attack_time();
-		int get_attack_duration();
+		clock_t get_hurt_time();
+		clock_t get_hurt_duration();
+		clock_t get_attack_time();
+		clock_t get_attack_duration();
 		int get_posX();
 		int get_posY();
 		MOVEMENT_DIR getFace();
@@ -64,7 +66,7 @@ namespace game_framework {
 		CMovingBitmap _wapon_f, _wapon_b, _wapon_l, _wapon_r;
 		int _wapon_offsetX = 0;
 		int _wapon_offsetY = 0;
-
+		float _attack_factor = 3.5;
 
 		//void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
 		 //Item* item_set;

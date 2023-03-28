@@ -43,10 +43,10 @@ namespace game_framework {
 		//get function
 		virtual MOVEMENT_DIR getFace() = 0;
 		virtual int getLife() = 0;
-		virtual int get_hurt_time() = 0;
-		virtual int get_hurt_duration() = 0;
-		virtual int get_attack_time() = 0;
-		virtual int get_attack_duration() = 0;
+		virtual clock_t get_hurt_time() = 0;
+		virtual clock_t get_hurt_duration() = 0;
+		virtual clock_t get_attack_time() = 0;
+		virtual clock_t get_attack_duration() = 0;
 		virtual int get_posX() = 0;
 		virtual int get_posY() = 0;
 		virtual vector<CMovingBitmap> get_body_layer() = 0;

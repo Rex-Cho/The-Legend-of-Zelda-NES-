@@ -110,14 +110,50 @@ namespace game_framework {
 			break;
 		}
 	}
+	void Character::set_wapon_position(long t)
+	{
+		float n = (float)(int)(t * 4 / _attack_duration);		//n = t per 1/4 attack duration
+		float s = -2 * (n - 2) * (n - 2) + 8;
+		if (s < 0 || t > _attack_duration) 
+		{
+			attackDone();
+			return;
+		}
+		int x = 0;
+		int y = 0;
+		switch (_face)
+		{
+		case UP:
+			y = (int)-s;
+			break;
+		case DOWN:
+			y = (int)s;
+			break;
+		case LEFT:
+			x = (int)-s;
+			break;
+		case RIGHT:
+			x = (int)s;
+			break;
+		case NONE:
+			break;
+		default:
+			break;
+		}
+		int counter = _wapon_layer.size();
+		for (int i = 0; i < counter; i++)
+		{
+			_wapon_layer[i].SetTopLeft((_posX + _wapon_offsetX + x)*scale_all, (_posY + _wapon_offsetY + y)*scale_all);
+		}
+	}
 
 	//get function
 	int Character::getLife(){ return 0; }
 	MOVEMENT_DIR  Character::getFace(){ return _face; }
-	int Character::get_hurt_time(){ return _hurt_time; }
-	int Character::get_hurt_duration(){ return _hurt_duration; }
-	int Character::get_attack_time(){ return _attack_time; }
-	int Character::get_attack_duration(){ return _attack_duration; }
+	clock_t Character::get_hurt_time(){ return _hurt_time; }
+	clock_t Character::get_hurt_duration(){ return _hurt_duration; }
+	clock_t Character::get_attack_time(){ return _attack_time; }
+	clock_t Character::get_attack_duration(){ return _attack_duration; }
 	int Character::get_posX() { return _posX; }
 	int Character::get_posY() { return _posY; }
 	vector<CMovingBitmap> Character::get_body_layer() { return _body_layer; }
@@ -284,6 +320,7 @@ namespace game_framework {
 	{
 		_attacking = true;
 		_walking = false;
+		_can_move = false;
 		_attack_time = clock();
 		_wapon_layer.clear();
 
@@ -319,6 +356,7 @@ namespace game_framework {
 	{
 		_attacking = false;
 		_walking = true;
+		_can_move = true;
 		_wapon_layer.clear();
 	}
 	void Character::die()
