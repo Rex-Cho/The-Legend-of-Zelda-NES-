@@ -46,10 +46,10 @@ namespace game_framework {
 	}
 	void Character::set_action_animation(vector<string> filename)
 	{
-		this->_action_animation_f.LoadBitmapByString({ filename[0] }, RGB(255, 255, 255));
-		this->_action_animation_b.LoadBitmapByString({ filename[1] }, RGB(255, 255, 255));
-		this->_action_animation_l.LoadBitmapByString({ filename[2] }, RGB(255, 255, 255));
-		this->_action_animation_r.LoadBitmapByString({ filename[3] }, RGB(255, 255, 255));
+		this->_action_animation_f.LoadBitmapByString({ filename[0],filename[1],filename[2],filename[3] }, RGB(255, 255, 255));
+		this->_action_animation_b.LoadBitmapByString({ filename[4],filename[5],filename[6],filename[7] }, RGB(255, 255, 255));
+		this->_action_animation_l.LoadBitmapByString({ filename[8],filename[9],filename[10],filename[11] }, RGB(255, 255, 255));
+		this->_action_animation_r.LoadBitmapByString({ filename[12],filename[13],filename[14],filename[15] }, RGB(255, 255, 255));
 	}
 	void Character::set_hurt_animation(vector<string> filename)
 	{
@@ -113,12 +113,7 @@ namespace game_framework {
 	void Character::set_wapon_position(long t)
 	{
 		float n = (float)(int)(t * 4 / _attack_duration);		//n = t per 1/4 attack duration
-		float s = -2 * (n - 2) * (n - 2) + 8;
-		if (s < 0 || t > _attack_duration) 
-		{
-			attackDone();
-			return;
-		}
+		float s = -2 * (n - 2) * (n - 2) + 12;
 		int x = 0;
 		int y = 0;
 		switch (_face)
@@ -143,7 +138,7 @@ namespace game_framework {
 		int counter = _wapon_layer.size();
 		for (int i = 0; i < counter; i++)
 		{
-			_wapon_layer[i].SetTopLeft((_posX + _wapon_offsetX + x)*scale_all, (_posY + _wapon_offsetY + y)*scale_all);
+			_wapon_layer[i].SetTopLeft((_posX + _wapon_offsetX + x)*scale_all, (_posY + _wapon_offsetY + map_top_offset + y)*scale_all);
 		}
 	}
 
@@ -209,7 +204,7 @@ namespace game_framework {
 		//show wapon
 		for (int i = 0; i < temp; i++)
 		{
-			_wapon_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
+			//_wapon_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
 			_wapon_layer[i].ShowBitmap(scale);
 		}
 		//show body
@@ -323,28 +318,49 @@ namespace game_framework {
 		_can_move = false;
 		_attack_time = clock();
 		_wapon_layer.clear();
+		_body_layer.clear();
 
 		switch (_face)
 		{
 		case UP:
-			_wapon_offsetX = 0;
-			_wapon_offsetY = -8;
+			_wapon_offsetX = 4;
+			_wapon_offsetY = 0;
+			//_wapon_b.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_b);
+			_action_animation_b.SetTopLeft(_posX * scale_all, _posY * scale_all);
+			_action_animation_b.SetAnimation(_attack_duration / 4, true);
+			_action_animation_b.ToggleAnimation();
+			_body_layer.push_back(_action_animation_b);
 			break;
 		case DOWN:
-			_wapon_offsetX = 0;
-			_wapon_offsetY = 0;
+			_wapon_offsetX = 4;
+			_wapon_offsetY = 4;
+			//_wapon_f.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_f);
+			_action_animation_f.SetTopLeft(_posX * scale_all, _posY * scale_all);
+			_action_animation_f.SetAnimation(_attack_duration / 4, true);
+			_action_animation_f.ToggleAnimation();
+			_body_layer.push_back(_action_animation_f);
 			break;
 		case LEFT:
-			_wapon_offsetX = -8;
-			_wapon_offsetY = 0;
+			_wapon_offsetX = -4;
+			_wapon_offsetY = 4;
+			//_wapon_l.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_l);
+			_action_animation_l.SetTopLeft(_posX * scale_all, _posY * scale_all);
+			_action_animation_l.SetAnimation(_attack_duration / 4, true);
+			_action_animation_l.ToggleAnimation();
+			_body_layer.push_back(_action_animation_l);
 			break;
 		case RIGHT:
 			_wapon_offsetX = 0;
-			_wapon_offsetY = 0;
+			_wapon_offsetY = 4;
+			//_wapon_r.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_r);
+			_action_animation_r.SetTopLeft(_posX * scale_all, _posY * scale_all);
+			_action_animation_r.SetAnimation(_attack_duration / 4, true);
+			_action_animation_r.ToggleAnimation();
+			_body_layer.push_back(_action_animation_r);
 			break;
 		case NONE:
 			break;

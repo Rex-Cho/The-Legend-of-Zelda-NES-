@@ -6,6 +6,7 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
+#include <string>
 
 using namespace game_framework;
 
@@ -39,9 +40,18 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (link.isAttacking())
 	{
 		//attack animation
-		clock_t attack_time = clock() - link.get_attack_time();		//clock_t == long
-		link.set_wapon_position(attack_time);		//input time
+		clock_t attack_t = clock() - link.get_attack_time();		//clock_t == long
+		if (attack_t > link.get_attack_duration())
+		{
+			link.attackDone();
+			link.stop();
+			if (key_down_count != 0)
+				link.movement(link.getFace());
+		}
+		else
+			link.set_wapon_position(attack_t);		//input time
 
+		//link.set_position(link.get_posX(), link.get_posY());
 		//if life == max_health => fly sword
 	}
 
@@ -75,7 +85,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//set character
 	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
-	link.set_action_animation({"resources/Link/link_act_f.bmp", "resources/Link/link_act_b.bmp", "resources/Link/link_act_l.bmp","resources/Link/link_act_r.bmp" });
+	link.set_action_animation({"resources/Link/link_act_f.bmp", "resources/Link/link_act_f.bmp","resources/Link/link_run_f2.bmp","resources/Link/link_run_f1.bmp",
+		"resources/Link/link_act_b.bmp","resources/Link/link_act_b.bmp","resources/Link/link_run_b2.bmp","resources/Link/link_run_b1.bmp",
+		"resources/Link/link_act_l.bmp","resources/Link/link_act_l.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_l1.bmp",
+		"resources/Link/link_act_r.bmp","resources/Link/link_act_r.bmp","resources/Link/link_run_r2.bmp","resources/Link/link_run_r1.bmp" });
 	link.set_hurt_animation({ "resources/Link/link_run_f1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_b1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_l1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_r1.bmp" ,"resources/Link/link_hurt.bmp" });
 	link.set_dead_animation({});
 	link.set_spawn_animation({});
@@ -153,4 +166,19 @@ void CGameStateRun::OnShow()
 	m_map.show_bitmap(scale_all);
 	ui_bg.ShowBitmap(scale_all);
 	link.showLayers(scale_all);
+	//show_text(link.get_posX(),link.get_posY());
+}
+
+void show_text(int posX, int posY)
+{
+	/*
+	CDC *pDC = CDDraw::GetBackCDC();
+	//CFont *fp;
+
+	CTextDraw::ChangeFontLog(pDC, 21, "微軟正黑體", RGB(0, 0, 0), 800);
+	CTextDraw::Print(pDC, 237, 128, "link._posX=" + std::to_string(posX));
+	CTextDraw::Print(pDC, 237, 178, "link._posX=" + std::to_string(posY));
+
+	CDDraw::ReleaseBackCDC();
+	*/
 }
