@@ -37,8 +37,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//attack
 	
 	*/
-	if (link.isAttacking())
+	if (link.isAttacking() && link.get_can_action())
 	{
+		
 		//attack animation
 		clock_t attack_t = clock() - link.get_attack_time();		//clock_t == long
 		if (attack_t > link.get_attack_duration())
@@ -49,11 +50,48 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 				link.movement(link.getFace());
 		}
 		else
+		{
 			link.set_wapon_position(attack_t);		//input time
+			if (link.getLife() == link.get_max_life() && wapon_fly == nullptr)
+			{
+				wapon_fly = link.make_fly_wapon();
+			}
+		}
 
-		//link.set_position(link.get_posX(), link.get_posY());
 		//if life == max_health => fly sword
 	}
+	if (wapon_fly != nullptr)
+	{
+		int x = 0;
+		int y = 0;
+		switch (link.getFace())
+		{
+		case UP:
+			y = 
+			break;
+		case DOWN:
+			break;
+		case LEFT:
+			break;
+		case RIGHT:
+			break;
+		case NONE:
+			break;
+		default:
+			break;
+		}
+		/*
+		for (int i = 0; i < map.monsters.size(); i++)
+		{
+			if (CMovingBitmap::IsOverlap(*wapon_fly, map.monsters()[i]))
+			{
+				//delete wapon_fly and wapon_fly = nullptr;
+			}
+		}
+		*/
+	}
+
+	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
 
 	link.isFrontCollide(m_map.get_colliders());
 	if(link.isWalk())

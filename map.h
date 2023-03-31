@@ -14,6 +14,8 @@
 #include"afxwin.h"
 #include".\Source.\Library\gameutil.h"
 
+#include"monster.h"
+
 using namespace std;
 
 namespace game_framework {
@@ -34,6 +36,10 @@ namespace game_framework {
 		//CRgn get_collider();
 		vector<CRect> get_colliders();
 
+		//is function
+		bool is_collide(Character);
+		bool is_collide(CMovingBitmap);
+
 		//behavior function
 		//void add_collider_by_point(vector<CPoint>);
 		//void add_collider_by_point(vector<CPoint>, int scale);
@@ -43,17 +49,15 @@ namespace game_framework {
 		void add_colliders(vector<CRect>);
 		void add_collider(CRect);
 
-		//is function
-		bool is_collide(Character);
-		bool is_collide(CMovingBitmap);
-	
+		void add_
+
 	protected:
 
 
 		//variables
 		CMovingBitmap _graph;
-		//CRgn _collider;
 		vector<CRect> _colliders;
+		vector<Monster> _monsters;
 
 	private:
 		int posX = 0;

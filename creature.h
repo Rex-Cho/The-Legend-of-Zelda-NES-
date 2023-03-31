@@ -54,6 +54,11 @@ namespace game_framework {
 		virtual vector<CMovingBitmap> get_item_layer() = 0;
 		virtual bool isWalk() = 0;
 		virtual bool isAttacking() = 0;
+		virtual bool get_can_action() = 0;
+		virtual bool get_can_hurt() = 0;
+		virtual bool get_can_move() = 0;
+		virtual int get_life() = 0;
+		virtual int get_max_life() = 0;
 
 		//behavior function
 		virtual void movement(MOVEMENT_DIR) = 0;
@@ -72,7 +77,8 @@ namespace game_framework {
 		int _posY;
 		int _layer_counter = 0;
 		int _decision_time = 800;				//ms
-		int _life = 2;
+		int _life = 3;
+		int _max_life = _life;
 		int _damage = 1;
 		int _move_duration = 100;				//ms
 		int _move_speed = 1;						//pixel

@@ -1,19 +1,19 @@
 #pragma once
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#ifndef MONSTER_H
+#define MONSTER_H
 
 #include"creature.h"
 
 using namespace std;
 
 namespace game_framework {
-	class Character : public Creature{
+	class Monster : public Creature {
 	public:
 		//void AI();
 		/*
 		*/
-		Character();
-		~Character() = default;
+		Monster();
+		~Monster() = default;
 
 		//set function
 		void set_decision_time(int);
@@ -22,15 +22,12 @@ namespace game_framework {
 		void set_action_animation(vector<string>);
 		void set_hurt_animation(vector<string>);
 		void set_spawn_animation(vector<string>);
-		void set_wapon(vector<string>);
 		void set_can_move(bool);
 		void set_can_hurt(bool);
 		void set_can_action(bool);
-		void set_position(int x,int y);
+		void set_position(int x, int y);
 		void set_ban_move(MOVEMENT_DIR, bool);
-		
 
-		void set_wapon_position(long time);
 
 		//get function
 		int getLife();
@@ -42,8 +39,6 @@ namespace game_framework {
 		int get_posY();
 		MOVEMENT_DIR getFace();
 		vector<CMovingBitmap> get_body_layer();
-		vector<CMovingBitmap> get_wapon_layer();
-		vector<CMovingBitmap> get_item_layer();
 		bool get_can_move();
 		bool get_can_hurt();
 		bool get_can_action();
@@ -67,7 +62,6 @@ namespace game_framework {
 		void hurt(int damage);
 		void heal(int count);
 
-		CMovingBitmap* make_fly_wapon();
 	protected:
 	private:
 		//variables
@@ -76,7 +70,6 @@ namespace game_framework {
 		int _wapon_offsetX = 0;
 		int _wapon_offsetY = 0;
 		float _attack_factor = 3.5;
-		int _wapon_fly_speed = 6;
 		//void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
 		 //Item* item_set;
 

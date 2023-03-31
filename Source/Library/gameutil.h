@@ -82,6 +82,8 @@ namespace game_framework {
 	public:
 		CMovingBitmap();
 
+		vector<string> GetImageFilesName();
+
 		/* The function for loading the bitmap. */
 		void  LoadBitmap(int, COLORREF = CLR_INVALID);		// 載入圖，指定圖的編號(resource)及透明色
 		void  LoadBitmap(char*, COLORREF = CLR_INVALID);	// 載入圖，指定圖的檔名及透明色
@@ -144,6 +146,7 @@ namespace game_framework {
 		clock_t last_time = clock();
 		//! 儲存物件讀取的圖片路徑
 		string   imageFileName = "";
+		vector<string> imageFilesName = {};
 		//! 儲存物件過濾的圖片顏色
 		COLORREF filterColor = CLR_INVALID;
 

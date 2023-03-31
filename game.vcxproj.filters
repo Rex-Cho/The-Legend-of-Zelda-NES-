@@ -56,6 +56,7 @@
     </ClCompile>
     <ClCompile Include="character.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="monster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -94,6 +95,7 @@
     <ClInclude Include="creature.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="monster.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc">

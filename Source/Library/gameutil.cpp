@@ -34,6 +34,11 @@ namespace game_framework {
 		isBitmapLoaded = false;
 	}
 
+	vector<string> CMovingBitmap::GetImageFilesName()
+	{
+		return imageFilesName;
+	}
+
 	//! 取得 CMovingBitmap 物件的圖片高度。
 	/*!
 		需要先載入圖片。
@@ -130,7 +135,7 @@ namespace game_framework {
 	*/
 	void CMovingBitmap::LoadBitmapByString(vector<string> filepaths, COLORREF color)
 	{
-
+		imageFilesName = filepaths;
 		for (int i = 0; i < (int)filepaths.size(); i++) {
 			LoadBitmap((char*)filepaths[i].c_str(), color);
 		}
