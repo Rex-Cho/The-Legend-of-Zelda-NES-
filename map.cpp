@@ -51,6 +51,7 @@ namespace game_framework {
 	int Map::get_posX() { return posX; }
 	int Map::get_posY() { return posY; }
 	vector<CRect> Map::get_colliders() { return _colliders; };
+	vector<Trigger_s> Map::get_triggers() { return _triggers; };
 	//CRgn Map::get_collider() { return _collider; }
 
 	//behavior function
@@ -79,11 +80,6 @@ namespace game_framework {
 		for (int i = 0; i < counter; i++)
 			_colliders.push_back(data[i]);
 	}
-	void Map::add_collider(CRect data)
-	{
-		_colliders.push_back(data);
-	}
-
 	void Map::clear_collider()
 	{
 		/*
@@ -94,6 +90,18 @@ namespace game_framework {
 		*/
 		_colliders.clear();
 	}
+
+	void Map::add_triggers(vector<Trigger_s> data)
+	{
+		int counter = data.size();
+		for (int i = 0; i < counter; i++)
+			_triggers.push_back(data[i]);
+	}
+	void Map::clear_triggers()
+	{
+		_triggers.clear();
+	}
+
 	void Map::show_bitmap()
 	{
 		_graph.ShowBitmap();
@@ -117,12 +125,6 @@ namespace game_framework {
 				return true;
 		}
 		return false;
-										
-		/*
-		if (_collider.RectInRegion(coll) == 0)//not collide
-			return false;
-		return true;
-		*/
 	}
 	bool Map::is_collide(CMovingBitmap obj)
 	{
@@ -134,5 +136,37 @@ namespace game_framework {
 				return true;
 		}
 		return false;
+	}
+
+	Map Map::is_trigger(Character obj)
+	{
+		/*
+		CRect coll;
+		coll = obj.get_body_layer()[0].get_location()[obj.get_body_layer()[0].GetFrameIndexOfBitmap()];
+		coll.InflateRect(1, 1, 1, 1);		//extend collider border by 1 pixel;
+		CRect tester;
+		int counter = _triggers.size();
+		for (int i = 0; i < counter; i++)
+		{
+			if (tester.IntersectRect(coll, _triggers[i].trigger_area) != 0)
+				return _triggers[i].link_map;
+		}
+		*/
+		return Map();
+	}
+	Map Map::is_trigger(CMovingBitmap obj)
+	{
+		/*
+		CRect tester;
+		int counter = _triggers.size();
+		for (int i = 0; i < counter; i++)
+		{
+			if (tester.IntersectRect(obj.get_location()[obj.GetFrameIndexOfBitmap()], _triggers[i].trigger_area) != 0)
+			{
+				return _triggers[i].link_map;
+			}
+		}
+		*/
+		return Map();
 	}
 }

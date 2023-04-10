@@ -46,8 +46,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		{
 			link.attackDone();
 			link.stop();
-			if (key_down_count != 0)
-				link.movement(link.getFace());
+			if (move_keys.size() != 0)
+				link.movement(move_keys[move_keys.size() - 1]);
 		}
 		else
 		{
@@ -67,7 +67,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		switch (link.getFace())
 		{
 		case UP:
-			y = 
 			break;
 		case DOWN:
 			break;
@@ -106,18 +105,14 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//item
 
+	//
+	move_keys.clear();
 	//set map
 	m_map.set_bitmap({ "resources/Map/7_7.bmp" });
 	m_map.set_pos(0, 80, scale_all);
 	m_map.add_colliders({ CRect(0,0,1024,320) });
 	//m_map.add_collider_by_point({ CPoint(144,0),CPoint(144,75) ,CPoint(157,75),CPoint(157,80),CPoint(256,0) }, scale_all);
-	
-	/*
-	CDC *pDC = CDDraw::GetBackCDC();
-	pDC->FillRgn(&m_map._collider, &CBrush(0xFF00));
-	mmap.LoadBitmapByString({ "resources/Map/7_7.bmp" }, RGB(255, 255, 255));
-	mmap.SetTopLeft(scale_all, scale_all + map_top_offset * scale_all);
-	*/
+	//UI_load
 	ui_bg.LoadBitmapByString({ "resources/UI_background.bmp" });
 	ui_bg.SetTopLeft(0, 0);
 
@@ -143,19 +138,19 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 	case VK_UP:
 		link.movement(UP);
-		key_down_count += 1;
+		move_keys.push_back(UP);
 		break;
 	case VK_DOWN:
 		link.movement(DOWN);
-		key_down_count += 1;
+		move_keys.push_back(DOWN);
 		break;
 	case VK_LEFT:
 		link.movement(LEFT);
-		key_down_count += 1;
+		move_keys.push_back(LEFT);
 		break;
 	case VK_RIGHT:
 		link.movement(RIGHT);
-		key_down_count += 1;
+		move_keys.push_back(RIGHT);
 		break;
 	case 0x5A:	//Z key
 		link.attack();
@@ -165,17 +160,35 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	int counter = move_keys.size();
+	MOVEMENT_DIR move_key;
 	switch (nChar)
 	{
 	case VK_UP:
+		move_key = UP;
+		break;
 	case VK_DOWN:
+		move_key = DOWN;
+		break;
 	case VK_LEFT:
+		move_key = LEFT;
+		break;
 	case VK_RIGHT:
-		key_down_count -= 1;
-		if(key_down_count == 0)
-			link.stop();
+		move_key = RIGHT;
 		break;
 	}
+	for (int i = 0; i < counter; i++)
+	{
+		if (move_keys[i] == move_key)
+		{
+			move_keys.erase(move_keys.begin() + i);
+			break;
+		}
+	}
+	if(move_keys.size() == 0)
+		link.stop();
+	else
+		link.movement(move_keys[move_keys.size() - 1]);
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作

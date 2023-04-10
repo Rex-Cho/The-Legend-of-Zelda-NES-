@@ -236,6 +236,7 @@
     <None Include="RES\GAME.RC2" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BigMap.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="monster.cpp" />
@@ -256,6 +257,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BigMap.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="map.h" />

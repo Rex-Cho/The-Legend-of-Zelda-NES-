@@ -100,6 +100,7 @@ namespace game_framework {
 		CMovingBitmap mmap, ui_bg;
 		Character link;
 		int key_down_count = 0;
+		vector<MOVEMENT_DIR> move_keys;
 		Map m_map;
 		CMovingBitmap* wapon_fly = nullptr;
 	};

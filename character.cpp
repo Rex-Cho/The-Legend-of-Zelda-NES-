@@ -27,6 +27,7 @@ namespace game_framework {
 
 	Character::Character() : Creature()
 	{
+		_move_speed = 2;
 		//_body_layer.clear();
 	}
 
@@ -332,8 +333,8 @@ namespace game_framework {
 		switch (_face)
 		{
 		case UP:
-			_wapon_offsetX = 4;
-			_wapon_offsetY = 0;
+			_wapon_offsetX = 5;
+			_wapon_offsetY = -3;
 			//_wapon_b.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_b);
 			_action_animation_b.SetTopLeft(_posX * scale_all, _posY * scale_all);
@@ -342,8 +343,8 @@ namespace game_framework {
 			_body_layer.push_back(_action_animation_b);
 			break;
 		case DOWN:
-			_wapon_offsetX = 4;
-			_wapon_offsetY = 4;
+			_wapon_offsetX = 5;
+			_wapon_offsetY = 3;
 			//_wapon_f.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_f);
 			_action_animation_f.SetTopLeft(_posX * scale_all, _posY * scale_all);
@@ -352,8 +353,8 @@ namespace game_framework {
 			_body_layer.push_back(_action_animation_f);
 			break;
 		case LEFT:
-			_wapon_offsetX = -4;
-			_wapon_offsetY = 4;
+			_wapon_offsetX = -3;
+			_wapon_offsetY = 5;
 			//_wapon_l.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_l);
 			_action_animation_l.SetTopLeft(_posX * scale_all, _posY * scale_all);
@@ -362,8 +363,8 @@ namespace game_framework {
 			_body_layer.push_back(_action_animation_l);
 			break;
 		case RIGHT:
-			_wapon_offsetX = 0;
-			_wapon_offsetY = 4;
+			_wapon_offsetX = 3;
+			_wapon_offsetY = 5;
 			//_wapon_r.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
 			_wapon_layer.push_back(_wapon_r);
 			_action_animation_r.SetTopLeft(_posX * scale_all, _posY * scale_all);

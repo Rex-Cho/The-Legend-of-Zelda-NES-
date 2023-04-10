@@ -50,15 +50,15 @@ namespace game_framework {
 		virtual int get_posX() = 0;
 		virtual int get_posY() = 0;
 		virtual vector<CMovingBitmap> get_body_layer() = 0;
-		virtual vector<CMovingBitmap> get_wapon_layer() = 0;
-		virtual vector<CMovingBitmap> get_item_layer() = 0;
-		virtual bool isWalk() = 0;
-		virtual bool isAttacking() = 0;
 		virtual bool get_can_action() = 0;
 		virtual bool get_can_hurt() = 0;
 		virtual bool get_can_move() = 0;
 		virtual int get_life() = 0;
 		virtual int get_max_life() = 0;
+
+		//is function
+		virtual bool isWalk() = 0;
+		virtual bool isAttacking() = 0;
 
 		//behavior function
 		virtual void movement(MOVEMENT_DIR) = 0;
@@ -103,9 +103,10 @@ namespace game_framework {
 		CMovingBitmap _hurt_animation_f, _hurt_animation_b, _hurt_animation_l, _hurt_animation_r;
 		CMovingBitmap _spawn_animation;
 		CMovingBitmap _dead_animation;
+		vector<CMovingBitmap> _wapon_layer;
+		vector<CMovingBitmap> _item_layer;
 		vector<CMovingBitmap> _body_layer;	
-		vector<CMovingBitmap> _wapon_layer;	
-		vector<CMovingBitmap> _item_layer;	
+
 	private:
 
 	};

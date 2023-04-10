@@ -16,7 +16,6 @@ namespace game_framework {
 		~Monster() = default;
 
 		//set function
-		void set_decision_time(int);
 		void set_movement_animation(vector<string>);
 		void set_dead_animation(vector<string>);
 		void set_action_animation(vector<string>);
@@ -26,10 +25,13 @@ namespace game_framework {
 		void set_can_hurt(bool);
 		void set_can_action(bool);
 		void set_position(int x, int y);
+
 		void set_ban_move(MOVEMENT_DIR, bool);
 
+		void set_decision_time(int);
 
 		//get function
+		MOVEMENT_DIR getFace();
 		int getLife();
 		clock_t get_hurt_time();
 		clock_t get_hurt_duration();
@@ -37,11 +39,12 @@ namespace game_framework {
 		clock_t get_attack_duration();
 		int get_posX();
 		int get_posY();
-		MOVEMENT_DIR getFace();
 		vector<CMovingBitmap> get_body_layer();
-		bool get_can_move();
-		bool get_can_hurt();
+		vector<CMovingBitmap> get_wapon_layer();
+		vector<CMovingBitmap> get_item_layer();
 		bool get_can_action();
+		bool get_can_hurt();
+		bool get_can_move();
 		int get_life();
 		int get_max_life();
 
