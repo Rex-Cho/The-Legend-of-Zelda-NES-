@@ -15,14 +15,11 @@
 #include".\Source.\Library\gameutil.h"
 
 #include"monster.h"
+#include"trigger.h"
 
 using namespace std;
 
 namespace game_framework {
-	struct Trigger_s{
-		CRect trigger_area;
-		//Map link_map;
-	};
 	enum ITEM_TYPE {
 		FIRE,
 		BOMB
@@ -49,14 +46,13 @@ namespace game_framework {
 		int get_posY();
 		//CRgn get_collider();
 		vector<CRect> get_colliders();
-		vector<Trigger_s> get_triggers();
+		vector<Trigger> get_triggers();
 
 		//is function
 		bool is_collide(Character);
 		bool is_collide(CMovingBitmap);
 
-		Map is_trigger(Character);
-		Map is_trigger(CMovingBitmap);
+		Map is_triggered(Character);
 
 		//behavior function
 		void show_bitmap();
@@ -65,7 +61,7 @@ namespace game_framework {
 		void add_colliders(vector<CRect>);
 		void clear_collider();
 
-		void add_triggers(vector<Trigger_s>);
+		void add_triggers(vector<Trigger>);
 		void clear_triggers();
 
 	protected:
@@ -74,7 +70,7 @@ namespace game_framework {
 		//variables
 		CMovingBitmap _graph;
 		vector<CRect> _colliders;
-		vector<Trigger_s> _triggers;
+		vector<Trigger> _triggers;
 		vector<Monster> _monsters;
 
 	private:

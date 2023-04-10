@@ -105,13 +105,38 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//item
 
-	//
+	//input init
 	move_keys.clear();
-	//set map
-	m_map.set_bitmap({ "resources/Map/7_7.bmp" });
+
+	//set UI
+	maps.set_UI_bitmap({ "resources/UI_background.bmp" });
+	//set maps
+	maps.reset_maps(16, 8);
+	Map adder;
+	adder.set_bitmap({ "resources/Map/7_7.bmp" });
+	adder.set_pos(0, 80, scale_all);
+	adder.add_colliders({ CRect(0,0,1024,320) });
+	maps.add_map(adder, 7, 7);
+
+	adder.set_bitmap({ "resources/Map/7_8.bmp" });
+	adder.set_pos(0, 80, scale_all);
+	maps.add_map(adder, 7, 8);
+
+	adder.set_bitmap({ "resources/Map/7_6.bmp" });
+	adder.set_pos(0, 80, scale_all);
+	maps.add_map(adder, 7, 6);
+
+	adder.set_bitmap({ "resources/Map/6_7.bmp" });
+	adder.set_pos(0, 80, scale_all);
+	maps.add_map(adder, 6, 7);
+
+	maps.set_mapss_trigger();
+
+	m_map.set_bitmap({ "resources/Map/7_8.bmp" });
 	m_map.set_pos(0, 80, scale_all);
 	m_map.add_colliders({ CRect(0,0,1024,320) });
 	//m_map.add_collider_by_point({ CPoint(144,0),CPoint(144,75) ,CPoint(157,75),CPoint(157,80),CPoint(256,0) }, scale_all);
+	
 	//UI_load
 	ui_bg.LoadBitmapByString({ "resources/UI_background.bmp" });
 	ui_bg.SetTopLeft(0, 0);
@@ -213,9 +238,12 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
+	maps.show_maps();
+	maps.show_UI();
+
 	//mmap.ShowBitmap(scale_all);
-	m_map.show_bitmap(scale_all);
-	ui_bg.ShowBitmap(scale_all);
+	//m_map.show_bitmap(scale_all);
+	//ui_bg.ShowBitmap(scale_all);
 	link.showLayers(scale_all);
 	//show_text(link.get_posX(),link.get_posY());
 }

@@ -59,7 +59,7 @@ namespace game_framework {
 		void add_map(Map data,int x,int y);
 		void add_maps_row(vector<Map>,int y);
 		void add_maps_all(vector<vector<Map>>);
-		void reset_maps();
+		void reset_maps(int x,int y);
 
 		void add_extra_map(Map);
 		void add_extra_maps(vector<Map>);
@@ -67,8 +67,10 @@ namespace game_framework {
 		void jump_map(Map next, MAP_TRANSITION_TYPE = SWITCH);
 		void move_map(MAP_TRANSITION_TYPE);
 
+		void set_mapss_trigger();
+		
 		void show_maps();
-		void show_UI(int heart,int money,int bomb, CMovingBitmap itemA, CMovingBitmap itemB);
+		void show_UI(int heart = 0,int money = 0,int bomb = 0, CMovingBitmap itemA = CMovingBitmap(), CMovingBitmap itemB = CMovingBitmap());
 
 	protected:
 		//variables
@@ -76,12 +78,12 @@ namespace game_framework {
 		vector<Map> _extra_map;
 		Map _corrent_map;
 		CMovingBitmap _UI;
-		int posX = 7;
-		int posY = 7;
-		int map_posX = 0;
-		int map_posY = 80;
-		int UI_posX = 0;
-		int UI_posY = 0;
+		int _posX = 7;
+		int _posY = 7;
+		int _map_posX = 0;
+		int _map_posY = 80;
+		int _UI_posX = 0;
+		int _UI_posY = 0;
 
 	private:
 	};

@@ -51,7 +51,7 @@ namespace game_framework {
 	int Map::get_posX() { return posX; }
 	int Map::get_posY() { return posY; }
 	vector<CRect> Map::get_colliders() { return _colliders; };
-	vector<Trigger_s> Map::get_triggers() { return _triggers; };
+	vector<Trigger> Map::get_triggers() { return _triggers; };
 	//CRgn Map::get_collider() { return _collider; }
 
 	//behavior function
@@ -91,7 +91,7 @@ namespace game_framework {
 		_colliders.clear();
 	}
 
-	void Map::add_triggers(vector<Trigger_s> data)
+	void Map::add_triggers(vector<Trigger> data)
 	{
 		int counter = data.size();
 		for (int i = 0; i < counter; i++)
@@ -138,35 +138,14 @@ namespace game_framework {
 		return false;
 	}
 
-	Map Map::is_trigger(Character obj)
+	Map Map::is_triggered(Character obj)
 	{
-		/*
-		CRect coll;
-		coll = obj.get_body_layer()[0].get_location()[obj.get_body_layer()[0].GetFrameIndexOfBitmap()];
-		coll.InflateRect(1, 1, 1, 1);		//extend collider border by 1 pixel;
-		CRect tester;
 		int counter = _triggers.size();
 		for (int i = 0; i < counter; i++)
 		{
-			if (tester.IntersectRect(coll, _triggers[i].trigger_area) != 0)
-				return _triggers[i].link_map;
+			if (_triggers[i].is_triggered(obj))
+				return _triggers[i].get_link_map();
 		}
-		*/
-		return Map();
-	}
-	Map Map::is_trigger(CMovingBitmap obj)
-	{
-		/*
-		CRect tester;
-		int counter = _triggers.size();
-		for (int i = 0; i < counter; i++)
-		{
-			if (tester.IntersectRect(obj.get_location()[obj.GetFrameIndexOfBitmap()], _triggers[i].trigger_area) != 0)
-			{
-				return _triggers[i].link_map;
-			}
-		}
-		*/
 		return Map();
 	}
 }

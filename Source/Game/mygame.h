@@ -41,7 +41,8 @@
 */
 
 #include "../../character.h"
-#include "../../map.h"
+//#include "../../map.h"
+#include "../../BigMap.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -97,11 +98,11 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
-		CMovingBitmap mmap, ui_bg;
+		CMovingBitmap ui_bg;
 		Character link;
-		int key_down_count = 0;
 		vector<MOVEMENT_DIR> move_keys;
 		Map m_map;
+		BigMap maps;
 		CMovingBitmap* wapon_fly = nullptr;
 	};
 
