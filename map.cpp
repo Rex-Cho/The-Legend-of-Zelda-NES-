@@ -50,8 +50,10 @@ namespace game_framework {
 	//get function
 	int Map::get_posX() { return posX; }
 	int Map::get_posY() { return posY; }
-	vector<CRect> Map::get_colliders() { return _colliders; };
-	vector<Trigger> Map::get_triggers() { return _triggers; };
+	vector<CRect> Map::get_colliders() { return _colliders; }
+	vector<CRect> Map::get_triggers() { return _triggers; }
+	vector<Monster> Map::get_monsters() { return _monsters; }
+	CMovingBitmap Map::get_graph() { return _graph; }
 	//CRgn Map::get_collider() { return _collider; }
 
 	//behavior function
@@ -82,16 +84,10 @@ namespace game_framework {
 	}
 	void Map::clear_collider()
 	{
-		/*
-		CRgn n;
-		n.CreateRectRgn(0,0,0,0);
-		_collider.CopyRgn(&n);
-		DeleteObject(n);
-		*/
 		_colliders.clear();
 	}
 
-	void Map::add_triggers(vector<Trigger> data)
+	void Map::add_triggers(vector<CRect> data)
 	{
 		int counter = data.size();
 		for (int i = 0; i < counter; i++)
@@ -100,6 +96,13 @@ namespace game_framework {
 	void Map::clear_triggers()
 	{
 		_triggers.clear();
+	}
+
+	void Map::add_monsters(vector<Monster> data)
+	{
+		int counter = data.size();
+		for (int i = 0; i < counter; i++)
+			_monsters.push_back(data[i]);
 	}
 
 	void Map::show_bitmap()
@@ -138,14 +141,41 @@ namespace game_framework {
 		return false;
 	}
 
-	Map Map::is_triggered(Character obj)
+	TRIGGER_TYPE Map::is_triggered(Character obj)
 	{
-		int counter = _triggers.size();
+		CRect coll;
+		coll = obj.get_body_layer()[0].get_location()[obj.get_body_layer()[0].GetFrameIndexOfBitmap()];
+		coll.InflateRect(1, 1, 1, 1);		//extend collider border by 1 pixel;
+		CRect tester;
+		int counter = _colliders.size();
 		for (int i = 0; i < counter; i++)
 		{
-			if (_triggers[i].is_triggered(obj))
-				return _triggers[i].get_link_map();
+			if (tester.IntersectRect(coll, _colliders[i]) != 0)
+			{
+				if (obj.get_posX() + 16  > 255)
+					return TRIGGER_MAP_R;
+				if (obj.get_posX() < 1)
+					return TRIGGER_MAP_R;
+				if (obj.get_posY() + 16 > 255)
+					return TRIGGER_MAP_D;
+				if (obj.get_posY() < 1)
+					return TRIGGER_MAP_U;
+				return TRIGGER_MAP_C;
+			}
 		}
-		return Map();
+		return TRIGGER_NONE;
+	}
+
+	Map& Map::operator=(Map& map)
+	{
+		if (this == &map)
+			return *this;
+		this->posX = map.posX;
+		this->posY = map.posY;
+		this->_colliders = map._colliders;
+		this->_graph.LoadBitmapByString(map._graph.GetImageFilesName());
+		this->_triggers = map._triggers;
+		this->_monsters = map._monsters;
+		return *this;
 	}
 }

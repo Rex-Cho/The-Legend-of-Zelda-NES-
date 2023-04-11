@@ -29,17 +29,6 @@ namespace game_framework {
 
 	class BigMap {
 	public:
-		/*
-		BigMap() {
-			_maps.clear();
-			_maps.resize(8);
-			for (int y = 0; y < 8; y++)
-			{
-				_maps[y].clear();
-				_maps[y].resize(16);
-			}
-		};
-		*/
 		BigMap();
 		~BigMap();
 
@@ -67,8 +56,8 @@ namespace game_framework {
 		void jump_map(Map next, MAP_TRANSITION_TYPE = SWITCH);
 		void move_map(MAP_TRANSITION_TYPE);
 
-		void set_mapss_trigger();
-		
+		TRIGGER_TYPE is_triggered(Character);
+
 		void show_maps();
 		void show_UI(int heart = 0,int money = 0,int bomb = 0, CMovingBitmap itemA = CMovingBitmap(), CMovingBitmap itemB = CMovingBitmap());
 

@@ -118,19 +118,20 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder.add_colliders({ CRect(0,0,1024,320) });
 	maps.add_map(adder, 7, 7);
 
+	adder = Map();
 	adder.set_bitmap({ "resources/Map/7_8.bmp" });
 	adder.set_pos(0, 80, scale_all);
 	maps.add_map(adder, 7, 8);
 
+	adder = Map();
 	adder.set_bitmap({ "resources/Map/7_6.bmp" });
 	adder.set_pos(0, 80, scale_all);
 	maps.add_map(adder, 7, 6);
 
+	adder = Map();
 	adder.set_bitmap({ "resources/Map/6_7.bmp" });
 	adder.set_pos(0, 80, scale_all);
 	maps.add_map(adder, 6, 7);
-
-	maps.set_mapss_trigger();
 
 	m_map.set_bitmap({ "resources/Map/7_8.bmp" });
 	m_map.set_pos(0, 80, scale_all);

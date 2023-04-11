@@ -15,11 +15,18 @@
 #include".\Source.\Library\gameutil.h"
 
 #include"monster.h"
-#include"trigger.h"
 
 using namespace std;
 
 namespace game_framework {
+	enum TRIGGER_TYPE {
+		TRIGGER_MAP_R,
+		TRIGGER_MAP_L,
+		TRIGGER_MAP_U,
+		TRIGGER_MAP_D,
+		TRIGGER_MAP_C,
+		TRIGGER_NONE,
+	};
 	enum ITEM_TYPE {
 		FIRE,
 		BOMB
@@ -46,13 +53,17 @@ namespace game_framework {
 		int get_posY();
 		//CRgn get_collider();
 		vector<CRect> get_colliders();
-		vector<Trigger> get_triggers();
+		vector<CRect> get_triggers();
+		vector<Monster> get_monsters();
+		CMovingBitmap get_graph();
 
 		//is function
 		bool is_collide(Character);
 		bool is_collide(CMovingBitmap);
 
-		Map is_triggered(Character);
+		TRIGGER_TYPE is_triggered(Character);
+		TRIGGER_TYPE is_triggered(CMovingBitmap);
+		//TRIGGER_TYPE is_triggered(Item);
 
 		//behavior function
 		void show_bitmap();
@@ -61,8 +72,15 @@ namespace game_framework {
 		void add_colliders(vector<CRect>);
 		void clear_collider();
 
-		void add_triggers(vector<Trigger>);
+		void add_triggers(vector<CRect>);
 		void clear_triggers();
+
+		void add_monsters(vector<Monster>);
+
+		//operator overloading
+		/*
+		*/
+		Map& operator=(Map& map);
 
 	protected:
 
@@ -70,7 +88,7 @@ namespace game_framework {
 		//variables
 		CMovingBitmap _graph;
 		vector<CRect> _colliders;
-		vector<Trigger> _triggers;
+		vector<CRect> _triggers;
 		vector<Monster> _monsters;
 
 	private:

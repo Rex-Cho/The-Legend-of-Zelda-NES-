@@ -26,13 +26,7 @@
 namespace game_framework {
 	BigMap::BigMap()
 	{
-		_maps.clear();
-		_maps.resize(8);
-		for (int y = 0; y < 8; y++)
-		{
-			_maps[y].clear();
-			_maps[y].resize(16);
-		}
+		_maps.resize(8, vector<Map>(16));
 	}
 	BigMap::~BigMap() {}
 	
@@ -54,17 +48,20 @@ namespace game_framework {
 	//behavior function
 	void BigMap::reset_maps(int x, int y)
 	{
-		_maps.clear();
-		_maps.resize(y);
-		for (int y = 0; y < y; y++)
-		{
-			_maps[y].clear();
-			_maps[y].resize(x);
-		}
+		_maps.resize(y, vector<Map>(x));
 	}
 
 	void BigMap::add_map(Map data, int x, int y)
 	{
+		
+		/*
+		_maps[y][x].set_bitmap(data.get_graph().GetImageFilesName());
+		_maps[y][x].set_pos(data.get_posX(), data.get_posY());
+		_maps[y][x].add_colliders(data.get_colliders());
+		_maps[y][x].add_triggers(data.get_triggers());
+		_maps[y][x].add_monsters(data.get_monsters());
+		*/
+		//_maps[y][x] = Map();
 		_maps[y][x] = data;
 	}
 	void BigMap::add_maps_row(vector<Map> data, int y)
@@ -87,7 +84,7 @@ namespace game_framework {
 			_extra_map.push_back(data[i]);
 	}
 
-	void BigMap::jump_map(Map next, MAP_TRANSITION_TYPE = SWITCH)
+	void BigMap::jump_map(Map next, MAP_TRANSITION_TYPE)
 	{
 
 	}
@@ -105,12 +102,8 @@ namespace game_framework {
 		_UI.ShowBitmap(scale_all);
 	}
 
-
-	void BigMap::set_mapss_trigger()
+	TRIGGER_TYPE BigMap::is_triggered(Character obj)
 	{
-		_maps[7][7].add_triggers({ 
-			Trigger(CRect(255,160,256,176), _maps[7][8]),
-			Trigger(CRect(112,0,143,1), _maps[6][7]),
-			Trigger(CRect(0,160,1,176), _maps[7][6]) });
+		return _corrent_map.is_triggered(obj);
 	}
 }
