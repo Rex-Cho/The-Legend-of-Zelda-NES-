@@ -147,15 +147,15 @@ namespace game_framework {
 		coll = obj.get_body_layer()[0].get_location()[obj.get_body_layer()[0].GetFrameIndexOfBitmap()];
 		coll.InflateRect(1, 1, 1, 1);		//extend collider border by 1 pixel;
 		CRect tester;
-		int counter = _colliders.size();
+		int counter = _triggers.size();
 		for (int i = 0; i < counter; i++)
 		{
-			if (tester.IntersectRect(coll, _colliders[i]) != 0)
+			if (tester.IntersectRect(coll, _triggers[i]) != 0)
 			{
 				if (obj.get_posX() + 16  > 255)
 					return TRIGGER_MAP_R;
 				if (obj.get_posX() < 1)
-					return TRIGGER_MAP_R;
+					return TRIGGER_MAP_L;
 				if (obj.get_posY() + 16 > 255)
 					return TRIGGER_MAP_D;
 				if (obj.get_posY() < 1)

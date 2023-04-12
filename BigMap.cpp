@@ -42,6 +42,8 @@ namespace game_framework {
 	vector<Map> BigMap::get_extra_maps() { return _extra_map; }
 	int BigMap::get_posX() { return _posX; }
 	int BigMap::get_posY() { return _posY; }
+	vector<CRect> BigMap::get_colliders() { return _corrent_map->get_colliders(); }
+	vector<CRect> BigMap::get_triggerss() { return _corrent_map->get_triggers(); }
 
 	//is function
 
@@ -49,10 +51,15 @@ namespace game_framework {
 	void BigMap::reset_maps(int x, int y)
 	{
 		/*
-		for (int i = 0; i < _maps.size(); i++)
-			for (int j = 0; j < _maps[0].size(); j++)
-				delete _maps[i][j];
 		*/
+		int counterY = _maps.size();
+		if (counterY != 0)
+		{
+			int counterX = _maps[0].size();
+			for (int i = 0; i < counterY; i++)
+				for (int j = 0; j < counterX; j++)
+					delete _maps[i][j];
+		}
 		_maps.resize(y, vector<Map*>(x));
 		for (int i = 0; i < y; i++)
 		{
@@ -63,7 +70,7 @@ namespace game_framework {
 		}
 	}
 
-	void BigMap::add_map(Map *data, int x, int y)
+	void BigMap::add_map(Map *data, int y, int x)
 	{
 		
 		/*
@@ -73,7 +80,7 @@ namespace game_framework {
 		_maps[y][x].add_triggers(data.get_triggers());
 		_maps[y][x].add_monsters(data.get_monsters());
 		*/
-		//_maps[y][x] = data;
+		_maps[y][x] = data;
 	}
 	void BigMap::add_maps_row(vector<Map*> data, int y)
 	{
@@ -95,18 +102,26 @@ namespace game_framework {
 			_extra_map.push_back(data[i]);
 	}
 
-	void BigMap::jump_map(Map next, MAP_TRANSITION_TYPE)
+	void BigMap::change_map(int x,int y)
 	{
-
+		int counterY = _maps.size();
+		if (counterY == 0)
+			return;
+		int counterX = _maps[0].size();
+		if (y > counterY || y < 0 || x > counterX || x < 0)
+			return;
+		_posX = x;
+		_posY = y;
 	}
-	void BigMap::move_map(MAP_TRANSITION_TYPE)
+	void BigMap::change_map(Map*)
 	{
 
 	}
 
 	void BigMap::show_maps()
 	{
-		_corrent_map.show_bitmap(scale_all);
+		_corrent_map = _maps[_posY][_posX];
+		_corrent_map->show_bitmap(scale_all);
 	}
 	void BigMap::show_UI(int heart, int money, int bomb, CMovingBitmap itemA, CMovingBitmap itemB)
 	{
@@ -115,6 +130,6 @@ namespace game_framework {
 
 	TRIGGER_TYPE BigMap::is_triggered(Character obj)
 	{
-		return _corrent_map.is_triggered(obj);
+		return _corrent_map->is_triggered(obj);
 	}
 }

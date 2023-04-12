@@ -92,7 +92,36 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
 
-	link.isFrontCollide(m_map.get_colliders());
+	//map triggers
+	switch (maps.is_triggered(link))
+	{
+	case TRIGGER_MAP_U:
+		maps.change_map(maps.get_posX(),maps.get_posY() - 1);
+		link.set_position(link.get_posX(), 176 - 32);
+		break;
+	case TRIGGER_MAP_D:
+		maps.change_map(maps.get_posX(),maps.get_posY() + 1);
+		link.set_position(link.get_posX(), 1 + map_top_offset);
+		break;
+	case TRIGGER_MAP_L:
+		maps.change_map(maps.get_posX() - 1,maps.get_posY());
+		link.set_position(255 - 16, link.get_posY());
+		break;
+	case TRIGGER_MAP_R:
+		maps.change_map(maps.get_posX() + 1,maps.get_posY());
+		link.set_position(1, link.get_posY());
+		break;
+	case TRIGGER_MAP_C:
+		//maps.change_map(maps.get_extra_maps[0]);
+		break;
+	case TRIGGER_NONE:
+		break;
+	default:
+		break;
+	};
+
+	//link walk
+	link.isFrontCollide(maps.get_colliders());
 	if(link.isWalk())
 		link.walk();
 
@@ -117,37 +146,31 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_graph({ "resources/Map/7_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
+
+	adder->add_triggers({ CRect(1023,0,1024,1024) });	//Right
+	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
+	adder->add_triggers({ CRect(0,320,1024,321) });		//Up
 	maps.add_map(adder, 7, 7);
-	
-	//delete adder;
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_8.bmp" });
 	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
 	maps.add_map(adder, 7, 8);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_6.bmp" });
 	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(1023,0,1024,1024) });	//Right
 	maps.add_map(adder, 7, 6);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/6_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
 	maps.add_map(adder, 6, 7);
-	/*
-	*/
-
-	/*
-	m_map.set_bitmap({ "resources/Map/7_8.bmp" });
-	m_map.set_pos(0, 80, scale_all);
-	m_map.add_colliders({ CRect(0,0,1024,320) });
-	//m_map.add_collider_by_point({ CPoint(144,0),CPoint(144,75) ,CPoint(157,75),CPoint(157,80),CPoint(256,0) }, scale_all);
-	
-	//UI_load
-	ui_bg.LoadBitmapByString({ "resources/UI_background.bmp" });
-	ui_bg.SetTopLeft(0, 0);
-	*/
 
 	//set character
 	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
@@ -246,14 +269,9 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
-	/*
 	maps.show_maps();
 	maps.show_UI();
-	*/
 
-	//mmap.ShowBitmap(scale_all);
-	//m_map.show_bitmap(scale_all);
-	//ui_bg.ShowBitmap(scale_all);
 	link.showLayers(scale_all);
 	//show_text(link.get_posX(),link.get_posY());
 }

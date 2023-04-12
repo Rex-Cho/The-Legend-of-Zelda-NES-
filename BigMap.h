@@ -40,12 +40,14 @@ namespace game_framework {
 		vector<Map> get_extra_maps();
 		int get_posX();
 		int get_posY();
+		vector<CRect> get_colliders();
+		vector<CRect> get_triggerss();
 
 		//is function
 
 
 		//behavior function
-		void add_map(Map *data,int x,int y);
+		void add_map(Map *data,int y,int x);
 		void add_maps_row(vector<Map*>,int y);
 		void add_maps_all(vector<vector<Map*>>);
 		void reset_maps(int x,int y);
@@ -53,8 +55,8 @@ namespace game_framework {
 		void add_extra_map(Map);
 		void add_extra_maps(vector<Map>);
 
-		void jump_map(Map next, MAP_TRANSITION_TYPE = SWITCH);
-		void move_map(MAP_TRANSITION_TYPE);
+		void change_map(int x,int y);
+		void change_map(Map*);
 
 		TRIGGER_TYPE is_triggered(Character);
 
@@ -65,7 +67,7 @@ namespace game_framework {
 		//variables
 		vector<vector<Map*>> _maps;
 		vector<Map> _extra_map;
-		Map _corrent_map;
+		Map* _corrent_map;
 		CMovingBitmap _UI;
 		int _posX = 7;
 		int _posY = 7;
