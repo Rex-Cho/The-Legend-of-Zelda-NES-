@@ -26,7 +26,7 @@
 namespace game_framework {
 	BigMap::BigMap()
 	{
-		_maps.resize(8, vector<Map>(16));
+
 	}
 	BigMap::~BigMap() {}
 	
@@ -38,7 +38,7 @@ namespace game_framework {
 	}
 
 	//get function
-	vector<vector<Map>> BigMap::get_maps() { return _maps; }
+	vector<vector<Map*>> BigMap::get_maps() { return _maps; }
 	vector<Map> BigMap::get_extra_maps() { return _extra_map; }
 	int BigMap::get_posX() { return _posX; }
 	int BigMap::get_posY() { return _posY; }
@@ -48,10 +48,22 @@ namespace game_framework {
 	//behavior function
 	void BigMap::reset_maps(int x, int y)
 	{
-		_maps.resize(y, vector<Map>(x));
+		/*
+		for (int i = 0; i < _maps.size(); i++)
+			for (int j = 0; j < _maps[0].size(); j++)
+				delete _maps[i][j];
+		*/
+		_maps.resize(y, vector<Map*>(x));
+		for (int i = 0; i < y; i++)
+		{
+			for (int j = 0; j < x; j++)
+			{
+				_maps[i][j] = new Map();
+			}
+		}
 	}
 
-	void BigMap::add_map(Map data, int x, int y)
+	void BigMap::add_map(Map *data, int x, int y)
 	{
 		
 		/*
@@ -61,14 +73,13 @@ namespace game_framework {
 		_maps[y][x].add_triggers(data.get_triggers());
 		_maps[y][x].add_monsters(data.get_monsters());
 		*/
-		//_maps[y][x] = Map();
-		_maps[y][x] = data;
+		//_maps[y][x] = data;
 	}
-	void BigMap::add_maps_row(vector<Map> data, int y)
+	void BigMap::add_maps_row(vector<Map*> data, int y)
 	{
 		_maps[y] = data;
 	}
-	void BigMap::add_maps_all(vector<vector<Map>> data)
+	void BigMap::add_maps_all(vector<vector<Map*>> data)
 	{
 		_maps = data;
 	}

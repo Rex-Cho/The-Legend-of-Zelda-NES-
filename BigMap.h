@@ -36,7 +36,7 @@ namespace game_framework {
 		void set_UI_bitmap(vector<string>);
 
 		//get function
-		vector<vector<Map>> get_maps();
+		vector<vector<Map*>> get_maps();
 		vector<Map> get_extra_maps();
 		int get_posX();
 		int get_posY();
@@ -45,9 +45,9 @@ namespace game_framework {
 
 
 		//behavior function
-		void add_map(Map data,int x,int y);
-		void add_maps_row(vector<Map>,int y);
-		void add_maps_all(vector<vector<Map>>);
+		void add_map(Map *data,int x,int y);
+		void add_maps_row(vector<Map*>,int y);
+		void add_maps_all(vector<vector<Map*>>);
 		void reset_maps(int x,int y);
 
 		void add_extra_map(Map);
@@ -63,7 +63,7 @@ namespace game_framework {
 
 	protected:
 		//variables
-		vector<vector<Map>> _maps;
+		vector<vector<Map*>> _maps;
 		vector<Map> _extra_map;
 		Map _corrent_map;
 		CMovingBitmap _UI;

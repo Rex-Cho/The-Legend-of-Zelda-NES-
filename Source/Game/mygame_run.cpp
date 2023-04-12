@@ -108,31 +108,37 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//input init
 	move_keys.clear();
 
+
 	//set UI
 	maps.set_UI_bitmap({ "resources/UI_background.bmp" });
 	//set maps
 	maps.reset_maps(16, 8);
-	Map adder;
-	adder.set_bitmap({ "resources/Map/7_7.bmp" });
-	adder.set_pos(0, 80, scale_all);
-	adder.add_colliders({ CRect(0,0,1024,320) });
+	Map* adder = new Map();
+	adder->set_graph({ "resources/Map/7_7.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
 	maps.add_map(adder, 7, 7);
+	
+	//delete adder;
 
-	adder = Map();
-	adder.set_bitmap({ "resources/Map/7_8.bmp" });
-	adder.set_pos(0, 80, scale_all);
+	adder = new Map();
+	adder->set_graph({ "resources/Map/7_8.bmp" });
+	adder->set_pos(0, 80, scale_all);
 	maps.add_map(adder, 7, 8);
 
-	adder = Map();
-	adder.set_bitmap({ "resources/Map/7_6.bmp" });
-	adder.set_pos(0, 80, scale_all);
+	adder = new Map();
+	adder->set_graph({ "resources/Map/7_6.bmp" });
+	adder->set_pos(0, 80, scale_all);
 	maps.add_map(adder, 7, 6);
 
-	adder = Map();
-	adder.set_bitmap({ "resources/Map/6_7.bmp" });
-	adder.set_pos(0, 80, scale_all);
+	adder = new Map();
+	adder->set_graph({ "resources/Map/6_7.bmp" });
+	adder->set_pos(0, 80, scale_all);
 	maps.add_map(adder, 6, 7);
+	/*
+	*/
 
+	/*
 	m_map.set_bitmap({ "resources/Map/7_8.bmp" });
 	m_map.set_pos(0, 80, scale_all);
 	m_map.add_colliders({ CRect(0,0,1024,320) });
@@ -141,6 +147,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//UI_load
 	ui_bg.LoadBitmapByString({ "resources/UI_background.bmp" });
 	ui_bg.SetTopLeft(0, 0);
+	*/
 
 	//set character
 	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
@@ -239,8 +246,10 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
+	/*
 	maps.show_maps();
 	maps.show_UI();
+	*/
 
 	//mmap.ShowBitmap(scale_all);
 	//m_map.show_bitmap(scale_all);

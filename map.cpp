@@ -30,30 +30,30 @@ namespace game_framework {
 		//DeleteObject(_collider);
 	}
 	//set function
-	void Map::set_bitmap(vector<string> files)
+	void Map::set_graph(vector<string> files)
 	{
 		_graph.LoadBitmapByString(files, RGB(255,255,255));
+		_graph.SetTopLeft(_posX, _posY);
 	}
 	void Map::set_pos(int x, int y)
 	{
-		posX = x;
-		posY = y;
-		_graph.SetTopLeft(posX, posY);
+		_posX = x;
+		_posY = y;
+		_graph.SetTopLeft(_posX, _posY);
 	}
 	void Map::set_pos(int x, int y, int scale)
 	{
-		posX = x;
-		posY = y;
-		_graph.SetTopLeft(posX * scale, posY * scale);
+		_posX = x;
+		_posY = y;
+		_graph.SetTopLeft(_posX * scale, _posY * scale);
 	}
 
 	//get function
-	int Map::get_posX() { return posX; }
-	int Map::get_posY() { return posY; }
+	int Map::get_posX() { return _posX; }
+	int Map::get_posY() { return _posY; }
 	vector<CRect> Map::get_colliders() { return _colliders; }
 	vector<CRect> Map::get_triggers() { return _triggers; }
 	vector<Monster> Map::get_monsters() { return _monsters; }
-	CMovingBitmap Map::get_graph() { return _graph; }
 	//CRgn Map::get_collider() { return _collider; }
 
 	//behavior function
@@ -165,13 +165,17 @@ namespace game_framework {
 		}
 		return TRIGGER_NONE;
 	}
+	TRIGGER_TYPE Map::is_triggered(CMovingBitmap)
+	{
+		return TRIGGER_NONE;
+	}
 
 	Map& Map::operator=(Map& map)
 	{
 		if (this == &map)
 			return *this;
-		this->posX = map.posX;
-		this->posY = map.posY;
+		this->_posX = map._posX;
+		this->_posY = map._posY;
 		this->_colliders = map._colliders;
 		this->_graph.LoadBitmapByString(map._graph.GetImageFilesName());
 		this->_triggers = map._triggers;

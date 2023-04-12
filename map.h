@@ -44,7 +44,7 @@ namespace game_framework {
 		~Map();
 	
 		//set function
-		void set_bitmap(vector<string>);
+		void set_graph(vector<string>);
 		void set_pos(int x, int y);
 		void set_pos(int x, int y, int scale);
 
@@ -55,7 +55,6 @@ namespace game_framework {
 		vector<CRect> get_colliders();
 		vector<CRect> get_triggers();
 		vector<Monster> get_monsters();
-		CMovingBitmap get_graph();
 
 		//is function
 		bool is_collide(Character);
@@ -90,10 +89,10 @@ namespace game_framework {
 		vector<CRect> _colliders;
 		vector<CRect> _triggers;
 		vector<Monster> _monsters;
+		int _posX = 0;
+		int _posY = 80;
 
 	private:
-		int posX = 0;
-		int posY = 80;
 	};
 }
 #endif // !CREATURE_H
