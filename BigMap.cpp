@@ -72,14 +72,6 @@ namespace game_framework {
 
 	void BigMap::add_map(Map *data, int y, int x)
 	{
-		
-		/*
-		_maps[y][x].set_bitmap(data.get_graph().GetImageFilesName());
-		_maps[y][x].set_pos(data.get_posX(), data.get_posY());
-		_maps[y][x].add_colliders(data.get_colliders());
-		_maps[y][x].add_triggers(data.get_triggers());
-		_maps[y][x].add_monsters(data.get_monsters());
-		*/
 		_maps[y][x] = data;
 	}
 	void BigMap::add_maps_row(vector<Map*> data, int y)
@@ -112,6 +104,7 @@ namespace game_framework {
 			return;
 		_posX = x;
 		_posY = y;
+		_corrent_map = _maps[_posY][_posX];
 	}
 	void BigMap::change_map(Map*)
 	{
@@ -130,6 +123,7 @@ namespace game_framework {
 
 	TRIGGER_TYPE BigMap::is_triggered(Character obj)
 	{
+		_corrent_map = _maps[_posY][_posX];
 		return _corrent_map->is_triggered(obj);
 	}
 }

@@ -89,6 +89,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		}
 		*/
 	}
+	//link walk	
+	link.isFrontCollide(maps.get_colliders());
+	if(link.isWalk())
+		link.walk();
 
 	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
 
@@ -97,11 +101,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	{
 	case TRIGGER_MAP_U:
 		maps.change_map(maps.get_posX(),maps.get_posY() - 1);
-		link.set_position(link.get_posX(), 176 - 32);
+		link.set_position(link.get_posX(), 176 - 35);
 		break;
 	case TRIGGER_MAP_D:
 		maps.change_map(maps.get_posX(),maps.get_posY() + 1);
-		link.set_position(link.get_posX(), 1 + map_top_offset);
+		link.set_position(link.get_posX(), 1 + map_top_offset + 5);
 		break;
 	case TRIGGER_MAP_L:
 		maps.change_map(maps.get_posX() - 1,maps.get_posY());
@@ -120,10 +124,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		break;
 	};
 
-	//link walk
-	link.isFrontCollide(maps.get_colliders());
-	if(link.isWalk())
-		link.walk();
 
 	//map and link collide detect
 	/*
@@ -146,10 +146,12 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_graph({ "resources/Map/7_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
-
+	adder->add_colliders({ CRect(576,320, 1024, 636) });
+	/*
 	adder->add_triggers({ CRect(1023,0,1024,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
 	adder->add_triggers({ CRect(0,320,1024,321) });		//Up
+	*/
 	maps.add_map(adder, 7, 7);
 
 	adder = new Map();
@@ -170,7 +172,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_graph({ "resources/Map/6_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(0,1023,1024,1024) });	//Down
 	maps.add_map(adder, 6, 7);
+
+	adder = new Map();
+	adder->set_graph({ "resources/Map/6_8.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
+	adder->add_triggers({ CRect(0,1023,1024,1024) });	//Down
+	maps.add_map(adder, 6, 8);
 
 	//set character
 	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
