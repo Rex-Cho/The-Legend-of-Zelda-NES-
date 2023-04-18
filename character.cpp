@@ -170,8 +170,8 @@ namespace game_framework {
 	bool Character::isAttacking() { return _attacking; };
 	bool Character::isFrontCollide(vector<CRect> data)
 	{
-		CRect coll;
-		coll = _body_layer[0].get_location()[_body_layer[0].GetFrameIndexOfBitmap()];
+		CRect coll = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
+		//coll = _body_layer[0].get_location()[_body_layer[0].GetFrameIndexOfBitmap()];
 		switch (_face)
 		{
 		case UP:

@@ -145,8 +145,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	Map* adder = new Map();
 	adder->set_graph({ "resources/Map/7_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
-	adder->add_colliders({ CRect(576,320, 1024, 636) });
+	adder->add_colliders({CRect(576,320, 1024, 636), CRect(0,0,1024,320) });
 	/*
 	adder->add_triggers({ CRect(1023,0,1024,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
@@ -284,7 +283,7 @@ void CGameStateRun::OnShow()
 	maps.show_UI();
 
 	link.showLayers(scale_all);
-	//show_text(link.get_posX(),link.get_posY());
+	show_CRect();
 }
 
 void show_text(int posX, int posY)
@@ -299,4 +298,20 @@ void show_text(int posX, int posY)
 
 	CDDraw::ReleaseBackCDC();
 	*/
+}
+
+void CGameStateRun::show_CRect() {
+	CDC *pDC = CDDraw::GetBackCDC();
+	
+	vector<CRect>  cur = maps.get_colliders();
+	int counter = cur.size();
+	for (int i = 0; i < counter; i++)
+	{
+		pDC->Draw3dRect(cur[i], RGB(0, 255, 0), RGB(0, 255, 0));
+		//pDC->Rectangle(cur[i]);
+	}
+	//CRect cha = link.get_body_layer()[0].get_location()[0];
+	CRect cha = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
+	pDC->Draw3dRect(cha, RGB(0, 255, 0), RGB(0, 255, 0));
+	CDDraw::ReleaseBackCDC();
 }
