@@ -170,21 +170,24 @@ namespace game_framework {
 	bool Character::isAttacking() { return _attacking; };
 	bool Character::isFrontCollide(vector<CRect> data)
 	{
-		CRect coll = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
-		//coll = _body_layer[0].get_location()[_body_layer[0].GetFrameIndexOfBitmap()];
+		int width = 5;
+		int offset = 5;
+		CRect coll;
+		//coll = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
 		switch (_face)
 		{
 		case UP:
-			coll.InflateRect(0, 2, 0, 0);	//left top right bottom
+			//coll.InflateRect(0, 2, 0, 0);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() - width, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop());
 			break;
 		case DOWN:
-			coll.InflateRect(0, 0, 0, 2);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all + width);
 			break;
 		case LEFT:
-			coll.InflateRect(2, 0, 0, 0);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() - width, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft(), _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
 			break;
 		case RIGHT:
-			coll.InflateRect(0, 0, 2, 0);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all + width, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
 			break;
 		case NONE:
 			break;

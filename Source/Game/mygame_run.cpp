@@ -310,8 +310,32 @@ void CGameStateRun::show_CRect() {
 		pDC->Draw3dRect(cur[i], RGB(0, 255, 0), RGB(0, 255, 0));
 		//pDC->Rectangle(cur[i]);
 	}
-	//CRect cha = link.get_body_layer()[0].get_location()[0];
-	CRect cha = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
-	pDC->Draw3dRect(cha, RGB(0, 255, 0), RGB(0, 255, 0));
+	//CRect cha = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
+	int width = 5;
+	int offset = 5;
+	CRect cha;
+	switch (link.getFace())
+	{
+	case UP:
+		cha = CRect(link.get_body_layer()[0].GetLeft() + offset, link.get_body_layer()[0].GetTop() - width, link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all - offset, link.get_body_layer()[0].GetTop());
+		break;
+	case DOWN:
+		cha = CRect(link.get_body_layer()[0].GetLeft() + offset, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all, link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all - offset, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all + width);
+		break;
+	case LEFT:
+		cha = CRect(link.get_body_layer()[0].GetLeft() - width, link.get_body_layer()[0].GetTop() + offset, link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all - offset);
+		break;
+	case RIGHT:
+		cha = CRect(link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetHeight() * scale_all, link.get_body_layer()[0].GetTop() + offset, link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all + width, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all - offset);
+		break;
+	case NONE:
+		break;
+	default:
+		break;
+	}
+
+
+	pDC->Draw3dRect(cha, RGB(255, 0, 0), RGB(255, 0, 0));
+
 	CDDraw::ReleaseBackCDC();
 }
