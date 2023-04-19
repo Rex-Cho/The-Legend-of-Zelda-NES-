@@ -96,7 +96,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
 
-	//map triggers
+	//map triggers to character
 	switch (maps.is_triggered(link))
 	{
 	case TRIGGER_MAP_U:
@@ -104,12 +104,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		link.set_position(link.get_posX(), 176 - 35);
 		break;
 	case TRIGGER_MAP_D:
+		/*
+		*/
 		maps.change_map(maps.get_posX(),maps.get_posY() + 1);
-		link.set_position(link.get_posX(), 1 + map_top_offset + 5);
+		link.set_position(link.get_posX(), 3);
 		break;
 	case TRIGGER_MAP_L:
 		maps.change_map(maps.get_posX() - 1,maps.get_posY());
-		link.set_position(255 - 16, link.get_posY());
+		link.set_position(255 - 23, link.get_posY());
 		break;
 	case TRIGGER_MAP_R:
 		maps.change_map(maps.get_posX() + 1,maps.get_posY());
@@ -147,31 +149,31 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({CRect(576,320, 1024, 636), CRect(0,0,1024,320) });
 	/*
-	adder->add_triggers({ CRect(1023,0,1024,1024) });	//Right
-	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
-	adder->add_triggers({ CRect(0,320,1024,321) });		//Up
 	*/
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	adder->add_triggers({ CRect(0,320,1024,325) });		//Up
 	maps.add_map(adder, 7, 7);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_8.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
-	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_6.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
-	adder->add_triggers({ CRect(1023,0,1024,1024) });	//Right
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	maps.add_map(adder, 7, 6);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/6_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
-	adder->add_triggers({ CRect(0,1023,1024,1024) });	//Down
+	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
 	maps.add_map(adder, 6, 7);
 
 	adder = new Map();
@@ -303,6 +305,7 @@ void show_text(int posX, int posY)
 void CGameStateRun::show_CRect() {
 	CDC *pDC = CDDraw::GetBackCDC();
 	
+	//print collider
 	vector<CRect>  cur = maps.get_colliders();
 	int counter = cur.size();
 	for (int i = 0; i < counter; i++)
@@ -310,6 +313,16 @@ void CGameStateRun::show_CRect() {
 		pDC->Draw3dRect(cur[i], RGB(0, 255, 0), RGB(0, 255, 0));
 		//pDC->Rectangle(cur[i]);
 	}
+	//print trigger
+	vector<CRect> tri = maps.get_triggerss();
+	counter = tri.size();
+	for (int i = 0; i < counter; i++)
+	{
+		pDC->Draw3dRect(tri[i], RGB(255, 0, 0), RGB(255, 0, 0));
+		//pDC->Rectangle(tri[i]);
+	}
+
+	//print character trigger
 	//CRect cha = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
 	int width = 5;
 	int offset = 5;
@@ -333,9 +346,11 @@ void CGameStateRun::show_CRect() {
 	default:
 		break;
 	}
-
-
 	pDC->Draw3dRect(cha, RGB(255, 0, 0), RGB(255, 0, 0));
+
+	//print character collider
+	CRect col = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
+	pDC->Draw3dRect(col, RGB(0, 255, 0), RGB(0, 255, 0));
 
 	CDDraw::ReleaseBackCDC();
 }

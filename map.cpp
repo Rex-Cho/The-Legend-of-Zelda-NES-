@@ -143,20 +143,19 @@ namespace game_framework {
 
 	TRIGGER_TYPE Map::is_triggered(Character obj)
 	{
-		CRect coll;
-		coll = obj.get_body_layer()[0].get_location()[obj.get_body_layer()[0].GetFrameIndexOfBitmap()];
-		coll.InflateRect(1, 1, 1, 1);		//extend collider border by 1 pixel;
+		CRect coll = CRect(obj.get_body_layer()[0].GetLeft(), obj.get_body_layer()[0].GetTop(), obj.get_body_layer()[0].GetLeft() + obj.get_body_layer()[0].GetWidth() * scale_all, obj.get_body_layer()[0].GetTop() + obj.get_body_layer()[0].GetHeight() * scale_all);
+		//coll.InflateRect(1, 1, 1, 1);		//extend collider border by 1 pixel;
 		CRect tester;
 		int counter = _triggers.size();
 		for (int i = 0; i < counter; i++)
 		{
 			if (tester.IntersectRect(coll, _triggers[i]) != 0)
 			{
-				if (obj.get_posX() + 16  > 255)
+				if (obj.get_posX() + obj.get_body_layer()[0].GetWidth() > 255)
 					return TRIGGER_MAP_R;
 				if (obj.get_posX() < 1)
 					return TRIGGER_MAP_L;
-				if (obj.get_posY() + 16 > 255)
+				if (obj.get_posY() + obj.get_body_layer()[0].GetHeight() > 255 - map_top_offset - 20)
 					return TRIGGER_MAP_D;
 				if (obj.get_posY() < 1)
 					return TRIGGER_MAP_U;
