@@ -42,7 +42,6 @@ namespace game_framework {
 
 		//get function
 		virtual MOVEMENT_DIR getFace() = 0;
-		virtual int getLife() = 0;
 		virtual clock_t get_hurt_time() = 0;
 		virtual clock_t get_hurt_duration() = 0;
 		virtual clock_t get_attack_time() = 0;
@@ -77,8 +76,8 @@ namespace game_framework {
 		int _posY;
 		int _layer_counter = 0;
 		int _decision_time = 800;				//ms
-		int _life = 3;
-		int _max_life = _life;
+		int _max_life = 3;
+		int _life = _max_life;
 		int _damage = 1;
 		int _move_duration = 100;				//ms
 		int _move_speed = 1;						//pixel

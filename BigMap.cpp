@@ -26,10 +26,11 @@
 namespace game_framework {
 	BigMap::BigMap()
 	{
-
+		//_bomb_bitmap.LoadBitmapByString({});
+		//_key_bitmap.LoadBitmapByString({});
 	}
 	BigMap::~BigMap() {}
-	
+
 	//set function
 	void BigMap::set_UI_bitmap(vector<string> data)
 	{
@@ -90,11 +91,11 @@ namespace game_framework {
 	void BigMap::add_extra_maps(vector<Map> data)
 	{
 		int counter = data.size();
-		for(int i= 0 ; i < counter; i++)
+		for (int i = 0; i < counter; i++)
 			_extra_map.push_back(data[i]);
 	}
 
-	void BigMap::change_map(int x,int y)
+	void BigMap::change_map(int x, int y)
 	{
 		int counterY = _maps.size();
 		if (counterY == 0)
@@ -116,9 +117,61 @@ namespace game_framework {
 		_corrent_map = _maps[_posY][_posX];
 		_corrent_map->show_bitmap(scale_all);
 	}
-	void BigMap::show_UI(int heart, int money, int bomb, CMovingBitmap itemA, CMovingBitmap itemB)
+	void BigMap::show_UI(int max_h, int heart, int money, int bomb, CMovingBitmap itemA, CMovingBitmap itemB)
 	{
 		_UI.ShowBitmap(scale_all);
+		show_heart(max_h, heart);
+	}
+	void BigMap::show_heart(int m, int now)
+	{
+		if (now < 0)
+			now = 0;
+		int full = now / 2;
+		int max = m / 2;
+		int counter = _heart_bitmap.size();
+		for (int i = 0; i < counter; i++)
+		{
+			if (i < full)
+			{
+				_heart_bitmap[i].SetFrameIndexOfBitmap(0);
+				_heart_bitmap[i].ShowBitmap(scale_all);
+			}
+			else if (i == full && now % 2 == 1)
+			{
+				_heart_bitmap[i].SetFrameIndexOfBitmap(1);
+				_heart_bitmap[i].ShowBitmap(scale_all);
+			}
+			else if (i < max)
+			{
+				_heart_bitmap[i].SetFrameIndexOfBitmap(2);
+				_heart_bitmap[i].ShowBitmap(scale_all);
+			}
+			else
+			{
+				_heart_bitmap[i].SetFrameIndexOfBitmap(3);
+				_heart_bitmap[i].ShowBitmap(scale_all);
+			}
+		}
+	}
+	void BigMap::init_heart()
+	{
+		int max_heart = 16;
+		int left = 176;
+		int top = 44;
+		int width = 8;
+		int height = 8;
+		_heart_bitmap.clear();
+		for (int i = 0; i < max_heart; i++)
+		{
+			int offsetX = (i % (max_heart / 2)) * width;
+			int offsetY = height;
+			if (i > 7)
+				offsetY = 0;
+			CMovingBitmap adder;
+			adder.LoadBitmapByString({ "resources/items/heart_full.bmp","resources/items/heart_half.bmp" ,"resources/items/heart_none.bmp","resources/items/8x8_none.bmp" }, RGB(255, 255, 255));
+			adder.SetTopLeft((left + offsetX)*scale_all, (top + offsetY)*scale_all);
+			_heart_bitmap.push_back(adder);
+		}
 	}
 
 	TRIGGER_TYPE BigMap::is_triggered(Character obj)

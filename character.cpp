@@ -28,6 +28,8 @@ namespace game_framework {
 	Character::Character() : Creature()
 	{
 		_move_speed = 2;
+		_max_life = 20;
+		_life = _max_life;
 		//_body_layer.clear();
 	}
 
@@ -148,7 +150,6 @@ namespace game_framework {
 	}
 
 	//get function
-	int Character::getLife(){ return 0; }
 	MOVEMENT_DIR  Character::getFace(){ return _face; }
 	clock_t Character::get_hurt_time(){ return _hurt_time; }
 	clock_t Character::get_hurt_duration(){ return _hurt_duration; }
@@ -164,6 +165,8 @@ namespace game_framework {
 	bool Character::get_can_move() { return _can_move; }
 	int Character::get_life() { return _life; }
 	int Character::get_max_life() { return _max_life; }
+	int Character::get_key() { return _key; }
+	int Character::get_bomb() { return _bomb; }
 
 	//is function
 	bool Character::isWalk(){ return _walking; }
@@ -420,6 +423,8 @@ namespace game_framework {
 	}
 	void Character::hurt(int damage)
 	{
+		_life -= damage;
+		/*
 		_hurt_duration = clock();
 		_can_move = false;
 		if (damage == 0)
@@ -431,6 +436,7 @@ namespace game_framework {
 			//dead animation
 			//reset the game
 		}
+		*/
 	}
 	void Character::heal(int count)
 	{

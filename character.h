@@ -33,7 +33,6 @@ namespace game_framework {
 		void set_wapon_position(long time);
 
 		//get function
-		int getLife();
 		clock_t get_hurt_time();
 		clock_t get_hurt_duration();
 		clock_t get_attack_time();
@@ -49,6 +48,9 @@ namespace game_framework {
 		bool get_can_action();
 		int get_life();
 		int get_max_life();
+
+		int get_bomb();
+		int get_key();
 
 		//is function
 		bool isWalk();
@@ -77,6 +79,8 @@ namespace game_framework {
 		int _wapon_offsetY = 0;
 		float _attack_factor = 3.5;
 		int _wapon_fly_speed = 6;
+		int _bomb;
+		int _key;
 		//void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
 		 //Item* item_set;
 

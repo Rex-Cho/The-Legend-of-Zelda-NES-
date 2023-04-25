@@ -61,7 +61,9 @@ namespace game_framework {
 		TRIGGER_TYPE is_triggered(Character);
 
 		void show_maps();
-		void show_UI(int heart = 0,int money = 0,int bomb = 0, CMovingBitmap itemA = CMovingBitmap(), CMovingBitmap itemB = CMovingBitmap());
+		void show_UI(int max_h = 0, int heart = 0, int money = 0, int bomb = 0, CMovingBitmap itemA = CMovingBitmap(), CMovingBitmap itemB = CMovingBitmap());
+
+		void init_heart();
 
 	protected:
 		//variables
@@ -77,6 +79,13 @@ namespace game_framework {
 		int _UI_posY = 0;
 
 	private:
+		CMovingBitmap _bomb_bitmap;
+		CMovingBitmap _key_bitmap;
+		vector<CMovingBitmap> _heart_bitmap;
+		void show_heart(int max,int current);
+		void show_money(int);
+		void show_bomb(int);
+		void show_key(int);
 	};
 }
 #endif // !BIGMAP_H

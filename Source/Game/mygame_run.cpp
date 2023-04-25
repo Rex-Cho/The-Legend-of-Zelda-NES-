@@ -52,7 +52,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		else
 		{
 			link.set_wapon_position(attack_t);		//input time
-			if (link.getLife() == link.get_max_life() && wapon_fly == nullptr)
+			if (link.get_life() == link.get_max_life() && wapon_fly == nullptr)
 			{
 				wapon_fly = link.make_fly_wapon();
 			}
@@ -136,11 +136,13 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//item
 
+
 	//input init
 	move_keys.clear();
 
 
 	//set UI
+	maps.init_heart();
 	maps.set_UI_bitmap({ "resources/UI_background.bmp" });
 	//set maps
 	maps.reset_maps(16, 8);
@@ -223,6 +225,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case 0x5A:	//Z key
 		link.attack();
 		break;
+	case 0x58:	//X key
+		link.hurt(1);
+		break;
 	}
 }
 
@@ -282,7 +287,9 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 void CGameStateRun::OnShow()
 {
 	maps.show_maps();
-	maps.show_UI();
+	//maps.show_UI();
+	maps.show_UI(link.get_max_life(), link.get_life());
+
 
 	link.showLayers(scale_all);
 	show_CRect();
