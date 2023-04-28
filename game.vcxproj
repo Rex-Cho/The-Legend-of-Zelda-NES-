@@ -255,6 +255,7 @@
     <ClCompile Include="Source\Library\gameutil.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="tektiteRed.cpp" />
     <ClCompile Include="trigger.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +275,7 @@
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />
     <ClInclude Include="Source\Library\gameutil.h" />
+    <ClInclude Include="tektiteRed.h" />
     <ClInclude Include="trigger.h" />
   </ItemGroup>
   <ItemGroup>

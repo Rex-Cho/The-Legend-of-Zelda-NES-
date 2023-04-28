@@ -59,6 +59,7 @@
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="BigMap.cpp" />
     <ClCompile Include="trigger.cpp" />
+    <ClCompile Include="tektiteRed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -100,6 +101,7 @@
     <ClInclude Include="monster.h" />
     <ClInclude Include="BigMap.h" />
     <ClInclude Include="trigger.h" />
+    <ClInclude Include="tektiteRed.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc">

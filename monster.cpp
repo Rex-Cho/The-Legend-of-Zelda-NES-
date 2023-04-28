@@ -27,6 +27,7 @@ namespace game_framework {
 
 	Monster::Monster() : Creature()
 	{
+		_move_speed = 2;
 		//_body_layer.clear();
 	}
 
@@ -104,8 +105,7 @@ namespace game_framework {
 		}
 	}
 
-	//get function
-	int Monster::getLife() { return 0; }
+	//get functionW
 	MOVEMENT_DIR  Monster::getFace() { return _face; }
 	clock_t Monster::get_hurt_time() { return _hurt_time; }
 	clock_t Monster::get_hurt_duration() { return _hurt_duration; }
@@ -114,6 +114,8 @@ namespace game_framework {
 	int Monster::get_posX() { return _posX; }
 	int Monster::get_posY() { return _posY; }
 	vector<CMovingBitmap> Monster::get_body_layer() { return _body_layer; }
+	vector<CMovingBitmap> Monster::get_wapon_layer() { return _wapon_layer; }
+	vector<CMovingBitmap> Monster::get_item_layer() { return _item_layer; }
 	bool Monster::get_can_action() { return _can_action; }
 	bool Monster::get_can_hurt() { return _can_hurt; }
 	bool Monster::get_can_move() { return _can_move; }
@@ -125,21 +127,23 @@ namespace game_framework {
 	bool Monster::isAttacking() { return _attacking; };
 	bool Monster::isFrontCollide(vector<CRect> data)
 	{
+		int width = 5;
+		int offset = 5;
 		CRect coll;
-		coll = _body_layer[0].get_location()[_body_layer[0].GetFrameIndexOfBitmap()];
 		switch (_face)
 		{
 		case UP:
-			coll.InflateRect(0, 2, 0, 0);	//left top right bottom
+			//coll.InflateRect(0, 2, 0, 0);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() - width, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop());
 			break;
 		case DOWN:
-			coll.InflateRect(0, 0, 0, 2);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all + width);
 			break;
 		case LEFT:
-			coll.InflateRect(2, 0, 0, 0);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() - width, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft(), _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
 			break;
 		case RIGHT:
-			coll.InflateRect(0, 0, 2, 0);	//left top right bottom
+			coll = CRect(_body_layer[0].GetLeft() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all + width, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
 			break;
 		case NONE:
 			break;
@@ -262,63 +266,6 @@ namespace game_framework {
 	{
 
 	}
-	void Monster::attack()
-	{
-		_attacking = true;
-		_walking = false;
-		_can_move = false;
-		_attack_time = clock();
-		_wapon_layer.clear();
-		_body_layer.clear();
-
-		switch (_face)
-		{
-		case UP:
-			_wapon_offsetX = 4;
-			_wapon_offsetY = 0;
-			//_wapon_b.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
-			_wapon_layer.push_back(_wapon_b);
-			_action_animation_b.SetTopLeft(_posX * scale_all, _posY * scale_all);
-			_action_animation_b.SetAnimation(_attack_duration / 4, true);
-			_action_animation_b.ToggleAnimation();
-			_body_layer.push_back(_action_animation_b);
-			break;
-		case DOWN:
-			_wapon_offsetX = 4;
-			_wapon_offsetY = 4;
-			//_wapon_f.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
-			_wapon_layer.push_back(_wapon_f);
-			_action_animation_f.SetTopLeft(_posX * scale_all, _posY * scale_all);
-			_action_animation_f.SetAnimation(_attack_duration / 4, true);
-			_action_animation_f.ToggleAnimation();
-			_body_layer.push_back(_action_animation_f);
-			break;
-		case LEFT:
-			_wapon_offsetX = -4;
-			_wapon_offsetY = 4;
-			//_wapon_l.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
-			_wapon_layer.push_back(_wapon_l);
-			_action_animation_l.SetTopLeft(_posX * scale_all, _posY * scale_all);
-			_action_animation_l.SetAnimation(_attack_duration / 4, true);
-			_action_animation_l.ToggleAnimation();
-			_body_layer.push_back(_action_animation_l);
-			break;
-		case RIGHT:
-			_wapon_offsetX = 0;
-			_wapon_offsetY = 4;
-			//_wapon_r.SetTopLeft((_posX + _wapon_offsetX)*scale_all, (_posY + _wapon_offsetY)*scale_all);
-			_wapon_layer.push_back(_wapon_r);
-			_action_animation_r.SetTopLeft(_posX * scale_all, _posY * scale_all);
-			_action_animation_r.SetAnimation(_attack_duration / 4, true);
-			_action_animation_r.ToggleAnimation();
-			_body_layer.push_back(_action_animation_r);
-			break;
-		case NONE:
-			break;
-		default:
-			break;
-		}
-	}
 	void Monster::attackDone()
 	{
 		_attacking = false;
@@ -350,20 +297,37 @@ namespace game_framework {
 			return;
 
 	}
-
-
-	/*
-	void Character::AI()
+	vector<bool> Monster::detect_can_walk(vector<CRect> data)
 	{
-
-	}
-	void Character::drop_items(int porbability)
-	{
-		int random = rand() % 1001;
-		if (random < porbability)
+		int width = 5;
+		int offset = 5;
+		CRect coll_UP;
+		coll_UP = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() - width, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop());
+		coll_UP.InflateRect(0, _body_layer[0].GetHeight() * scale_all, 0, 0);
+		CRect coll_DOWN;
+		coll_DOWN = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all + width);
+		coll_DOWN.InflateRect(0, 0, 0, _body_layer[0].GetHeight() * scale_all);
+		CRect coll_LEFT;
+		coll_LEFT = CRect(_body_layer[0].GetLeft() - width, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft(), _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
+		coll_LEFT.InflateRect(_body_layer[0].GetWidth() * scale_all, 0, 0, 0);
+		CRect coll_RIGHT;
+		coll_RIGHT = CRect(_body_layer[0].GetLeft() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all + width, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
+		coll_RIGHT.InflateRect(0, 0, _body_layer[0].GetWidth() * scale_all, 0);
+		CRect tester;
+		vector<bool> re = { true,true, true, true };	//left up right bottom
+		int counter = data.size();
+		for (int i = 0; i < counter; i++)
 		{
-			//drop item
+			if (re[0] == true && tester.IntersectRect(coll_LEFT, data[i]) != 0)	//collide something
+				re[0] = false;
+			if (re[1] == true && tester.IntersectRect(coll_UP, data[i]) != 0)	//collide something
+				re[1] = false;
+			if (re[2] == true && tester.IntersectRect(coll_RIGHT, data[i]) != 0)	//collide something
+				re[2] = false;
+			if (re[3] == true && tester.IntersectRect(coll_DOWN, data[i]) != 0)	//collide something
+				re[3] = false;
 		}
+		return re;
 	}
-	*/
+	
 }

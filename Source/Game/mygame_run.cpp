@@ -312,7 +312,7 @@ void show_text(int posX, int posY)
 void CGameStateRun::show_CRect() {
 	CDC *pDC = CDDraw::GetBackCDC();
 	
-	//print collider
+	//print map collider
 	vector<CRect>  cur = maps.get_colliders();
 	int counter = cur.size();
 	for (int i = 0; i < counter; i++)
@@ -320,7 +320,7 @@ void CGameStateRun::show_CRect() {
 		pDC->Draw3dRect(cur[i], RGB(0, 255, 0), RGB(0, 255, 0));
 		//pDC->Rectangle(cur[i]);
 	}
-	//print trigger
+	//print map trigger
 	vector<CRect> tri = maps.get_triggerss();
 	counter = tri.size();
 	for (int i = 0; i < counter; i++)
