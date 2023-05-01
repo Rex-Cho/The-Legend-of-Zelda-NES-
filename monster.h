@@ -34,6 +34,7 @@ namespace game_framework {
 		clock_t get_hurt_time();
 		clock_t get_hurt_duration();
 		clock_t get_attack_time();
+		clock_t get_attack_speed();
 		clock_t get_attack_duration();
 		int get_posX();
 		int get_posY();
@@ -76,8 +77,6 @@ namespace game_framework {
 		int _wapon_offsetY = 0;
 		float _attack_factor = 3.5;
 		
-		clock_t _action_duration;
-		clock_t _stop_time;
 		//void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
 		 //Item* item_set;
 

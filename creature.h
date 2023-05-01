@@ -45,6 +45,7 @@ namespace game_framework {
 		virtual clock_t get_hurt_time() = 0;
 		virtual clock_t get_hurt_duration() = 0;
 		virtual clock_t get_attack_time() = 0;
+		virtual clock_t get_attack_speed() = 0;
 		virtual clock_t get_attack_duration() = 0;
 		virtual int get_posX() = 0;
 		virtual int get_posY() = 0;
@@ -95,7 +96,8 @@ namespace game_framework {
 		clock_t _hurt_time = 0;
 		clock_t _hurt_duration = 200;				//ms, get hurt can't controling time
 		clock_t _attack_time = 0;
-		clock_t _attack_duration = 200;				//ms, attack speed
+		clock_t _attack_speed = 200;				//ms, attack speed
+		clock_t _attack_duration = 200;
 		MOVEMENT_DIR _face = DOWN;
 		CMovingBitmap _movement_animation_f, _movement_animation_b, _movement_animation_l, _movement_animation_r;
 		CMovingBitmap _action_animation_f, _action_animation_b, _action_animation_l, _action_animation_r;

@@ -36,6 +36,7 @@ namespace game_framework {
 		clock_t get_hurt_time();
 		clock_t get_hurt_duration();
 		clock_t get_attack_time();
+		clock_t get_attack_speed();
 		clock_t get_attack_duration();
 		int get_posX();
 		int get_posY();

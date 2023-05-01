@@ -30,6 +30,9 @@ namespace game_framework {
 		_move_speed = 2;
 		_max_life = 20;
 		_life = _max_life;
+		_attack_speed = 200;
+		_attack_duration = 300;
+		_attack_time = 0;
 		//_body_layer.clear();
 	}
 
@@ -119,7 +122,7 @@ namespace game_framework {
 	}
 	void Character::set_wapon_position(long t)
 	{
-		float n = (float)(int)(t * 4 / _attack_duration);		//n = t per 1/4 attack duration
+		float n = (float)(int)(t * 4 / _attack_speed);		//n = t per 1/4 attack duration
 		float s = -2 * (n - 2) * (n - 2) + 12;
 		int x = 0;
 		int y = 0;
@@ -154,6 +157,7 @@ namespace game_framework {
 	clock_t Character::get_hurt_time(){ return _hurt_time; }
 	clock_t Character::get_hurt_duration(){ return _hurt_duration; }
 	clock_t Character::get_attack_time(){ return _attack_time; }
+	clock_t Character::get_attack_speed(){ return _attack_speed; }
 	clock_t Character::get_attack_duration(){ return _attack_duration; }
 	int Character::get_posX() { return _posX; }
 	int Character::get_posY() { return _posY; }
@@ -329,6 +333,8 @@ namespace game_framework {
 	}
 	void Character::attack()
 	{
+		if (clock() - _attack_time < _attack_duration)
+			return;
 		_attacking = true;
 		_walking = false;
 		_can_move = false;

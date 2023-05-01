@@ -39,4 +39,27 @@ namespace game_framework {
 
 	}
 
+	void TektiteRed::move(clock_t ti, int dir)
+	{
+		switch (dir)
+		{
+		case 0:	//Right Up
+			//y = -10(x - 1)^2 + 10
+
+			break;
+		case 1:	//Right
+			break;
+		case 2:	//Right Down
+			break;
+		case 3:	//Left Down
+			break;
+		case 4:	//Left
+			break;
+		case 5:	//Left Up
+			break;
+		default:
+			break;
+		}
+	}
+
 }

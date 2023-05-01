@@ -42,7 +42,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		
 		//attack animation
 		clock_t attack_t = clock() - link.get_attack_time();		//clock_t == long
-		if (attack_t > link.get_attack_duration())
+		if (attack_t > link.get_attack_speed())
 		{
 			link.attackDone();
 			link.stop();

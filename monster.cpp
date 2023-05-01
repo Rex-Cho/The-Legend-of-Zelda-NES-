@@ -110,6 +110,7 @@ namespace game_framework {
 	clock_t Monster::get_hurt_time() { return _hurt_time; }
 	clock_t Monster::get_hurt_duration() { return _hurt_duration; }
 	clock_t Monster::get_attack_time() { return _attack_time; }
+	clock_t Monster::get_attack_speed() { return _attack_speed; }
 	clock_t Monster::get_attack_duration() { return _attack_duration; }
 	int Monster::get_posX() { return _posX; }
 	int Monster::get_posY() { return _posY; }
