@@ -24,7 +24,10 @@
 #include"map.h"
 
 namespace game_framework {
-
+	Map::Map()
+	{
+		_monsters.clear();
+	}
 	Map::~Map()
 	{
 		//DeleteObject(_collider);
@@ -97,12 +100,27 @@ namespace game_framework {
 	{
 		_triggers.clear();
 	}
-
+	//monsters
 	void Map::add_monsters(vector<Monster> data)
 	{
 		int counter = data.size();
 		for (int i = 0; i < counter; i++)
 			_monsters.push_back(data[i]);
+		/*
+		*/
+		//FUCKING PROBLEM
+	}
+	void Map::show_monsters()
+	{
+		int counter = _monsters.size();
+		for (int i = 0; i < counter; i++)
+		{
+			_monsters[i].showLayers(scale_all);
+		}
+	}
+	void Map::monsters_AI(clock_t t)
+	{
+		//do something
 	}
 
 	void Map::show_bitmap()

@@ -7,6 +7,10 @@
 using namespace std;
 
 namespace game_framework {
+	enum MONSTER_TYPE
+	{
+		TEKTITE_RED,
+	};
 	class Monster : public Creature {
 	public:
 		//void AI();

@@ -150,8 +150,6 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_graph({ "resources/Map/7_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({CRect(576,320, 1024, 636), CRect(0,0,1024,320) });
-	/*
-	*/
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,320,1024,325) });		//Up
@@ -163,6 +161,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_colliders({ CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
+	maps.add_monsters({ create_monster(TEKTITE_RED),create_monster(TEKTITE_RED) ,create_monster(TEKTITE_RED) });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_6.bmp" });
@@ -287,7 +286,7 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 void CGameStateRun::OnShow()
 {
 	maps.show_maps();
-	//maps.show_UI();
+	maps.show_monsters();
 	maps.show_UI(link.get_max_life(), link.get_life());
 
 
@@ -309,6 +308,7 @@ void show_text(int posX, int posY)
 	*/
 }
 
+//custom function
 void CGameStateRun::show_CRect() {
 	CDC *pDC = CDDraw::GetBackCDC();
 	
@@ -360,4 +360,20 @@ void CGameStateRun::show_CRect() {
 	pDC->Draw3dRect(col, RGB(0, 255, 0), RGB(0, 255, 0));
 
 	CDDraw::ReleaseBackCDC();
+}
+Monster CGameStateRun::create_monster(MONSTER_TYPE s)
+{
+	switch (s)
+	{
+	case game_framework::TEKTITE_RED:
+		TektiteRed mon;
+		mon.set_movement_animation({ "resources/enemies/tektite_r1.bmp" });
+		mon.set_action_animation({ "resources/enemies/tektite_r2.bmp" });
+		//mon.set_dead_animation({});
+		//mon.set_hurt_animation({});
+		//mon.set_spawn_animation({});
+		return mon;
+		break;
+	}
+	return Monster();
 }

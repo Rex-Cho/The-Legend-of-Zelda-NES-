@@ -29,7 +29,14 @@ namespace game_framework {
 		//_bomb_bitmap.LoadBitmapByString({});
 		//_key_bitmap.LoadBitmapByString({});
 	}
-	BigMap::~BigMap() {}
+	BigMap::~BigMap() 
+	{
+		int counterY = _maps.size();
+		int counterX = _maps[0].size();
+		for (int i = 0; i < counterY; i++)
+			for(int j = 0; j < counterX; j++)
+				delete _maps[i][j];
+	}
 
 	//set function
 	void BigMap::set_UI_bitmap(vector<string> data)
@@ -178,5 +185,19 @@ namespace game_framework {
 	{
 		_corrent_map = _maps[_posY][_posX];
 		return _corrent_map->is_triggered(obj);
+	}
+
+	//monsters
+	void BigMap::add_monsters(vector<Monster> monsters)
+	{
+		_corrent_map->add_monsters(monsters);
+	}
+	void BigMap::show_monsters()
+	{
+		_corrent_map->show_monsters();
+	}
+	void BigMap::monsters_AI(clock_t t)
+	{
+		_corrent_map->monsters_AI(t);
 	}
 }

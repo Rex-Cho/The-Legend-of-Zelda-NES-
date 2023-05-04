@@ -40,7 +40,7 @@ namespace game_framework {
 	class Map {
 	public:
 		//Map() { _collider.CreateRectRgn(0, 0, 0, 0); };
-		Map() {};
+		Map();
 		~Map();
 	
 		//set function
@@ -74,7 +74,10 @@ namespace game_framework {
 		void add_triggers(vector<CRect>);
 		void clear_triggers();
 
+		//monsters
 		void add_monsters(vector<Monster>);
+		void show_monsters();
+		void monsters_AI(clock_t t);
 
 		//operator overloading
 		/*
@@ -83,7 +86,7 @@ namespace game_framework {
 
 	protected:
 
-
+	private:
 		//variables
 		CMovingBitmap _graph;
 		vector<CRect> _colliders;
@@ -91,8 +94,6 @@ namespace game_framework {
 		vector<Monster> _monsters;
 		int _posX = 0;
 		int _posY = 80;
-
-	private:
 	};
 }
 #endif // !CREATURE_H
