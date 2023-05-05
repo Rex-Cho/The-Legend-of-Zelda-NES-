@@ -85,8 +85,6 @@ namespace game_framework {
 		Map& operator=(Map& map);
 
 	protected:
-
-	private:
 		//variables
 		CMovingBitmap _graph;
 		vector<CRect> _colliders;
@@ -94,6 +92,8 @@ namespace game_framework {
 		vector<Monster> _monsters;
 		int _posX = 0;
 		int _posY = 80;
+
+	private:
 	};
 }
 #endif // !CREATURE_H

@@ -105,7 +105,7 @@ namespace game_framework {
 	{
 		int counter = data.size();
 		for (int i = 0; i < counter; i++)
-			_monsters.push_back(data[i]);
+			this->_monsters.push_back(data[i]);
 		/*
 		*/
 		//FUCKING PROBLEM

@@ -24,7 +24,7 @@
 #include "tektiteRed.h"
 
 namespace game_framework {
-	TektiteRed::TektiteRed() 
+	TektiteRed::TektiteRed() : Monster()
 	{
 
 	}
