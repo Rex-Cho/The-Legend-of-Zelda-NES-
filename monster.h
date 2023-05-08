@@ -62,7 +62,7 @@ namespace game_framework {
 		void movement(MOVEMENT_DIR);
 		void walk();
 		void die();
-		void spawn();
+		void spawn(vector<CRect> map_collider);
 		void hurt(int damage);
 		void heal(int count);
 		void attack() {};

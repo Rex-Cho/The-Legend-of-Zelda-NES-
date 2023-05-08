@@ -81,7 +81,7 @@ namespace game_framework {
 	}
 	void Monster::set_position(int x, int y)
 	{
-		if (x < 0 || x > 1024 || y < 0 || y > 1024)
+		if (x < 0 || x > 256 || y < 0 || y > 256)
 			return;
 		_posX = x;
 		_posY = y;
@@ -263,9 +263,30 @@ namespace game_framework {
 			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
 		*/
 	}
-	void Monster::spawn()
+	void Monster::spawn(vector<CRect> colliders)
 	{
-
+		int x = 0;
+		int y = 0;
+		bool is_in_wall = false;
+		do
+		{
+			x = rand() % 256;
+			y = rand() % 176;
+			is_in_wall = false;
+			int counter = colliders.size();
+			CRect entity = CRect(x * scale_all, y * scale_all, (x + _movement_animation_f.GetWidth()) * scale_all, (y + _movement_animation_f.GetHeight()) * scale_all);
+			CRect tester;
+			for (int i = 0; i < counter; i++)
+			{
+				if (tester.IntersectRect(entity, colliders[i]) != 0)
+				{
+					is_in_wall = true;
+					break;
+				}
+			}
+		} while (is_in_wall);
+		_posX = x;
+		_posY = y;
 	}
 	void Monster::attackDone()
 	{

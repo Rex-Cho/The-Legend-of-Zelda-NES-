@@ -63,7 +63,7 @@ namespace game_framework {
 		void movement(MOVEMENT_DIR);
 		void walk();
 		void stop();
-		void spawn();
+		void spawn(vector<CRect>);
 		void attack();
 		void attackDone();
 		void die();

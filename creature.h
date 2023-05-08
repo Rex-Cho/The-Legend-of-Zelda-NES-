@@ -64,7 +64,7 @@ namespace game_framework {
 		virtual void movement(MOVEMENT_DIR) = 0;
 		virtual void walk() = 0;
 		virtual void die() = 0;
-		virtual void spawn() = 0;
+		virtual void spawn(vector<CRect>) = 0;
 		virtual void hurt(int) = 0;
 		virtual void heal(int) = 0;
 		virtual void attack() = 0;

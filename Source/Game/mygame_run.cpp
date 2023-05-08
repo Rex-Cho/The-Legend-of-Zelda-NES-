@@ -37,6 +37,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//attack
 	
 	*/
+	//link attack
 	if (link.isAttacking() && link.get_can_action())
 	{
 		
@@ -89,12 +90,16 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		}
 		*/
 	}
+	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
+
 	//link walk	
 	link.isFrontCollide(maps.get_colliders());
 	if(link.isWalk())
 		link.walk();
 
-	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
+	//monster AI
+	TR.AI(clock());
+
 
 	//map triggers to character
 	switch (maps.is_triggered(link))
@@ -104,8 +109,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		link.set_position(link.get_posX(), 176 - 35);
 		break;
 	case TRIGGER_MAP_D:
-		/*
-		*/
 		maps.change_map(maps.get_posX(),maps.get_posY() + 1);
 		link.set_position(link.get_posX(), 3);
 		break;
@@ -126,10 +129,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		break;
 	};
 
-
-	//map and link collide detect
-	/*
-	*/
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -155,13 +154,15 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(0,320,1024,325) });		//Up
 	maps.add_map(adder, 7, 7);
 
+	maps.change_map(7, 7);
+
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_8.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
-	maps.add_monsters({ create_monster(TEKTITE_RED),create_monster(TEKTITE_RED) ,create_monster(TEKTITE_RED) });
+	//maps.add_monsters({ create_monster(TEKTITE_RED),create_monster(TEKTITE_RED) ,create_monster(TEKTITE_RED) });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_6.bmp" });
@@ -185,6 +186,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(0,1023,1024,1024) });	//Down
 	maps.add_map(adder, 6, 8);
 
+
 	//set character
 	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
 	link.set_action_animation({"resources/Link/link_act_f.bmp", "resources/Link/link_act_f.bmp","resources/Link/link_run_f2.bmp","resources/Link/link_run_f1.bmp",
@@ -197,6 +199,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	link.set_wapon({"resources/items/wood_sword_f.bmp","resources/items/wood_sword_b.bmp", "resources/items/wood_sword_l.bmp", "resources/items/wood_sword_r.bmp"});
 	link.set_position(128,48);
 	link.stop();
+
+	//monster
+	TR = create_TektiteRed();
 
 	Sleep(200);
 }
@@ -292,6 +297,8 @@ void CGameStateRun::OnShow()
 
 	link.showLayers(scale_all);
 	show_CRect();
+
+	TR.showLayers(scale_all);
 }
 
 void show_text(int posX, int posY)
@@ -361,19 +368,15 @@ void CGameStateRun::show_CRect() {
 
 	CDDraw::ReleaseBackCDC();
 }
-Monster CGameStateRun::create_monster(MONSTER_TYPE s)
+TektiteRed CGameStateRun::create_TektiteRed()
 {
-	switch (s)
-	{
-	case game_framework::TEKTITE_RED:
-		TektiteRed mon;
-		mon.set_movement_animation({ "resources/enemies/tektite_r1.bmp" });
-		mon.set_action_animation({ "resources/enemies/tektite_r2.bmp" });
-		//mon.set_dead_animation({});
-		//mon.set_hurt_animation({});
-		//mon.set_spawn_animation({});
-		return mon;
-		break;
-	}
-	return Monster();
+	TektiteRed mon;
+	mon.set_movement_animation({ "resources/enemies/tektite_r1.bmp", "resources/enemies/tektite_r2.bmp" });
+	mon.set_action_animation({ "resources/enemies/tektite_r2.bmp" });
+	//mon.set_dead_animation({});
+	//mon.set_hurt_animation({});
+	//mon.set_spawn_animation({});
+	vector<CRect> temp = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_colliders();
+	mon.spawn(temp);
+	return mon;
 }

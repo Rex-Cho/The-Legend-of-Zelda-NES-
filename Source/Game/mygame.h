@@ -101,13 +101,14 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		
-		Monster create_monster(MONSTER_TYPE);
+		TektiteRed create_TektiteRed();
 		void show_CRect();
 
 		Character link;
 		vector<MOVEMENT_DIR> move_keys;
 		BigMap maps;
 		CMovingBitmap* wapon_fly = nullptr;
+		TektiteRed TR;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

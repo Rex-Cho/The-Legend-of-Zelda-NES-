@@ -26,15 +26,19 @@
 namespace game_framework {
 	TektiteRed::TektiteRed() : Monster()
 	{
-
+		_attacking = false;
 	}
 	//set
 	void TektiteRed::set_movement_animation(vector<string> filename)
 	{
-		this->_movement_animation_f.LoadBitmapByString({ filename[0]}, RGB(255, 255, 255));
-		this->_movement_animation_b.LoadBitmapByString({ filename[0]}, RGB(255, 255, 255));
-		this->_movement_animation_l.LoadBitmapByString({ filename[0]}, RGB(255, 255, 255));
-		this->_movement_animation_r.LoadBitmapByString({ filename[0]}, RGB(255, 255, 255));
+		this->_movement_animation_f.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
+		this->_movement_animation_f.SetAnimation(300, false);
+		this->_movement_animation_b.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
+		this->_movement_animation_b.SetAnimation(300, false);
+		this->_movement_animation_l.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
+		this->_movement_animation_l.SetAnimation(300, false);
+		this->_movement_animation_r.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
+		this->_movement_animation_r.SetAnimation(300, false);
 	}
 	void TektiteRed::set_dead_animation(vector<string> filename)
 	{
@@ -61,58 +65,136 @@ namespace game_framework {
 
 	}
 
-	void TektiteRed::AI()
+	void TektiteRed::AI(clock_t time)
 	{
-
+		if (_attacking)		//move
+		{
+			move(time, _start_jump_time, _jump_dir);
+			_start_stop_time = time;
+			if (time > _start_jump_time + _jump_time)
+			{
+				_body_layer.clear();
+				_body_layer.push_back(_movement_animation_f);
+				_attacking = false;
+			}
+		}
+		else				//stop
+		{
+			_start_jump_time = time;
+			if (time > _start_stop_time + _stop_time)
+			{
+				_body_layer.clear();
+				_body_layer.push_back(_action_animation_f);
+				_attacking = true;
+				_jump_dir = rand() % 6;		//0 Right Up, 1 Right, 2 Right Down, 3 Left down, 4 Left, 5 Left Up
+			}
+		}
 	}
 
-	void TektiteRed::move(clock_t ti, clock_t jump_time, int dir)
+	void TektiteRed::move(clock_t time, clock_t start_jump_time, int dir)
 	{
-		if (ti > jump_time)
+		clock_t ti = time - start_jump_time;
+		if (ti > _jump_time)
 			return;
-		float scale_factor = 2000 / float(jump_time);
+		float scale_factor = 2000 / float(start_jump_time);
 		float t = ti * scale_factor;
-		int x = int(t);
-		int y = 0;
+		int step = 2;
+		int x = step;
+		int y = step;
 		switch (dir)
 		{
 		case 0:	//Right Up
-			if (t > 1400)
+			if (t > _jump_time)
 				return;
-			y = int(-10 * (t - 1) * (t - 1) + 10);
+			else if (t > _jump_time * 3 / 5)
+			{
+				x = step;
+				y = step;
+			}
+			else
+			{
+				x = step;
+				y = -step;
+			}
 			break;
 		case 1:	//Right
-			y = int(-10 * (t - 1) * (t - 1) + 10);
-			if (y < 0)
+			if (t > _jump_time)
 				return;
+			else if (t > _jump_time / 2)
+			{
+				x = step;
+				y = step;
+			}
+			else
+			{
+				x = step;
+				y = -step;
+			}
 			break;
 		case 2:	//Right Down
-			y = int(-10 * (t - 0.6) * (t - 0.6) + 10);
-			if (y < 0)
+			if (t > _jump_time * 2 / 5)
 				return;
+			else if (t > 500)
+			{
+				x = step;
+				y = step;
+			}
+			else
+			{
+				x = step;
+				y = -step;
+			}
 			break;
 		case 3:	//Left Down
-			x = int(-t);
-			y = int(-10 * (t - 0.6) * (t - 0.6) + 10);
-			if (y < 0)
+			if (t > _jump_time * 2 / 5)
 				return;
+			else if (t > _jump_time)
+			{
+				x = -step;
+				y = step;
+			}
+			else
+			{
+				x = -step;
+				y = -step;
+			}
 			break;
 		case 4:	//Left
-			x = int(-t);
-			y = int(-10 * (t - 1) * (t - 1) + 10);
-			if (y < 0)
+			if (t > _jump_time)
 				return;
+			else if (t > _jump_time / 2)
+			{
+				x = -step;
+				y = step;
+			}
+			else
+			{
+				x = -step;
+				y = -step;
+			}
 			break;
 		case 5:	//Left Up
-			x = int(-t);
-			if (t > 1400)
+			if (t > _jump_time)
 				return;
-			y = int(-10 * (t - 1) * (t - 1) + 10);
+			else if (t > _jump_time * 3 / 5)
+			{
+				x = -step;
+				y = step;
+			}
+			else
+			{
+				x = -step;
+				y = -step;
+			}
 			break;
 		default:
 			break;
 		}
-		this->set_position(x * 20,y * 2);
+		int fx = _posX + x;
+		int fy = _posY + y;
+		if (fx > 255 || fx < 1 || fy > 255 || fy < 1)
+			return;
+		this->set_position(fx, fy);
 	}
 
 }

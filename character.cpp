@@ -327,7 +327,7 @@ namespace game_framework {
 			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
 		*/
 	}
-	void Character::spawn()
+	void Character::spawn(vector<CRect>)
 	{
 
 	}
