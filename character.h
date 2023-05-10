@@ -65,12 +65,12 @@ namespace game_framework {
 		void walk();
 		void stop();
 		void spawn(vector<CRect>);
+		void hurt(vector<CRect> collider,vector<int> damage);
+		void heal(int count);
 		void attack();
 		void attackDone();
 		void die();
-		void hurt(vector<CRect> collider,int damage) override;
-		void hurt(vector<Monster*>);
-		void heal(int count);
+		//void hurt(vector<Monster*>);
 
 		CMovingBitmap* make_fly_wapon();
 	protected:

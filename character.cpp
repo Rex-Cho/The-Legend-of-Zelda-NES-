@@ -33,6 +33,7 @@ namespace game_framework {
 		_attack_speed = 200;
 		_attack_duration = 300;
 		_attack_time = 0;
+		_invincible_time = 700;
 		//_body_layer.clear();
 	}
 
@@ -428,6 +429,7 @@ namespace game_framework {
 	{
 
 	}
+	/*
 	void Character::hurt(vector<Monster*> monsters)
 	{
 		clock_t time = clock();
@@ -489,7 +491,8 @@ namespace game_framework {
 			//reset the game
 		}
 	}
-	void Character::hurt(vector<CRect> collider, int damage)
+	*/
+	void Character::hurt(vector<CRect> collider, vector<int> damage)
 	{
 		clock_t time = clock();
 		if (time < _hurt_time + _hurt_stop_time)
@@ -524,10 +527,7 @@ namespace game_framework {
 			_can_move = true;
 			return;
 		}
-		if (damage == 0)
-			return;
 
-		_hurt_time = time;
 		CRect self = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
 		CRect tester;
 		int counter = collider.size();
@@ -535,8 +535,8 @@ namespace game_framework {
 		{
 			if (tester.IntersectRect(self, collider[i]) != 0)
 			{
-				//hurt animation
-				_life -= damage;
+				_hurt_time = time;
+				_life -= damage[i];
 				if (_life < 0)
 					_life = 0;
 			}
@@ -550,6 +550,7 @@ namespace game_framework {
 			//reset the game
 		}
 	}
+
 	void Character::heal(int count)
 	{
 		if (count == 0)
@@ -557,19 +558,4 @@ namespace game_framework {
 
 	}
 	
-
-	/*
-	void Character::AI()
-	{
-
-	}
-	void Character::drop_items(int porbability)
-	{
-		int random = rand() % 1001;
-		if (random < porbability)
-		{
-			//drop item
-		}
-	}
-	*/
 }

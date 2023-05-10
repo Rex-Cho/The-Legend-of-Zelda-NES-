@@ -208,62 +208,8 @@ namespace game_framework {
 		}
 		//_movement_animation.SetAnimation(20, true);
 	}
-	void Monster::walk()
-	{
-		switch (_face)
-		{
-		case UP:
-			if (!ban_move_up)
-				_posY -= _move_speed;
-			break;
-		case DOWN:
-			if (!ban_move_down)
-				_posY += _move_speed;
-			break;
-		case LEFT:
-			if (!ban_move_left)
-				_posX -= _move_speed;
-			break;
-		case RIGHT:
-			if (!ban_move_right)
-				_posX += _move_speed;
-			break;
-		}
-		/*
-		int temp = _layer.size();
-		for(int i = 0; i < temp; i++)
-			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
-		*/
-	}
-	void Monster::stop()
-	{
-		_walking = false;
-		_body_layer.clear();
-		switch (_face)
-		{
-		case UP:
-			_movement_animation_b.StopAnimation();
-			_body_layer.push_back(_movement_animation_b);
-			break;
-		case DOWN:
-			_movement_animation_f.StopAnimation();
-			_body_layer.push_back(_movement_animation_f);
-			break;
-		case LEFT:
-			_movement_animation_l.StopAnimation();
-			_body_layer.push_back(_movement_animation_l);
-			break;
-		case RIGHT:
-			_movement_animation_r.StopAnimation();
-			_body_layer.push_back(_movement_animation_r);
-			break;
-		}
-		/*
-		int temp = _layer.size();
-		for (int i = 0; i < temp; i++)
-			_layer[i].SetTopLeft(_posX * scale_all, _posY * scale_all + map_top_offset * scale_all);
-		*/
-	}
+	void Monster::walk(){}
+	void Monster::stop(){}
 	void Monster::spawn(vector<CRect> colliders)
 	{
 		int x = 0;
@@ -298,12 +244,11 @@ namespace game_framework {
 		_can_move = true;
 		_wapon_layer.clear();
 	}
-	void Monster::die()
+	void Monster::die(){}
+	void Monster::hurt(vector<CRect> collider, vector<int> damage)
 	{
-
-	}
-	void Monster::hurt(vector<CRect> collider, int damage)
-	{
+		if (_life == 0)
+			return;
 		clock_t time = clock();
 		if (time < _hurt_time + _hurt_stop_time)
 		{
@@ -329,6 +274,7 @@ namespace game_framework {
 			default:
 				break;
 			}
+			_body_layer[0].SetTopLeft(_posX, _posY);
 			_body_layer[0].SetAnimation(_hurt_stop_time / 2, false);
 			return;
 		}
@@ -337,9 +283,7 @@ namespace game_framework {
 			_can_move = true;
 			return;
 		}
-		if (damage == 0)
-			return;
-		_hurt_time = time;
+
 		CRect self = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
 		CRect tester;
 		int counter = collider.size();
@@ -347,13 +291,15 @@ namespace game_framework {
 		{
 			if (tester.IntersectRect(self, collider[i]) != 0)
 			{
-				//hurt animation
-				_life -= damage;
+				_hurt_time = time;
+				_life -= damage[i];
 				if (_life < 0)
+				{
+					_die_time = clock();
 					_life = 0;
+				}
 			}
 		}
-
 
 		if (_life == 0)
 		{

@@ -78,7 +78,8 @@ namespace game_framework {
 		void add_monsters(vector<Monster*>);
 		void show_monsters();
 		void monsters_AI(clock_t t);
-
+		void monsters_hurt(vector<CRect>, vector<int>);
+		void monsters_die();
 		//operator overloading
 		/*
 		*/

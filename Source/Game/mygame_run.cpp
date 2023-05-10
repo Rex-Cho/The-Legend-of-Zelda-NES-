@@ -29,14 +29,6 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	//Timer
-	/*
-	//hurt
-	if (clock() - link.get_hurt_time() > link.get_hurt_duration())
-		link.set_can_move(true);
-	//attack
-	
-	*/
 	//link attack
 	if (link.isAttacking() && link.get_can_action())
 	{
@@ -60,50 +52,44 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 			}
 			*/
 		}
-
 		//if life == max_health => fly sword
 	}
-	if (wapon_fly != nullptr)
-	{
-		int x = 0;
-		int y = 0;
-		switch (link.getFace())
-		{
-		case UP:
-			break;
-		case DOWN:
-			break;
-		case LEFT:
-			break;
-		case RIGHT:
-			break;
-		case NONE:
-			break;
-		default:
-			break;
-		}
-		/*
-		for (int i = 0; i < map.monsters.size(); i++)
-		{
-			if (CMovingBitmap::IsOverlap(*wapon_fly, map.monsters()[i]))
-			{
-				//delete wapon_fly and wapon_fly = nullptr;
-			}
-		}
-		*/
-	}
-	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
 
 	//link hurt
-	//link.hurt(maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters());
+	vector<CRect> monsters_collider = {};
+	vector<int> monsters_damage = {};
+	int coll_counter = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters().size();
+	for (int i = 0; i < coll_counter; i++)
+	{
+		monsters_collider.push_back(CRect(
+			maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters()[i]->get_body_layer()[0].GetLeft(),
+			maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters()[i]->get_body_layer()[0].GetTop(),
+			maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters()[i]->get_body_layer()[0].GetLeft() + maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters()[i]->get_body_layer()[0].GetWidth() * scale_all,
+			maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters()[i]->get_body_layer()[0].GetTop() + maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters()[i]->get_body_layer()[0].GetHeight() * scale_all));
+		monsters_damage.push_back(maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters()[i]->get_damage());
+	}
+	link.hurt(monsters_collider, monsters_damage);
 
 	//link walk	
 	link.isFrontCollide(maps.get_colliders());
 	if(link.isWalk())
 		link.walk();
 
-	//monster AI
+	//monster movement AI
 	maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_AI(clock());
+
+	//monster hurt
+	vector<CRect> wapon_area = {};
+	vector<int> damage_list = {};
+	int counter = link.get_wapon_layer().size();
+	for (int i = 0; i < counter; i++)
+	{
+		wapon_area.push_back(CRect(link.get_wapon_layer()[0].GetLeft(), link.get_wapon_layer()[0].GetTop(), link.get_wapon_layer()[0].GetLeft() + link.get_wapon_layer()[0].GetWidth() *scale_all, link.get_wapon_layer()[0].GetTop() + link.get_wapon_layer()[0].GetHeight() * scale_all));
+		damage_list.push_back(link.get_damage());
+	}
+	maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_hurt(wapon_area, damage_list);
+	//monster die
+	maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_die();
 
 
 	//map triggers to character
@@ -390,8 +376,8 @@ Monster* CGameStateRun::create_TektiteRed()
 	Monster* mon = new TektiteRed();
 	mon->set_movement_animation({ "resources/enemies/tektite_r1.bmp", "resources/enemies/tektite_r2.bmp" });
 	mon->set_action_animation({ "resources/enemies/tektite_r2.bmp" });
+	mon->set_hurt_animation({ "resources/enemies/tektite_r1.bmp","resources/enemies/all_white.bmp" });
 	//mon.set_dead_animation({});
-	//mon.set_hurt_animation({});
 	//mon.set_spawn_animation({});
 	vector<CRect> temp = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_colliders();
 	mon->spawn(temp);

@@ -53,6 +53,10 @@ namespace game_framework {
 	}
 	void TektiteRed::set_hurt_animation(vector<string> filename)
 	{
+		this->_hurt_animation_f.LoadBitmapByString({ filename[0],filename[1] }, RGB(255, 255, 255));
+		this->_hurt_animation_b.LoadBitmapByString({ filename[0],filename[1] }, RGB(255, 255, 255));
+		this->_hurt_animation_l.LoadBitmapByString({ filename[0],filename[1] }, RGB(255, 255, 255));
+		this->_hurt_animation_r.LoadBitmapByString({ filename[0],filename[1] }, RGB(255, 255, 255));
 
 	}
 	void TektiteRed::set_spawn_animation(vector<string> filename)

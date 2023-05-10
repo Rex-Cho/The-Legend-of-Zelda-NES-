@@ -133,6 +133,28 @@ namespace game_framework {
 			_monsters[i]->AI(t);
 		}
 	}
+	void Map::monsters_hurt(vector<CRect> data, vector<int> damage)
+	{
+		int counter = _monsters.size();
+		for (int i = 0; i < counter; i++)
+		{
+			_monsters[i]->hurt(data, damage);
+		}
+	}
+	void Map::monsters_die()
+	{
+		int counter = _monsters.size();
+		for (int i = 0; i < counter; i++)
+		{
+			//_monsters[i]->die();
+			if (_monsters[i]->get_life() == 0)
+			{
+				_monsters.erase(_monsters.begin() + i);
+				counter -= 1;
+				i -= 1;
+			}
+		}
+	}
 
 	void Map::show_bitmap()
 	{

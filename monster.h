@@ -46,9 +46,9 @@ namespace game_framework {
 		bool get_can_action();
 		bool get_can_hurt();
 		bool get_can_move();
-		int get_damage();
 		int get_life();
 		int get_max_life();
+		int get_damage();
 
 		vector<CMovingBitmap> get_wapon_layer();
 		vector<CMovingBitmap> get_item_layer();
@@ -64,7 +64,7 @@ namespace game_framework {
 		void walk();
 		void die();
 		void spawn(vector<CRect> map_collider);
-		void hurt(vector<CRect> collider, int damage);
+		void hurt(vector<CRect> collider, vector<int> damage);
 		void heal(int count);
 		void attack() {};
 		void attackDone();

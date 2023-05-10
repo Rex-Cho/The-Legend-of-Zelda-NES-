@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef CREATURE_H
 #define CREATURE_H
 
@@ -25,7 +25,6 @@ namespace game_framework {
 	};
 	class Creature {
 	public:
-	protected:
 		Creature() {};
 		~Creature() = default;
 
@@ -55,6 +54,7 @@ namespace game_framework {
 		virtual bool get_can_move() = 0;
 		virtual int get_life() = 0;
 		virtual int get_max_life() = 0;
+		virtual int get_damage() = 0;
 
 		//is function
 		virtual bool isWalk() = 0;
@@ -65,12 +65,14 @@ namespace game_framework {
 		virtual void walk() = 0;
 		virtual void die() = 0;
 		virtual void spawn(vector<CRect>) = 0;
-		virtual void hurt(vector<CRect>,int) = 0;
+		virtual void hurt(vector<CRect>,vector<int>) = 0;
 		virtual void heal(int) = 0;
 		virtual void attack() = 0;
 		virtual void attackDone() = 0;
 		virtual void stop() = 0;
 		virtual void showLayers(int) = 0;
+
+	protected:
 
 		//variables
 		int _posX;
@@ -98,7 +100,9 @@ namespace game_framework {
 		clock_t _attack_time = 0;
 		clock_t _attack_speed = 200;				//ms, attack speed
 		clock_t _attack_duration = 200;
-		clock_t _invincible_time = 500;				//�L�Įɶ�
+		clock_t _invincible_time = 500;				//無敵時間
+		clock_t _die_time = 0;
+		clock_t _die_duration = 300;				//死亡動畫時間
 		MOVEMENT_DIR _face = DOWN;
 		CMovingBitmap _movement_animation_f, _movement_animation_b, _movement_animation_l, _movement_animation_r;
 		CMovingBitmap _action_animation_f, _action_animation_b, _action_animation_l, _action_animation_r;
