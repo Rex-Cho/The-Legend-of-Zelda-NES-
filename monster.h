@@ -36,7 +36,7 @@ namespace game_framework {
 		//get function
 		MOVEMENT_DIR getFace();
 		clock_t get_hurt_time();
-		clock_t get_hurt_duration();
+		clock_t get_hurt_stop_time();
 		clock_t get_attack_time();
 		clock_t get_attack_speed();
 		clock_t get_attack_duration();
@@ -46,6 +46,7 @@ namespace game_framework {
 		bool get_can_action();
 		bool get_can_hurt();
 		bool get_can_move();
+		int get_damage();
 		int get_life();
 		int get_max_life();
 
@@ -63,12 +64,14 @@ namespace game_framework {
 		void walk();
 		void die();
 		void spawn(vector<CRect> map_collider);
-		void hurt(int damage);
+		void hurt(vector<CRect> collider, int damage);
 		void heal(int count);
 		void attack() {};
 		void attackDone();
 		void stop();
 		void showLayers(int);
+
+		virtual void AI(clock_t) { _posY += 1; };
 
 		vector<bool> detect_can_walk(vector<CRect>);
 

@@ -66,7 +66,7 @@ namespace game_framework {
 		void init_heart();
 
 		//monsters
-		void add_monsters(vector<Monster>);
+		void add_monsters(vector<Monster*>);
 		void show_monsters();
 		void monsters_AI(clock_t);
 

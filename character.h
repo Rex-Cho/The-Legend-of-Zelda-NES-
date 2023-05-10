@@ -34,7 +34,7 @@ namespace game_framework {
 
 		//get function
 		clock_t get_hurt_time();
-		clock_t get_hurt_duration();
+		clock_t get_hurt_stop_time();
 		clock_t get_attack_time();
 		clock_t get_attack_speed();
 		clock_t get_attack_duration();
@@ -49,6 +49,7 @@ namespace game_framework {
 		bool get_can_action();
 		int get_life();
 		int get_max_life();
+		int get_damage();
 
 		int get_bomb();
 		int get_key();
@@ -67,7 +68,8 @@ namespace game_framework {
 		void attack();
 		void attackDone();
 		void die();
-		void hurt(int damage);
+		void hurt(vector<CRect> collider,int damage) override;
+		void hurt(vector<Monster*>);
 		void heal(int count);
 
 		CMovingBitmap* make_fly_wapon();

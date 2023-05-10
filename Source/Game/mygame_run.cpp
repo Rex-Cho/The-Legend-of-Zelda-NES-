@@ -53,10 +53,12 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		else
 		{
 			link.set_wapon_position(attack_t);		//input time
+			/*
 			if (link.get_life() == link.get_max_life() && wapon_fly == nullptr)
 			{
 				wapon_fly = link.make_fly_wapon();
 			}
+			*/
 		}
 
 		//if life == max_health => fly sword
@@ -92,13 +94,16 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 	//if(CMovingBitmap::IsOverlap(*wapon_fly, ))
 
+	//link hurt
+	//link.hurt(maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_monsters());
+
 	//link walk	
 	link.isFrontCollide(maps.get_colliders());
 	if(link.isWalk())
 		link.walk();
 
 	//monster AI
-	TR.AI(clock());
+	maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_AI(clock());
 
 
 	//map triggers to character
@@ -162,6 +167,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_colliders({ CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
+	maps.get_maps()[7][8]->add_monsters({ create_TektiteRed(),create_TektiteRed() ,create_TektiteRed() });
 	//maps.add_monsters({ create_monster(TEKTITE_RED),create_monster(TEKTITE_RED) ,create_monster(TEKTITE_RED) });
 
 	adder = new Map();
@@ -201,7 +207,6 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	link.stop();
 
 	//monster
-	TR = create_TektiteRed();
 
 	Sleep(200);
 }
@@ -230,7 +235,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		link.attack();
 		break;
 	case 0x58:	//X key
-		link.hurt(1);
+		//link.hurt(1);
 		break;
 	}
 }
@@ -298,7 +303,6 @@ void CGameStateRun::OnShow()
 	link.showLayers(scale_all);
 	show_CRect();
 
-	TR.showLayers(scale_all);
 }
 
 void show_text(int posX, int posY)
@@ -366,17 +370,30 @@ void CGameStateRun::show_CRect() {
 	CRect col = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
 	pDC->Draw3dRect(col, RGB(0, 255, 0), RGB(0, 255, 0));
 
+	//print character sword collider
+	counter = link.get_wapon_layer().size();
+	//vector<CRect> wap = {};
+	for (int i = 0; i < counter; i++)
+	{
+		//.push_back(CRect(link.get_wapon_layer()[0].GetLeft(), link.get_wapon_layer()[0].GetTop(), link.get_wapon_layer()[0].GetLeft() + link.get_wapon_layer()[0].GetWidth(), link.get_wapon_layer()[0].GetTop() + link.get_wapon_layer()[0].GetHeight()));
+		CRect temp = CRect(link.get_wapon_layer()[0].GetLeft(), link.get_wapon_layer()[0].GetTop(), link.get_wapon_layer()[0].GetLeft() + link.get_wapon_layer()[0].GetWidth() *scale_all, link.get_wapon_layer()[0].GetTop() + link.get_wapon_layer()[0].GetHeight() * scale_all);
+		pDC->Draw3dRect(temp, RGB(0, 255, 0), RGB(0, 255, 0));
+	}
+	/*
+	*/
+
 	CDDraw::ReleaseBackCDC();
 }
-TektiteRed CGameStateRun::create_TektiteRed()
+Monster* CGameStateRun::create_TektiteRed()
 {
-	TektiteRed mon;
-	mon.set_movement_animation({ "resources/enemies/tektite_r1.bmp", "resources/enemies/tektite_r2.bmp" });
-	mon.set_action_animation({ "resources/enemies/tektite_r2.bmp" });
+	//TektiteRed mon;
+	Monster* mon = new TektiteRed();
+	mon->set_movement_animation({ "resources/enemies/tektite_r1.bmp", "resources/enemies/tektite_r2.bmp" });
+	mon->set_action_animation({ "resources/enemies/tektite_r2.bmp" });
 	//mon.set_dead_animation({});
 	//mon.set_hurt_animation({});
 	//mon.set_spawn_animation({});
 	vector<CRect> temp = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_colliders();
-	mon.spawn(temp);
+	mon->spawn(temp);
 	return mon;
 }

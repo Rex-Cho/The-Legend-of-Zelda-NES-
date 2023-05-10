@@ -91,22 +91,22 @@ namespace game_framework {
 		}
 	}
 
-	void TektiteRed::move(clock_t time, clock_t start_jump_time, int dir)
+	void TektiteRed::move(clock_t t, clock_t start_jump_time, int dir)
 	{
-		clock_t ti = time - start_jump_time;
-		if (ti > _jump_time)
+		if (_can_move == false)
 			return;
-		float scale_factor = 2000 / float(start_jump_time);
-		float t = ti * scale_factor;
+		clock_t time = t - start_jump_time;
+		if (time > _jump_time)
+			return;
 		int step = 2;
 		int x = step;
 		int y = step;
 		switch (dir)
 		{
 		case 0:	//Right Up
-			if (t > _jump_time)
+			if (time > _jump_time)
 				return;
-			else if (t > _jump_time * 3 / 5)
+			else if (time > _jump_time * 4 / 5)
 			{
 				x = step;
 				y = step;
@@ -118,9 +118,9 @@ namespace game_framework {
 			}
 			break;
 		case 1:	//Right
-			if (t > _jump_time)
+			if (time > _jump_time)
 				return;
-			else if (t > _jump_time / 2)
+			else if (time > _jump_time / 2)
 			{
 				x = step;
 				y = step;
@@ -132,9 +132,9 @@ namespace game_framework {
 			}
 			break;
 		case 2:	//Right Down
-			if (t > _jump_time * 2 / 5)
+			if (time > _jump_time)
 				return;
-			else if (t > 500)
+			else if (time > _jump_time * 1 / 5)
 			{
 				x = step;
 				y = step;
@@ -146,9 +146,9 @@ namespace game_framework {
 			}
 			break;
 		case 3:	//Left Down
-			if (t > _jump_time * 2 / 5)
+			if (time > _jump_time)
 				return;
-			else if (t > _jump_time)
+			else if (time > _jump_time * 1 / 5)
 			{
 				x = -step;
 				y = step;
@@ -176,7 +176,7 @@ namespace game_framework {
 		case 5:	//Left Up
 			if (t > _jump_time)
 				return;
-			else if (t > _jump_time * 3 / 5)
+			else if (t > _jump_time * 4 / 5)
 			{
 				x = -step;
 				y = step;
@@ -192,7 +192,7 @@ namespace game_framework {
 		}
 		int fx = _posX + x;
 		int fy = _posY + y;
-		if (fx > 255 || fx < 1 || fy > 255 || fy < 1)
+		if (fx > 255 - _body_layer[0].GetWidth() || fx < 1 || fy > 175 - _body_layer[0].GetHeight() || fy < 1)
 			return;
 		this->set_position(fx, fy);
 	}

@@ -18,7 +18,7 @@ namespace game_framework {
 		void set_action_animation(vector<string>) override;
 		void set_hurt_animation(vector<string>) override;
 		void set_spawn_animation(vector<string>) override;
-		void AI(clock_t);
+		void AI(clock_t) override;
 	private:
 		void move(clock_t t, clock_t jump_time, int dir);
 

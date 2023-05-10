@@ -54,7 +54,7 @@ namespace game_framework {
 		//CRgn get_collider();
 		vector<CRect> get_colliders();
 		vector<CRect> get_triggers();
-		vector<Monster> get_monsters();
+		vector<Monster*> get_monsters();
 
 		//is function
 		bool is_collide(Character);
@@ -75,7 +75,7 @@ namespace game_framework {
 		void clear_triggers();
 
 		//monsters
-		void add_monsters(vector<Monster>);
+		void add_monsters(vector<Monster*>);
 		void show_monsters();
 		void monsters_AI(clock_t t);
 
@@ -89,7 +89,7 @@ namespace game_framework {
 		CMovingBitmap _graph;
 		vector<CRect> _colliders;
 		vector<CRect> _triggers;
-		vector<Monster> _monsters;
+		vector<Monster*> _monsters;
 		int _posX = 0;
 		int _posY = 80;
 

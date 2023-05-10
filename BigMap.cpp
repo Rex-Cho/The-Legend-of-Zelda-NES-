@@ -188,7 +188,7 @@ namespace game_framework {
 	}
 
 	//monsters
-	void BigMap::add_monsters(vector<Monster> monsters)
+	void BigMap::add_monsters(vector<Monster*> monsters)
 	{
 		_corrent_map->add_monsters(monsters);
 	}

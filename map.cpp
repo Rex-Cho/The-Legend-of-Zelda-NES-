@@ -30,6 +30,12 @@ namespace game_framework {
 	}
 	Map::~Map()
 	{
+		int counter = _monsters.size();
+		for (int i = 0; i < counter; i++)
+		{
+			delete _monsters[i];
+		}
+		_monsters.clear();
 		//DeleteObject(_collider);
 	}
 	//set function
@@ -56,7 +62,7 @@ namespace game_framework {
 	int Map::get_posY() { return _posY; }
 	vector<CRect> Map::get_colliders() { return _colliders; }
 	vector<CRect> Map::get_triggers() { return _triggers; }
-	vector<Monster> Map::get_monsters() { return _monsters; }
+	vector<Monster*> Map::get_monsters() { return _monsters; }
 	//CRgn Map::get_collider() { return _collider; }
 
 	//behavior function
@@ -101,7 +107,7 @@ namespace game_framework {
 		_triggers.clear();
 	}
 	//monsters
-	void Map::add_monsters(vector<Monster> data)
+	void Map::add_monsters(vector<Monster*> data)
 	{
 		int counter = data.size();
 		for (int i = 0; i < counter; i++)
@@ -115,12 +121,17 @@ namespace game_framework {
 		int counter = _monsters.size();
 		for (int i = 0; i < counter; i++)
 		{
-			_monsters[i].showLayers(scale_all);
+			_monsters[i]->showLayers(scale_all);
 		}
 	}
 	void Map::monsters_AI(clock_t t)
 	{
 		//do something
+		int counter = _monsters.size();
+		for (int i = 0; i < counter; i++)
+		{
+			_monsters[i]->AI(t);
+		}
 	}
 
 	void Map::show_bitmap()

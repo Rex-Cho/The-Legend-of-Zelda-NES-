@@ -155,7 +155,7 @@ namespace game_framework {
 	//get function
 	MOVEMENT_DIR  Character::getFace(){ return _face; }
 	clock_t Character::get_hurt_time(){ return _hurt_time; }
-	clock_t Character::get_hurt_duration(){ return _hurt_duration; }
+	clock_t Character::get_hurt_stop_time(){ return _hurt_stop_time; }
 	clock_t Character::get_attack_time(){ return _attack_time; }
 	clock_t Character::get_attack_speed(){ return _attack_speed; }
 	clock_t Character::get_attack_duration(){ return _attack_duration; }
@@ -169,6 +169,7 @@ namespace game_framework {
 	bool Character::get_can_move() { return _can_move; }
 	int Character::get_life() { return _life; }
 	int Character::get_max_life() { return _max_life; }
+	int Character::get_damage() { return _damage; }
 	int Character::get_key() { return _key; }
 	int Character::get_bomb() { return _bomb; }
 
@@ -427,14 +428,59 @@ namespace game_framework {
 	{
 
 	}
-	void Character::hurt(int damage)
+	void Character::hurt(vector<Monster*> monsters)
 	{
-		_life -= damage;
-		/*
-		_hurt_duration = clock();
-		_can_move = false;
-		if (damage == 0)
+		clock_t time = clock();
+		if (time < _hurt_time + _hurt_stop_time)
+		{
+			_can_move = false;
+			//play hurt animation
+			_body_layer.clear();
+			switch (_face)
+			{
+			case game_framework::UP:
+				_body_layer.push_back(_hurt_animation_b);
+				break;
+			case game_framework::DOWN:
+				_body_layer.push_back(_hurt_animation_f);
+				break;
+			case game_framework::LEFT:
+				_body_layer.push_back(_hurt_animation_l);
+				break;
+			case game_framework::RIGHT:
+				_body_layer.push_back(_hurt_animation_r);
+				break;
+			case game_framework::NONE:
+				break;
+			default:
+				break;
+			}
+			_body_layer[0].SetAnimation(_hurt_stop_time / 2, false);
 			return;
+		}
+		else if (time < _hurt_time + _invincible_time)
+		{
+			_can_move = true;
+			return;
+		}
+
+
+		_hurt_time = time;
+		CRect self = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
+		CRect tester;
+		int counter = monsters.size();
+		for (int i = 0; i < counter; i++)
+		{
+			CRect monsters_coll = CRect(monsters[i]->get_body_layer()[i].GetLeft(), monsters[i]->get_body_layer()[i].GetTop(), monsters[i]->get_body_layer()[i].GetLeft() + monsters[i]->get_body_layer()[i].GetWidth() * scale_all, monsters[i]->get_body_layer()[i].GetTop() + monsters[i]->get_body_layer()[i].GetHeight() * scale_all);
+			if (tester.IntersectRect(self, monsters_coll) != 0)
+			{
+				_life -= monsters[i]->get_damage();
+				if (_life < 0)
+					_life = 0;
+				break;
+			}
+		}
+		//_hurt_time = clock();
 
 
 		if (_life == 0)
@@ -442,7 +488,67 @@ namespace game_framework {
 			//dead animation
 			//reset the game
 		}
-		*/
+	}
+	void Character::hurt(vector<CRect> collider, int damage)
+	{
+		clock_t time = clock();
+		if (time < _hurt_time + _hurt_stop_time)
+		{
+			_can_move = false;
+			//play hurt animation
+			_body_layer.clear();
+			switch (_face)
+			{
+			case game_framework::UP:
+				_body_layer.push_back(_hurt_animation_b);
+				break;
+			case game_framework::DOWN:
+				_body_layer.push_back(_hurt_animation_f);
+				break;
+			case game_framework::LEFT:
+				_body_layer.push_back(_hurt_animation_l);
+				break;
+			case game_framework::RIGHT:
+				_body_layer.push_back(_hurt_animation_r);
+				break;
+			case game_framework::NONE:
+				break;
+			default:
+				break;
+			}
+			_body_layer[0].SetAnimation(_hurt_stop_time / 2, false);
+			return;
+		}
+		else if (time < _hurt_time + _invincible_time)
+		{
+			_can_move = true;
+			return;
+		}
+		if (damage == 0)
+			return;
+
+		_hurt_time = time;
+		CRect self = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
+		CRect tester;
+		int counter = collider.size();
+		for (int i = 0; i < counter; i++)
+		{
+			if (tester.IntersectRect(self, collider[i]) != 0)
+			{
+				//hurt animation
+				_life -= damage;
+				if (_life < 0)
+					_life = 0;
+			}
+		}
+		//_hurt_time = clock();
+
+
+		if (_life == 0)
+		{
+			//dead animation
+			//reset the game
+		}
 	}
 	void Character::heal(int count)
 	{

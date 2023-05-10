@@ -43,7 +43,7 @@ namespace game_framework {
 		//get function
 		virtual MOVEMENT_DIR getFace() = 0;
 		virtual clock_t get_hurt_time() = 0;
-		virtual clock_t get_hurt_duration() = 0;
+		virtual clock_t get_hurt_stop_time() = 0;
 		virtual clock_t get_attack_time() = 0;
 		virtual clock_t get_attack_speed() = 0;
 		virtual clock_t get_attack_duration() = 0;
@@ -65,7 +65,7 @@ namespace game_framework {
 		virtual void walk() = 0;
 		virtual void die() = 0;
 		virtual void spawn(vector<CRect>) = 0;
-		virtual void hurt(int) = 0;
+		virtual void hurt(vector<CRect>,int) = 0;
 		virtual void heal(int) = 0;
 		virtual void attack() = 0;
 		virtual void attackDone() = 0;
@@ -94,10 +94,11 @@ namespace game_framework {
 		bool ban_move_right = false;
 
 		clock_t _hurt_time = 0;
-		clock_t _hurt_duration = 200;				//ms, get hurt can't controling time
+		clock_t _hurt_stop_time = 200;				//ms, get hurt can't controling time
 		clock_t _attack_time = 0;
 		clock_t _attack_speed = 200;				//ms, attack speed
 		clock_t _attack_duration = 200;
+		clock_t _invincible_time = 500;				//µL¼Ä®É¶¡
 		MOVEMENT_DIR _face = DOWN;
 		CMovingBitmap _movement_animation_f, _movement_animation_b, _movement_animation_l, _movement_animation_r;
 		CMovingBitmap _action_animation_f, _action_animation_b, _action_animation_l, _action_animation_r;
