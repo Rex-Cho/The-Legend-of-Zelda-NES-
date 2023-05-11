@@ -275,7 +275,7 @@ namespace game_framework {
 				break;
 			}
 			_body_layer[0].SetTopLeft(_posX, _posY);
-			_body_layer[0].SetAnimation(_hurt_stop_time / 2, false);
+			_body_layer[0].SetAnimation(_hurt_stop_time / 5, false);
 			return;
 		}
 		else if (time < _hurt_time + _invincible_time)

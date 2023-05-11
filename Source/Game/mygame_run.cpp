@@ -120,6 +120,12 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		break;
 	};
 
+
+	//character die
+	if (link.get_life() == 0)
+	{
+		exit(1);
+	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -142,7 +148,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_colliders({CRect(576,320, 1024, 636), CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
-	adder->add_triggers({ CRect(0,320,1024,325) });		//Up
+	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	maps.add_map(adder, 7, 7);
 
 	maps.change_map(7, 7);
@@ -354,6 +360,7 @@ void CGameStateRun::show_CRect() {
 
 	//print character collider
 	CRect col = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
+	col.DeflateRect(10,10,10,10);
 	pDC->Draw3dRect(col, RGB(0, 255, 0), RGB(0, 255, 0));
 
 	//print character sword collider

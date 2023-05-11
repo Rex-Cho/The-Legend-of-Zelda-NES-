@@ -28,7 +28,7 @@ namespace game_framework {
 	Character::Character() : Creature()
 	{
 		_move_speed = 2;
-		_max_life = 20;
+		_max_life = 6;
 		_life = _max_life;
 		_attack_speed = 200;
 		_attack_duration = 300;
@@ -519,7 +519,7 @@ namespace game_framework {
 			default:
 				break;
 			}
-			_body_layer[0].SetAnimation(_hurt_stop_time / 2, false);
+			_body_layer[0].SetAnimation(_hurt_stop_time / 4, false);
 			return;
 		}
 		else if (time < _hurt_time + _invincible_time)
@@ -529,6 +529,7 @@ namespace game_framework {
 		}
 
 		CRect self = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
+		self.DeflateRect(10,10,10,10);
 		CRect tester;
 		int counter = collider.size();
 		for (int i = 0; i < counter; i++)

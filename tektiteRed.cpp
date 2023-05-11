@@ -32,13 +32,13 @@ namespace game_framework {
 	void TektiteRed::set_movement_animation(vector<string> filename)
 	{
 		this->_movement_animation_f.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
-		this->_movement_animation_f.SetAnimation(300, false);
+		this->_movement_animation_f.SetAnimation(200, false);
 		this->_movement_animation_b.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
-		this->_movement_animation_b.SetAnimation(300, false);
+		this->_movement_animation_b.SetAnimation(200, false);
 		this->_movement_animation_l.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
-		this->_movement_animation_l.SetAnimation(300, false);
+		this->_movement_animation_l.SetAnimation(200, false);
 		this->_movement_animation_r.LoadBitmapByString({ filename[0], filename[1] }, RGB(255, 255, 255));
-		this->_movement_animation_r.SetAnimation(300, false);
+		this->_movement_animation_r.SetAnimation(200, false);
 	}
 	void TektiteRed::set_dead_animation(vector<string> filename)
 	{
