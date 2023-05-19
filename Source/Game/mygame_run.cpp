@@ -159,7 +159,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_colliders({ CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
-	maps.get_maps()[7][8]->add_monsters({ create_Leever(),create_TektiteRed() ,create_TektiteRed() });
+	maps.get_maps()[7][8]->add_monsters({ create_Leever() ,create_Leever(),create_TektiteRed() ,create_TektiteRed() });
 	//maps.add_monsters({ create_monster(TEKTITE_RED),create_monster(TEKTITE_RED) ,create_monster(TEKTITE_RED) });
 
 	adder = new Map();
@@ -167,8 +167,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
-	maps.get_maps()[7][6]->add_monsters({ create_Leever(),create_Leever() ,create_Leever() });
 	maps.add_map(adder, 7, 6);
+	maps.get_maps()[7][6]->add_monsters({ create_Leever(),create_Leever() ,create_Leever() });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/6_7.bmp" });
