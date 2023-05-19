@@ -102,95 +102,31 @@ namespace game_framework {
 		clock_t time = t - start_jump_time;
 		if (time > _jump_time)
 			return;
-		int step = 2;
+		int step = 1;
 		int x = step;
 		int y = step;
 		switch (dir)
 		{
-		case 0:	//Right Up
-			if (time > _jump_time)
-				return;
-			else if (time > _jump_time * 4 / 5)
-			{
-				x = step;
-				y = step;
-			}
-			else
-			{
-				x = step;
-				y = -step;
-			}
+		
+		case 0:	//Right
+			x = step;
+			y = step;
 			break;
-		case 1:	//Right
-			if (time > _jump_time)
-				return;
-			else if (time > _jump_time / 2)
-			{
-				x = step;
-				y = step;
-			}
-			else
-			{
-				x = step;
-				y = -step;
-			}
+		
+		
+		case 1:	//Left
+			x = -step;
+			y = step;
 			break;
-		case 2:	//Right Down
-			if (time > _jump_time)
-				return;
-			else if (time > _jump_time * 1 / 5)
-			{
-				x = step;
-				y = step;
-			}
-			else
-			{
-				x = step;
-				y = -step;
-			}
+		case 2:	//up
+			x = step;
+			y = -step;
 			break;
-		case 3:	//Left Down
-			if (time > _jump_time)
-				return;
-			else if (time > _jump_time * 1 / 5)
-			{
-				x = -step;
-				y = step;
-			}
-			else
-			{
-				x = -step;
-				y = -step;
-			}
+		case 3:	//down
+			x = step;
+			y = +step;
 			break;
-		case 4:	//Left
-			if (t > _jump_time)
-				return;
-			else if (t > _jump_time / 2)
-			{
-				x = -step;
-				y = step;
-			}
-			else
-			{
-				x = -step;
-				y = -step;
-			}
-			break;
-		case 5:	//Left Up
-			if (t > _jump_time)
-				return;
-			else if (t > _jump_time * 4 / 5)
-			{
-				x = -step;
-				y = step;
-			}
-			else
-			{
-				x = -step;
-				y = -step;
-			}
-			break;
+		
 		default:
 			break;
 		}
