@@ -396,7 +396,7 @@ Monster* CGameStateRun::create_Leever()
 {
 	//TektiteRed mon;
 	Monster* mon = new Leever();
-	mon->set_movement_animation({ "resources/enemies/leever1_b.bmp", "resources/enemies/leever3_b.bmp" });
+	mon->set_movement_animation({ "resources/enemies/leever2_b.bmp", "resources/enemies/leever3_b.bmp" });
 	mon->set_action_animation({ "resources/enemies/leever3_b.bmp" });
 	mon->set_hurt_animation({ "resources/enemies/leever1_b.bmp","resources/enemies/all_white.bmp" });
 	//mon.set_dead_animation({});
