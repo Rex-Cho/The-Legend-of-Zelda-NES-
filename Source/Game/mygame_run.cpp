@@ -159,7 +159,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_colliders({ CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
-	maps.get_maps()[7][8]->add_monsters({ create_TektiteRed(),create_TektiteRed() ,create_TektiteRed() });
+	maps.get_maps()[7][8]->add_monsters({ create_Leever(),create_TektiteRed() ,create_TektiteRed() });
 	//maps.add_monsters({ create_monster(TEKTITE_RED),create_monster(TEKTITE_RED) ,create_monster(TEKTITE_RED) });
 
 	adder = new Map();
@@ -167,6 +167,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	maps.get_maps()[7][6]->add_monsters({ create_Leever(),create_Leever() ,create_Leever() });
 	maps.add_map(adder, 7, 6);
 
 	adder = new Map();
@@ -384,6 +385,20 @@ Monster* CGameStateRun::create_TektiteRed()
 	mon->set_movement_animation({ "resources/enemies/tektite_r1.bmp", "resources/enemies/tektite_r2.bmp" });
 	mon->set_action_animation({ "resources/enemies/tektite_r2.bmp" });
 	mon->set_hurt_animation({ "resources/enemies/tektite_r1.bmp","resources/enemies/all_white.bmp" });
+	//mon.set_dead_animation({});
+	//mon.set_spawn_animation({});
+	vector<CRect> temp = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_colliders();
+	mon->spawn(temp);
+	return mon;
+}
+
+Monster* CGameStateRun::create_Leever()
+{
+	//TektiteRed mon;
+	Monster* mon = new Leever();
+	mon->set_movement_animation({ "resources/enemies/leever1_b.bmp", "resources/enemies/leever2_b.bmp" });
+	mon->set_action_animation({ "resources/enemies/leever3_b.bmp" });
+	mon->set_hurt_animation({ "resources/enemies/leever1_b.bmp","resources/enemies/all_white.bmp" });
 	//mon.set_dead_animation({});
 	//mon.set_spawn_animation({});
 	vector<CRect> temp = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_colliders();

@@ -44,6 +44,8 @@
 //#include "../../map.h"
 #include "../../BigMap.h"
 #include "../../tektiteRed.h"
+#include "../../Leever.h"
+
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -102,6 +104,8 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 		
 		Monster* create_TektiteRed();
+		Monster* create_Leever();
+
 		void show_CRect();
 
 		Character link;

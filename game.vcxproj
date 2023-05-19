@@ -240,6 +240,7 @@
     <ClCompile Include="character.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="monster.cpp" />
+    <ClCompile Include="leever.cpp" />
     <ClCompile Include="Source\Core\game.cpp" />
     <ClCompile Include="Source\Core\gameDoc.cpp" />
     <ClCompile Include="Source\Core\gameView.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="BigMap.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="creature.h" />
+    <ClInclude Include="leever.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="Source\Core\Game.h" />
