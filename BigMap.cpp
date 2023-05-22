@@ -102,7 +102,7 @@ namespace game_framework {
 			_extra_map.push_back(data[i]);
 	}
 
-	void BigMap::change_map(int x, int y)
+	void BigMap::change_map(int y, int x)
 	{
 		int counterY = _maps.size();
 		if (counterY == 0)

@@ -96,19 +96,19 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	switch (maps.is_triggered(link))
 	{
 	case TRIGGER_MAP_U:
-		maps.change_map(maps.get_posX(),maps.get_posY() - 1);
+		maps.change_map(maps.get_posY() - 1, maps.get_posX());
 		link.set_position(link.get_posX(), 176 - 35);
 		break;
 	case TRIGGER_MAP_D:
-		maps.change_map(maps.get_posX(),maps.get_posY() + 1);
+		maps.change_map(maps.get_posY() + 1, maps.get_posX());
 		link.set_position(link.get_posX(), 3);
 		break;
 	case TRIGGER_MAP_L:
-		maps.change_map(maps.get_posX() - 1,maps.get_posY());
+		maps.change_map(maps.get_posY(), maps.get_posX() - 1);
 		link.set_position(255 - 23, link.get_posY());
 		break;
 	case TRIGGER_MAP_R:
-		maps.change_map(maps.get_posX() + 1,maps.get_posY());
+		maps.change_map(maps.get_posY(), maps.get_posX() + 1);
 		link.set_position(1, link.get_posY());
 		break;
 	case TRIGGER_MAP_C:
@@ -153,12 +153,18 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	maps.add_map(adder, 7, 7);
 
-	maps.change_map(7, 7);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_8.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320),CRect(0,320,120,520),CRect(0,520,60,636), CRect(0,700,60,1024),CRect(60,742,120,1024),CRect(120,800,1024,1024) });
+	adder->add_colliders({ CRect(0,0,1024,320),CRect(0,320,120,520),CRect(0,520,60,636), CRect(0,700,60,1024),CRect(60,760,120,1024),CRect(120,900,1024,1024),
+						CRect(131,587,180,632),CRect(132,716,177,761),CRect(260,587,305,632),CRect(260,716,305,761),
+						CRect(130,330,180,430),CRect(258,330,318,430),CRect(258,330,318,430),CRect(386,330,446,430),CRect(578,330,638,430),CRect(706,330,766,430),CRect(834,330,894,430),CRect(962,330,1024,430),
+						CRect(386,520,431,565),CRect(386,648,431,693),CRect(386,776,431,821),
+						CRect(578,520,638,565),CRect(578,648,638,693),CRect(578,776,638,821),
+						CRect(706,520,766,565),CRect(706,648,766,693),CRect(706,776,766,821),
+						CRect(834,520,894,565),CRect(834,648,894,693),CRect(834,776,894,821), });//w45 sw128
+	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
 	maps.get_maps()[7][8]->add_monsters({ create_Leever() ,create_Leever(),create_TektiteRed() ,create_TektiteRed() });
@@ -167,8 +173,12 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_6.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),CRect(0,320,764,440),CRect(896,320,1024,560),CRect(960,560,1024,636),CRect(960,704,1024,780),CRect(896,780,1024,1024),CRect(0,896,896,1024),
+						CRect(514,520,574,565),CRect(514,648,574,693),CRect(514,776,574,821),
+						CRect(642,584,702,629),CRect(642,712,702,757),
+						CRect(322,648,382,693),CRect(130,648,190,693)});
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	maps.add_map(adder, 7, 6);
 	maps.get_maps()[7][6]->add_monsters({ create_Leever(),create_Leever() ,create_Leever() });
 
@@ -183,10 +193,11 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_graph({ "resources/Map/6_8.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
-	adder->add_triggers({ CRect(0,0,1,1024) });			//Left
-	adder->add_triggers({ CRect(0,1023,1024,1024) });	//Down
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
 	maps.add_map(adder, 6, 8);
 
+	maps.change_map(7, 6);
 
 	//set character
 	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
