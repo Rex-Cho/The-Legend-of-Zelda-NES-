@@ -130,6 +130,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
+	//music
+
 	//item
 
 
@@ -145,7 +147,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	Map* adder = new Map();
 	adder->set_graph({ "resources/Map/7_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({CRect(576,320, 1024, 636), CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(576,320, 1024, 636), CRect(0,0,1024,320) ,CRect(0,320,450,450),CRect(0,450,224, 500),CRect(0,500,160,560),CRect(0,560,96,640),CRect(0,700,120,1024),CRect(120,900,900,1024),CRect(900,700,1024,1024) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
@@ -156,7 +158,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder = new Map();
 	adder->set_graph({ "resources/Map/7_8.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),CRect(0,320,120,520),CRect(0,520,60,636), CRect(0,700,60,1024),CRect(60,742,120,1024),CRect(120,800,1024,1024) });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
 	maps.get_maps()[7][8]->add_monsters({ create_Leever() ,create_Leever(),create_TektiteRed() ,create_TektiteRed() });
@@ -337,20 +339,25 @@ void CGameStateRun::show_CRect() {
 	//CRect cha = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
 	int width = 5;
 	int offset = 5;
+	int deflacteNUM = 5;
 	CRect cha;
 	switch (link.getFace())
 	{
 	case UP:
 		cha = CRect(link.get_body_layer()[0].GetLeft() + offset, link.get_body_layer()[0].GetTop() - width, link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all - offset, link.get_body_layer()[0].GetTop());
+		cha.DeflateRect(deflacteNUM, 0, deflacteNUM, 0);
 		break;
 	case DOWN:
 		cha = CRect(link.get_body_layer()[0].GetLeft() + offset, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all, link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all - offset, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all + width);
+		cha.DeflateRect(deflacteNUM, 0, deflacteNUM, 0);
 		break;
 	case LEFT:
 		cha = CRect(link.get_body_layer()[0].GetLeft() - width, link.get_body_layer()[0].GetTop() + offset, link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all - offset);
+		cha.DeflateRect(0, deflacteNUM, 0, deflacteNUM);
 		break;
 	case RIGHT:
 		cha = CRect(link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetHeight() * scale_all, link.get_body_layer()[0].GetTop() + offset, link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all + width, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight() * scale_all - offset);
+		cha.DeflateRect(0, deflacteNUM, 0, deflacteNUM);
 		break;
 	case NONE:
 		break;

@@ -181,6 +181,7 @@ namespace game_framework {
 	{
 		int width = 5;
 		int offset = 5;
+		int deflacteNUM = 5;
 		CRect coll;
 		//coll = CRect(_body_layer[0].GetLeft(), _body_layer[0].GetTop(), _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all);
 		switch (_face)
@@ -188,15 +189,19 @@ namespace game_framework {
 		case UP:
 			//coll.InflateRect(0, 2, 0, 0);	//left top right bottom
 			coll = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() - width, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop());
+			coll.DeflateRect(deflacteNUM, 0, deflacteNUM, 0);
 			break;
 		case DOWN:
 			coll = CRect(_body_layer[0].GetLeft() + offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all - offset, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all + width);
+			coll.DeflateRect(deflacteNUM, 0, deflacteNUM, 0);
 			break;
 		case LEFT:
 			coll = CRect(_body_layer[0].GetLeft() - width, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft(), _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
+			coll.DeflateRect(0, deflacteNUM, 0, deflacteNUM);
 			break;
 		case RIGHT:
 			coll = CRect(_body_layer[0].GetLeft() + _body_layer[0].GetHeight() * scale_all, _body_layer[0].GetTop() + offset, _body_layer[0].GetLeft() + _body_layer[0].GetWidth() * scale_all + width, _body_layer[0].GetTop() + _body_layer[0].GetHeight() * scale_all - offset);
+			coll.DeflateRect(0, deflacteNUM, 0, deflacteNUM);
 			break;
 		case NONE:
 			break;
