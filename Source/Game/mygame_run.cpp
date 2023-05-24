@@ -163,7 +163,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 						CRect(386,520,431,565),CRect(386,648,431,693),CRect(386,776,431,821),
 						CRect(578,520,638,565),CRect(578,648,638,693),CRect(578,776,638,821),
 						CRect(706,520,766,565),CRect(706,648,766,693),CRect(706,776,766,821),
-						CRect(834,520,894,565),CRect(834,648,894,693),CRect(834,776,894,821), });//w45 sw128
+						CRect(834,520,894,565),CRect(834,648,894,693),CRect(834,776,894,821),
+						CRect(1023,320,1050,1024)});//w45 sw128
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
@@ -183,21 +184,39 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	maps.get_maps()[7][6]->add_monsters({ create_Leever(),create_Leever() ,create_Leever() });
 
 	adder = new Map();
+	adder->set_graph({ "resources/Map/6_6.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	maps.add_map(adder, 6, 6);
+
+	adder = new Map();
 	adder->set_graph({ "resources/Map/6_7.bmp" });
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
 	maps.add_map(adder, 6, 7);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/6_8.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),
+						CRect(131,587,180,632),CRect(132,716,177,761),
+						CRect(260,520,305,565),CRect(260,648,305,693),CRect(260,776,305,821),
+						CRect(130,330,180,430),CRect(258,330,318,430),CRect(258,330,318,430),CRect(386,330,446,430),CRect(578,330,638,430),CRect(706,330,766,430),CRect(834,330,894,430),CRect(962,330,1024,570),
+						CRect(386,648,431,693),
+						CRect(578,520,638,565),CRect(578,648,638,693),CRect(578,776,638,821),
+						CRect(706,648,766,693),
+						CRect(834,520,894,565),CRect(834,648,894,693),CRect(834,776,894,821),
+						CRect(1023,320,1050,1024) });//w45 sw128
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
 	maps.add_map(adder, 6, 8);
 
-	maps.change_map(7, 6);
+	maps.change_map(6, 8);
 
 	//set character
 	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
