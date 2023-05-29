@@ -79,7 +79,17 @@ namespace game_framework {
 		void show_monsters();
 		void monsters_AI(clock_t t);
 		void monsters_hurt(vector<CRect>, vector<int>);
-		void monsters_die();
+		int monsters_die();
+
+		//keys and door
+		/*
+		*/
+		void add_key(int posY, int posX);
+		void add_door(int posY, int posX);
+		void show_key_and_door();
+		bool eat_key(Character link);
+		bool enter_door(Character link);
+
 		//operator overloading
 		/*
 		*/
@@ -93,6 +103,8 @@ namespace game_framework {
 		vector<Monster*> _monsters;
 		int _posX = 0;
 		int _posY = 80;
+		vector<CMovingBitmap> _keys;
+		vector<CMovingBitmap> _doors;
 
 	private:
 	};

@@ -53,6 +53,7 @@ namespace game_framework {
 
 		int get_bomb();
 		int get_key();
+		int get_money();
 
 		//is function
 		bool isWalk();
@@ -70,6 +71,9 @@ namespace game_framework {
 		void attack();
 		void attackDone();
 		void die();
+
+		void add_key(int count);
+		void add_money(int count);
 		//void hurt(vector<Monster*>);
 
 		CMovingBitmap* make_fly_wapon();
@@ -82,8 +86,9 @@ namespace game_framework {
 		int _wapon_offsetY = 0;
 		float _attack_factor = 3.5;
 		int _wapon_fly_speed = 6;
-		int _bomb;
-		int _key;
+		int _bomb = 0;
+		int _key = 0;
+		int _money = 0;
 		//void drop_items(int probability);	// 1 ~ 1000, 1000 = 100% drop
 		 //Item* item_set;
 

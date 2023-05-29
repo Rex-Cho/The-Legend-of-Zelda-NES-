@@ -61,9 +61,10 @@ namespace game_framework {
 		TRIGGER_TYPE is_triggered(Character);
 
 		void show_maps();
-		void show_UI(int max_h = 0, int heart = 0, int money = 0, int bomb = 0, CMovingBitmap itemA = CMovingBitmap(), CMovingBitmap itemB = CMovingBitmap());
+		void show_UI(int max_h = 0, int heart = 0, int money = 0,int key = 0, int bomb = 0, CMovingBitmap itemA = CMovingBitmap(), CMovingBitmap itemB = CMovingBitmap());
 
 		void init_heart();
+		void init_bomb_money_key();
 
 		//monsters
 		void add_monsters(vector<Monster*>);
@@ -87,6 +88,9 @@ namespace game_framework {
 		CMovingBitmap _bomb_bitmap;
 		CMovingBitmap _key_bitmap;
 		vector<CMovingBitmap> _heart_bitmap;
+		vector<CMovingBitmap> _money_number_bitmap;
+		vector<CMovingBitmap> _bomb_number_bitmap;
+		vector<CMovingBitmap> _key_number_bitmap;
 		void show_heart(int max,int current);
 		void show_money(int);
 		void show_bomb(int);

@@ -125,11 +125,19 @@ namespace game_framework {
 	{
 		_corrent_map = _maps[_posY][_posX];
 		_corrent_map->show_bitmap(scale_all);
+		_corrent_map->show_key_and_door();
 	}
-	void BigMap::show_UI(int max_h, int heart, int money, int bomb, CMovingBitmap itemA, CMovingBitmap itemB)
+	void BigMap::show_UI(int max_h, int heart, int money,int key, int bomb, CMovingBitmap itemA, CMovingBitmap itemB)
 	{
 		_UI.ShowBitmap(scale_all);
 		show_heart(max_h, heart);
+		show_money(money);
+		show_key(key);
+		show_bomb(bomb);
+		CMovingBitmap itemAtmep;
+		itemAtmep.LoadBitmapByString({ "resources/items/wood_sword_f.bmp" }, RGB(255, 255, 255));
+		itemAtmep.SetTopLeft(608, 144);
+		itemAtmep.ShowBitmap(scale_all);
 	}
 	void BigMap::show_heart(int m, int now)
 	{
@@ -162,6 +170,36 @@ namespace game_framework {
 			}
 		}
 	}
+	void BigMap::show_money(int data)
+	{
+		if (data > 999)
+			data = 999;
+		int d1 = data % 10;
+		data /= 10;
+		int d2 = data % 10;
+		int d3 = data / 10;
+		_money_number_bitmap[0].SetFrameIndexOfBitmap(d3);
+		_money_number_bitmap[0].ShowBitmap(scale_all);
+		_money_number_bitmap[1].SetFrameIndexOfBitmap(d2);
+		_money_number_bitmap[1].ShowBitmap(scale_all);
+		_money_number_bitmap[2].SetFrameIndexOfBitmap(d1);
+		_money_number_bitmap[2].ShowBitmap(scale_all);
+	}
+	void BigMap::show_bomb(int data)
+	{
+		if (data > 9)
+			data = 9;
+		_bomb_number_bitmap[0].SetFrameIndexOfBitmap(data);
+		_bomb_number_bitmap[0].ShowBitmap(scale_all);
+	}
+	void BigMap::show_key(int data)
+	{
+		if (data > 9)
+			data = 9;
+		_key_number_bitmap[0].SetFrameIndexOfBitmap(data);
+		_key_number_bitmap[0].ShowBitmap(scale_all);
+	}
+
 	void BigMap::init_heart()
 	{
 		int max_heart = 16;
@@ -181,6 +219,29 @@ namespace game_framework {
 			adder.SetTopLeft((left + offsetX)*scale_all, (top + offsetY)*scale_all);
 			_heart_bitmap.push_back(adder);
 		}
+	}
+	void BigMap::init_bomb_money_key()
+	{
+		CMovingBitmap adder;
+		adder.LoadBitmapByString({ "resources/fonts/0.bmp","resources/fonts/1.bmp","resources/fonts/2.bmp","resources/fonts/3.bmp","resources/fonts/4.bmp","resources/fonts/5.bmp","resources/fonts/6.bmp","resources/fonts/7.bmp","resources/fonts/8.bmp","resources/fonts/9.bmp" });
+		adder.SetFrameIndexOfBitmap(0);
+
+		_money_number_bitmap.clear();
+		adder.SetTopLeft(384,112);
+		_money_number_bitmap.push_back(adder);
+		adder.SetTopLeft(416,112);
+		_money_number_bitmap.push_back(adder);
+		adder.SetTopLeft(448,112);
+		_money_number_bitmap.push_back(adder);
+
+		_key_number_bitmap.clear();
+		adder.SetTopLeft(384, 176);
+		_key_number_bitmap.push_back(adder);
+
+		_bomb_number_bitmap.clear();
+		adder.SetTopLeft(384, 208);
+		_bomb_number_bitmap.push_back(adder);
+
 	}
 
 	TRIGGER_TYPE BigMap::is_triggered(Character obj)

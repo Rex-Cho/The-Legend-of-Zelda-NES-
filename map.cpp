@@ -141,19 +141,22 @@ namespace game_framework {
 			_monsters[i]->hurt(data, damage);
 		}
 	}
-	void Map::monsters_die()
+	int Map::monsters_die()
 	{
+		int point = 0;
 		int counter = _monsters.size();
 		for (int i = 0; i < counter; i++)
 		{
 			//_monsters[i]->die();
 			if (_monsters[i]->get_life() == 0)
 			{
+				point += rand() % 5 + 1;
 				_monsters.erase(_monsters.begin() + i);
 				counter -= 1;
 				i -= 1;
 			}
 		}
+		return point;
 	}
 
 	void Map::show_bitmap()
@@ -218,6 +221,69 @@ namespace game_framework {
 	TRIGGER_TYPE Map::is_triggered(CMovingBitmap)
 	{
 		return TRIGGER_NONE;
+	}
+
+	//key and door
+	void Map::add_key(int posY, int posX)
+	{
+		_keys.clear();
+		CMovingBitmap key;
+		key.LoadBitmapByString({ "resources/items/key.bmp" }, RGB(255, 255, 255));
+		key.SetTopLeft(posX, posY);
+		_keys.push_back(key);
+	}
+
+	void Map::add_door(int posY, int posX)
+	{
+		_doors.clear();
+		CMovingBitmap door;
+		door.LoadBitmapByString({ "resources/items/door1.bmp","resources/items/door2.bmp","resources/items/door3.bmp","resources/items/door4.bmp" }, RGB(255, 255, 255));
+		door.SetAnimation(100, false);
+		door.SetTopLeft(posX, posY);
+		_doors.push_back(door);
+	}
+	void Map::show_key_and_door()
+	{
+		int counter = _keys.size();
+		for (int i = 0; i < counter; i++)
+		{
+			_keys[i].ShowBitmap(scale_all);
+		}
+		counter = _doors.size();
+		for(int i = 0; i < counter; i++)
+		{
+			_doors[i].ShowBitmap(scale_all);
+		}
+	}
+	bool Map::eat_key(Character link)
+	{
+		int counter = _keys.size();
+		if (counter == 0)
+			return false;
+		CRect key_coll = CRect(_keys[0].GetLeft(), _keys[0].GetTop(), _keys[0].GetLeft() + scale_all * _keys[0].GetWidth(), _keys[0].GetTop() + scale_all * _keys[0].GetHeight());
+		CRect col = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
+		CRect tester;
+		if (tester.IntersectRect(key_coll, col) != 0)
+		{
+			_keys.clear();
+			return true;
+		}
+		return false;
+	}
+	bool Map::enter_door(Character link)
+	{
+		int counter = _doors.size();
+		if (counter == 0)
+			return false;
+		CRect door_col = CRect(_doors[0].GetLeft(), _doors[0].GetTop(), _doors[0].GetLeft() + scale_all * _doors[0].GetWidth(), _doors[0].GetTop() + scale_all * _doors[0].GetHeight());
+		CRect col = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
+		CRect tester;
+		if (tester.IntersectRect(door_col, col) != 0 && link.get_key() > 0)
+		{
+			_doors.clear();
+			return true;
+		}
+		return false;
 	}
 
 	Map& Map::operator=(Map& map)

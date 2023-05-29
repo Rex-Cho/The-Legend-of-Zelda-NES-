@@ -107,42 +107,13 @@ namespace game_framework {
 		Monster* create_Leever();
 
 		void show_CRect();
+		void to_next_level();
 
 		Character link;
 		vector<MOVEMENT_DIR> move_keys;
 		BigMap maps;
 		CMovingBitmap* wapon_fly = nullptr;
 	};
-	/*
-	class CGameStateRun2 : public CGameState {
-	public:
-		CGameStateRun2(CGame *g);
-		~CGameStateRun2();
-		void OnBeginState();							// 設定每次重玩所需的變數
-		void OnInit();  								// 遊戲的初值及圖形設定
-		void OnKeyDown(UINT, UINT, UINT);
-		void OnKeyUp(UINT, UINT, UINT);
-		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnLButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
-		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
-		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-
-	protected:
-		void OnMove();									// 移動遊戲元素
-		void OnShow();									// 顯示這個狀態的遊戲畫面
-
-		Monster* create_TektiteRed();
-		Monster* create_Leever();
-
-		void show_CRect();
-
-		Character link;
-		vector<MOVEMENT_DIR> move_keys;
-		BigMap maps;
-		CMovingBitmap* wapon_fly = nullptr;
-	};
-	*/
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的結束狀態(Game Over)
 	// 每個Member function的Implementation都要弄懂

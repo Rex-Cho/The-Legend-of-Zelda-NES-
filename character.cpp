@@ -173,6 +173,7 @@ namespace game_framework {
 	int Character::get_damage() { return _damage; }
 	int Character::get_key() { return _key; }
 	int Character::get_bomb() { return _bomb; }
+	int Character::get_money() { return _money; }
 
 	//is function
 	bool Character::isWalk(){ return _walking; }
@@ -559,9 +560,25 @@ namespace game_framework {
 
 	void Character::heal(int count)
 	{
-		if (count == 0)
+		if (count <= 0)
 			return;
+		_life += count;
+		if (_life > _max_life)
+			_life = _max_life;
 
 	}
-	
+	void Character::add_key(int count)
+	{
+		_key += count;
+		if (_key > 9)
+			_key = 9;
+		if (_key < 0)
+			_key = 0;
+	}
+	void Character::add_money(int count)
+	{
+		if (count < 1)
+			return;
+		_money += count;
+	}
 }

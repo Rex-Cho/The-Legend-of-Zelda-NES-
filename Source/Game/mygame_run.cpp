@@ -89,8 +89,19 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 	maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_hurt(wapon_area, damage_list);
 	//monster die
-	maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_die();
+	int point = maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_die();
+	link.add_money(point);
 
+	//key and door
+	if (maps.get_maps()[maps.get_posY()][maps.get_posX()]->eat_key(link))
+	{
+		link.add_key(1);
+	}
+	if (maps.get_maps()[maps.get_posY()][maps.get_posX()]->enter_door(link))
+	{
+		link.add_key(-1);
+		to_next_level();
+	}
 
 	//map triggers to character
 	switch (maps.is_triggered(link))
@@ -132,8 +143,6 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//music
 
-	//item
-
 
 	//input init
 	move_keys.clear();
@@ -141,6 +150,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 
 	//set UI
 	maps.init_heart();
+	maps.init_bomb_money_key();
+
 	maps.set_UI_bitmap({ "resources/UI_background.bmp" });
 	//set maps
 	maps.reset_maps(16, 8);
@@ -208,6 +219,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	adder->add_door(700, 700);
+	adder->add_key(400, 400);
+	
 	maps.add_map(adder, 6, 7);
 
 	adder = new Map();
@@ -228,6 +242,60 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
 	maps.add_map(adder, 6, 8);
+
+	
+
+	/*
+	*/
+	//level 2 map set
+	adder = new Map();
+	adder->set_graph({ "resources/Map/2_9.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320)});
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	maps.add_map(adder, 2, 9);
+
+	adder = new Map();
+	adder->set_graph({ "resources/Map/2_10.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	maps.add_map(adder, 2, 10);
+
+	adder = new Map();
+	adder->set_graph({ "resources/Map/2_11.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	maps.add_map(adder, 2, 11);
+
+	adder = new Map();
+	adder->set_graph({ "resources/Map/2_12.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	maps.add_map(adder, 2, 12);
+
+	adder = new Map();
+	adder->set_graph({ "resources/Map/3_10.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
+	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
+	maps.add_map(adder, 3, 10);
+
+	adder = new Map();
+	adder->set_graph({ "resources/Map/3_11.bmp" });
+	adder->set_pos(0, 80, scale_all);
+	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
+	maps.add_map(adder, 3, 11);
 
 	maps.change_map(7, 7);
 
@@ -335,7 +403,7 @@ void CGameStateRun::OnShow()
 {
 	maps.show_maps();
 	maps.show_monsters();
-	maps.show_UI(link.get_max_life(), link.get_life());
+	maps.show_UI(link.get_max_life(), link.get_life(), link.get_money(), link.get_key(), link.get_bomb());
 
 
 	link.showLayers(scale_all);
@@ -428,6 +496,14 @@ void CGameStateRun::show_CRect() {
 
 	CDDraw::ReleaseBackCDC();
 }
+
+void CGameStateRun::to_next_level()
+{
+	link.set_position(128, 48);
+	link.heal(20);
+	maps.change_map(2, 10);
+}
+
 Monster* CGameStateRun::create_TektiteRed()
 {
 	//TektiteRed mon;
