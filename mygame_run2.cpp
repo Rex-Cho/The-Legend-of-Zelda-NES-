@@ -1,11 +1,11 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../Core/Resource.h"
-#include <mmsystem.h>
 #include <ddraw.h>
+#include <mmsystem.h>
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
-#include "mygame.h"
+#include "Source/Game/mygame.h"
 #include <string>
 
 using namespace game_framework;
@@ -14,25 +14,25 @@ using namespace game_framework;
 // 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
 /////////////////////////////////////////////////////////////////////////////
 
-CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
+CGameStateRun2::CGameStateRun2(CGame *g) : CGameState(g)
 {
 
 }
 
-CGameStateRun::~CGameStateRun()
+CGameStateRun2::~CGameStateRun2()
 {
 }
 
-void CGameStateRun::OnBeginState()
+void CGameStateRun2::OnBeginState()
 {
 }
 
-void CGameStateRun::OnMove()							// 移動遊戲元素
+void CGameStateRun2::OnMove()							// 移動遊戲元素
 {
 	//link attack
 	if (link.isAttacking() && link.get_can_action())
 	{
-		
+
 		//attack animation
 		clock_t attack_t = clock() - link.get_attack_time();		//clock_t == long
 		if (attack_t > link.get_attack_speed())
@@ -72,7 +72,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	//link walk	
 	link.isFrontCollide(maps.get_colliders());
-	if(link.isWalk())
+	if (link.isWalk())
 		link.walk();
 
 	//monster movement AI
@@ -128,7 +128,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	}
 }
 
-void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
+void CGameStateRun2::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//music
 
@@ -164,7 +164,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 						CRect(578,520,638,565),CRect(578,648,638,693),CRect(578,776,638,821),
 						CRect(706,520,766,565),CRect(706,648,766,693),CRect(706,776,766,821),
 						CRect(834,520,894,565),CRect(834,648,894,693),CRect(834,776,894,821),
-						CRect(1023,320,1050,1024)});//w45 sw128
+						CRect(1023,320,1050,1024) });//w45 sw128
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	maps.add_map(adder, 7, 8);
@@ -177,7 +177,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_colliders({ CRect(0,0,1024,320),CRect(0,320,764,440),CRect(896,320,1024,560),CRect(960,560,1024,636),CRect(960,704,1024,780),CRect(896,780,1024,1024),CRect(0,896,896,1024),
 						CRect(514,520,574,565),CRect(514,648,574,693),CRect(514,776,574,821),
 						CRect(642,584,702,629),CRect(642,712,702,757),
-						CRect(322,648,382,693),CRect(130,648,190,693)});
+						CRect(322,648,382,693),CRect(130,648,190,693) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	maps.add_map(adder, 7, 6);
@@ -188,7 +188,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->set_pos(0, 80, scale_all);
 	adder->add_colliders({ CRect(0,0,1024,320),
 						CRect(0,320,1024,450),CRect(896,450,1024,488),CRect(960,488,1024,550),
-						CRect(0,900,764,1024),CRect(896,832,1024,1024),CRect(960,768,1024,832), 
+						CRect(0,900,764,1024),CRect(896,832,1024,1024),CRect(960,768,1024,832),
 						CRect(196,520,440,568),CRect(196,648,440,696),CRect(196,776,440,824),
 						CRect(516,584,696,632),CRect(516,712,696,760) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
@@ -229,19 +229,19 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
 	maps.add_map(adder, 6, 8);
 
-	maps.change_map(7, 7);
+	maps.change_map(6, 8);
 
 	//set character
-	link.set_movement_animation({"resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp"});
-	link.set_action_animation({"resources/Link/link_act_f.bmp", "resources/Link/link_act_f.bmp","resources/Link/link_run_f2.bmp","resources/Link/link_run_f1.bmp",
+	link.set_movement_animation({ "resources/Link/link_run_f1.bmp", "resources/Link/link_run_f2.bmp", "resources/Link/link_run_b1.bmp", "resources/Link/link_run_b2.bmp","resources/Link/link_run_l1.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_r1.bmp","resources/Link/link_run_r2.bmp" });
+	link.set_action_animation({ "resources/Link/link_act_f.bmp", "resources/Link/link_act_f.bmp","resources/Link/link_run_f2.bmp","resources/Link/link_run_f1.bmp",
 		"resources/Link/link_act_b.bmp","resources/Link/link_act_b.bmp","resources/Link/link_run_b2.bmp","resources/Link/link_run_b1.bmp",
 		"resources/Link/link_act_l.bmp","resources/Link/link_act_l.bmp","resources/Link/link_run_l2.bmp","resources/Link/link_run_l1.bmp",
 		"resources/Link/link_act_r.bmp","resources/Link/link_act_r.bmp","resources/Link/link_run_r2.bmp","resources/Link/link_run_r1.bmp" });
 	link.set_hurt_animation({ "resources/Link/link_run_f1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_b1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_l1.bmp" ,"resources/Link/link_hurt.bmp","resources/Link/link_run_r1.bmp" ,"resources/Link/link_hurt.bmp" });
 	link.set_dead_animation({});
 	link.set_spawn_animation({});
-	link.set_wapon({"resources/items/wood_sword_f.bmp","resources/items/wood_sword_b.bmp", "resources/items/wood_sword_l.bmp", "resources/items/wood_sword_r.bmp"});
-	link.set_position(128,48);
+	link.set_wapon({ "resources/items/wood_sword_f.bmp","resources/items/wood_sword_b.bmp", "resources/items/wood_sword_l.bmp", "resources/items/wood_sword_r.bmp" });
+	link.set_position(128, 48);
 	link.stop();
 
 	//monster
@@ -249,7 +249,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	Sleep(200);
 }
 
-void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+void CGameStateRun2::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	switch (nChar)
 	{
@@ -278,7 +278,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 }
 
-void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+void CGameStateRun2::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	int counter = move_keys.size();
 	MOVEMENT_DIR move_key;
@@ -305,33 +305,33 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 			break;
 		}
 	}
-	if(move_keys.size() == 0)
+	if (move_keys.size() == 0)
 		link.stop();
 	else
 		link.movement(move_keys[move_keys.size() - 1]);
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+void CGameStateRun2::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 }
 
-void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+void CGameStateRun2::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
 }
 
-void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+void CGameStateRun2::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
 }
 
-void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
+void CGameStateRun2::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 }
 
-void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
+void CGameStateRun2::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
 }
 
-void CGameStateRun::OnShow()
+void CGameStateRun2::OnShow()
 {
 	maps.show_maps();
 	maps.show_monsters();
@@ -358,9 +358,9 @@ void show_text(int posX, int posY)
 }
 
 //custom function
-void CGameStateRun::show_CRect() {
+void CGameStateRun2::show_CRect() {
 	CDC *pDC = CDDraw::GetBackCDC();
-	
+
 	//print map collider
 	vector<CRect>  cur = maps.get_colliders();
 	int counter = cur.size();
@@ -411,7 +411,7 @@ void CGameStateRun::show_CRect() {
 
 	//print character collider
 	CRect col = CRect(link.get_body_layer()[0].GetLeft(), link.get_body_layer()[0].GetTop(), link.get_body_layer()[0].GetLeft() + link.get_body_layer()[0].GetWidth() * scale_all, link.get_body_layer()[0].GetTop() + link.get_body_layer()[0].GetHeight()* scale_all);
-	col.DeflateRect(10,10,10,10);
+	col.DeflateRect(10, 10, 10, 10);
 	pDC->Draw3dRect(col, RGB(0, 255, 0), RGB(0, 255, 0));
 
 	//print character sword collider
@@ -428,7 +428,7 @@ void CGameStateRun::show_CRect() {
 
 	CDDraw::ReleaseBackCDC();
 }
-Monster* CGameStateRun::create_TektiteRed()
+Monster* CGameStateRun2::create_TektiteRed()
 {
 	//TektiteRed mon;
 	Monster* mon = new TektiteRed();
@@ -442,7 +442,7 @@ Monster* CGameStateRun::create_TektiteRed()
 	return mon;
 }
 
-Monster* CGameStateRun::create_Leever()
+Monster* CGameStateRun2::create_Leever()
 {
 	//TektiteRed mon;
 	Monster* mon = new Leever();

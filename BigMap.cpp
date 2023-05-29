@@ -110,6 +110,8 @@ namespace game_framework {
 		int counterX = _maps[0].size();
 		if (y > counterY || y < 0 || x > counterX || x < 0)
 			return;
+		if (_maps[y][x]->get_colliders().size() == 0)
+			return;
 		_posX = x;
 		_posY = y;
 		_corrent_map = _maps[_posY][_posX];
