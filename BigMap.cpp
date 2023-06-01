@@ -258,6 +258,7 @@ namespace game_framework {
 	void BigMap::show_monsters()
 	{
 		_corrent_map->show_monsters();
+		_corrent_map->show_merchants();
 	}
 	void BigMap::monsters_AI(clock_t t)
 	{

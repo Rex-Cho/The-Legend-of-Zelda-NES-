@@ -15,6 +15,7 @@
 #include".\Source.\Library\gameutil.h"
 
 #include"monster.h"
+#include"merchant.h"
 
 using namespace std;
 
@@ -81,14 +82,18 @@ namespace game_framework {
 		void monsters_hurt(vector<CRect>, vector<int>);
 		int monsters_die();
 
-		//keys and door
-		/*
-		*/
+		//merchants keys and door
+		void add_merchant(int posY, int posX);
+		void show_merchants();
+		void merchants_hurt(vector<CRect>, vector<int>);
+		void merchants_AI(clock_t t);
+		int merchants_die();
 		void add_key(int posY, int posX);
 		void add_door(int posY, int posX);
 		void show_key_and_door();
 		bool eat_key(Character link);
 		bool enter_door(Character link);
+		bool buy_key(Character *link);
 
 		//operator overloading
 		/*
@@ -101,6 +106,7 @@ namespace game_framework {
 		vector<CRect> _colliders;
 		vector<CRect> _triggers;
 		vector<Monster*> _monsters;
+		vector<Merchant> _merchants;
 		int _posX = 0;
 		int _posY = 80;
 		vector<CMovingBitmap> _keys;

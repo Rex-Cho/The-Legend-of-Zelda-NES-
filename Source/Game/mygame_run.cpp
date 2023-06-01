@@ -92,6 +92,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	int point = maps.get_maps()[maps.get_posY()][maps.get_posX()]->monsters_die();
 	link.add_money(point);
 
+	//merchants AI
+	maps.get_maps()[maps.get_posY()][maps.get_posX()]->merchants_AI(clock());
+	//merchants hurt
+	maps.get_maps()[maps.get_posY()][maps.get_posX()]->merchants_hurt(wapon_area, damage_list);
+	//merchants die
+	int key_point = maps.get_maps()[maps.get_posY()][maps.get_posX()]->merchants_die();
+	link.add_key(key_point);
+
 	//key and door
 	if (maps.get_maps()[maps.get_posY()][maps.get_posX()]->eat_key(link))
 	{
@@ -162,6 +170,11 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
+
+	//adder->add_key(256, 448);
+	adder->add_door(800, 820);
+	adder->add_merchant(64, 32);
+
 	maps.add_map(adder, 7, 7);
 
 
@@ -218,10 +231,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 						CRect(776,520,824,568),CRect(776,648,824,696),CRect(776,776,824,824), });//w 48
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
-	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
-	adder->add_door(700, 700);
-	adder->add_key(400, 400);
-	
+	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down	
 	maps.add_map(adder, 6, 7);
 
 	adder = new Map();
@@ -311,6 +321,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	link.set_wapon({"resources/items/wood_sword_f.bmp","resources/items/wood_sword_b.bmp", "resources/items/wood_sword_l.bmp", "resources/items/wood_sword_r.bmp"});
 	link.set_position(128,48);
 	link.stop();
+	//link.add_money(20);
 
 	//monster
 
@@ -341,7 +352,13 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		link.attack();
 		break;
 	case 0x58:	//X key
-		//link.hurt(1);
+		if (maps.get_maps()[maps.get_posY()][maps.get_posX()]->buy_key(&link))
+		{
+			/*
+			link.add_key(1);
+			link.add_money(-20);
+			*/
+		}
 		break;
 	}
 }
@@ -405,9 +422,8 @@ void CGameStateRun::OnShow()
 	maps.show_monsters();
 	maps.show_UI(link.get_max_life(), link.get_life(), link.get_money(), link.get_key(), link.get_bomb());
 
-
 	link.showLayers(scale_all);
-	show_CRect();
+	//show_CRect();
 
 }
 

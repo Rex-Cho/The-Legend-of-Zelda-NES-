@@ -61,6 +61,7 @@
     <ClCompile Include="trigger.cpp" />
     <ClCompile Include="tektiteRed.cpp" />
     <ClCompile Include="leever.cpp" />
+    <ClCompile Include="merchant.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -104,6 +105,7 @@
     <ClInclude Include="trigger.h" />
     <ClInclude Include="tektiteRed.h" />
     <ClInclude Include="leever.h" />
+    <ClInclude Include="merchant.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc">

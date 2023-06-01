@@ -239,6 +239,7 @@
     <ClCompile Include="BigMap.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="merchant.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="leever.cpp" />
     <ClCompile Include="Source\Core\game.cpp" />
@@ -265,6 +266,7 @@
     <ClInclude Include="creature.h" />
     <ClInclude Include="leever.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="merchant.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="Source\Core\Game.h" />
     <ClInclude Include="Source\Core\gameDoc.h" />

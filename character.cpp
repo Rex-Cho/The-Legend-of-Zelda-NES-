@@ -577,8 +577,8 @@ namespace game_framework {
 	}
 	void Character::add_money(int count)
 	{
-		if (count < 1)
-			return;
 		_money += count;
+		if (_money < 0)
+			_money = 0;
 	}
 }

@@ -223,7 +223,60 @@ namespace game_framework {
 		return TRIGGER_NONE;
 	}
 
-	//key and door
+	//merchant key and door
+	void Map::add_merchant(int Y, int X)
+	{
+		_merchants.clear();
+		Merchant merchant;
+		merchant.set_action_animation({ "resources/enemies/armos_f1.bmp" });
+		merchant.set_movement_animation({ "resources/enemies/armos_f1.bmp" });
+		merchant.set_hurt_animation({ "resources/enemies/armos_f1.bmp", "resources/enemies/all_white.bmp" });
+		merchant.set_position(X, Y);
+		/*
+		*/
+		_merchants.push_back(merchant);
+	}
+	void Map::show_merchants()
+	{
+		int counter = _merchants.size();
+		for(int i = 0; i < counter; i++)
+		{
+			_merchants[i].showLayers(scale_all);
+		}
+	}
+	void Map::merchants_AI(clock_t t)
+	{
+		int counter = _merchants.size();
+		for (int i = 0; i < counter; i++)
+		{
+			_merchants[i].AI(t);
+		}
+	}
+	void Map::merchants_hurt(vector<CRect> data, vector<int> damage)
+	{
+		int counter = _merchants.size();
+		for (int i = 0; i < counter; i++)
+		{
+			_merchants[i].hurt(data, damage);
+		}
+	}
+	int Map::merchants_die()
+	{
+		int point = 0;
+		int counter = _merchants.size();
+		for (int i = 0; i < counter; i++)
+		{
+			//_monsters[i]->die();
+			if (_merchants[i].get_life() == 0)
+			{
+				point += 1;
+				_merchants.erase(_merchants.begin() + i);
+				counter -= 1;
+				i -= 1;
+			}
+		}
+		return point;
+	}
 	void Map::add_key(int posY, int posX)
 	{
 		_keys.clear();
@@ -241,6 +294,21 @@ namespace game_framework {
 		door.SetAnimation(100, false);
 		door.SetTopLeft(posX, posY);
 		_doors.push_back(door);
+	}
+	bool Map::buy_key(Character *link)
+	{
+		if (link->get_money() < _merchants[0].get_key_cost())
+			return false;
+		CRect merchant_col = CRect(_merchants[0].get_body_layer()[0].GetLeft(), _merchants[0].get_body_layer()[0].GetTop(), _merchants[0].get_body_layer()[0].GetLeft() + scale_all * _merchants[0].get_body_layer()[0].GetWidth(), _merchants[0].get_body_layer()[0].GetTop() + scale_all * _merchants[0].get_body_layer()[0].GetHeight());
+		CRect col = CRect(link->get_body_layer()[0].GetLeft(), link->get_body_layer()[0].GetTop(), link->get_body_layer()[0].GetLeft() + scale_all * link->get_body_layer()[0].GetWidth(), link->get_body_layer()[0].GetTop() + scale_all * link->get_body_layer()[0].GetHeight());
+		CRect tester;
+		if (tester.IntersectRect(merchant_col, col) != 0)
+		{
+			link->add_key(1);
+			link->add_money(-_merchants[0].get_key_cost());
+			return true;
+		}
+		return false;
 	}
 	void Map::show_key_and_door()
 	{
