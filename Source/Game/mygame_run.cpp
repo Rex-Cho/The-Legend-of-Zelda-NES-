@@ -150,7 +150,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//music
-
+	//CAudio *bgm = CAudio::Instance();
+	//bgm->Load(0, "resources/SE/The Legend of Zelda Cartoon Sound Effects Triforce Piece Obtained.wav");
 
 	//input init
 	move_keys.clear();
@@ -359,6 +360,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			link.add_money(-20);
 			*/
 		}
+		break;
+	case 0x41:	//A key
+		link.heal(1);
+		break;
+	case 0x53:	//s key
+		link.add_money(10);
+		break;
+	case 0x44:	//D key
+		link.add_key(1);
 		break;
 	}
 }

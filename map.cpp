@@ -297,6 +297,10 @@ namespace game_framework {
 	}
 	bool Map::buy_key(Character *link)
 	{
+		int counter = _merchants.size();
+		if (counter == 0)
+			return false;
+
 		if (link->get_money() < _merchants[0].get_key_cost())
 			return false;
 		CRect merchant_col = CRect(_merchants[0].get_body_layer()[0].GetLeft(), _merchants[0].get_body_layer()[0].GetTop(), _merchants[0].get_body_layer()[0].GetLeft() + scale_all * _merchants[0].get_body_layer()[0].GetWidth(), _merchants[0].get_body_layer()[0].GetTop() + scale_all * _merchants[0].get_body_layer()[0].GetHeight());
