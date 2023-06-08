@@ -107,6 +107,7 @@ namespace game_framework {
 		Monster* create_Leever();
 
 		void show_CRect();
+		void show_text();
 		void to_next_level();
 
 		Character link;

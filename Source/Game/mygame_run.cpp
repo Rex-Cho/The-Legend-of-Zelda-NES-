@@ -162,6 +162,14 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	maps.init_bomb_money_key();
 
 	maps.set_UI_bitmap({ "resources/UI_background.bmp" });
+	//merchant and door random
+	int merchantPos = rand() % 6;
+	int doorPos = rand() % 6;
+	while (merchantPos == doorPos)
+	{
+		doorPos = rand() % 6;
+	}
+	
 	//set maps
 	maps.reset_maps(16, 8);
 	Map* adder = new Map();
@@ -171,11 +179,11 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
-
 	//adder->add_key(256, 448);
-	adder->add_door(800, 820);
-	adder->add_merchant(64, 32);
-
+	if(merchantPos == 0)
+		adder->add_merchant(64, 32);
+	if(doorPos == 0)
+		adder->add_door(800, 820);
 	maps.add_map(adder, 7, 7);
 
 
@@ -189,11 +197,15 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 						CRect(578,520,638,565),CRect(578,648,638,693),CRect(578,776,638,821),
 						CRect(706,520,766,565),CRect(706,648,766,693),CRect(706,776,766,821),
 						CRect(834,520,894,565),CRect(834,648,894,693),CRect(834,776,894,821),
-						CRect(1023,320,1050,1024)});//w45 sw128
+						CRect(1020,320,1050,1024)});//w45 sw128
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	if (merchantPos == 1)
+		adder->add_merchant(32, 32);
+	if (doorPos == 1)
+		adder->add_door(800, 930);
 	maps.add_map(adder, 7, 8);
-	maps.get_maps()[7][8]->add_monsters({ create_Leever() ,create_Leever(),create_TektiteRed() ,create_TektiteRed() });
+	maps.get_maps()[7][8]->add_monsters({ create_TektiteRed() ,create_TektiteRed(),create_TektiteRed() ,create_TektiteRed(),create_TektiteRed() });
 	//maps.add_monsters({ create_monster(TEKTITE_RED),create_monster(TEKTITE_RED) ,create_monster(TEKTITE_RED) });
 
 	adder = new Map();
@@ -202,11 +214,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_colliders({ CRect(0,0,1024,320),CRect(0,320,764,440),CRect(896,320,1024,560),CRect(960,560,1024,636),CRect(960,704,1024,780),CRect(896,780,1024,1024),CRect(0,896,896,1024),
 						CRect(514,520,574,565),CRect(514,648,574,693),CRect(514,776,574,821),
 						CRect(642,584,702,629),CRect(642,712,702,757),
-						CRect(322,648,382,693),CRect(130,648,190,693)});
+						CRect(322,648,382,693),CRect(130,648,190,693),
+						CRect(-20,320,4,1024)});
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
+	if (merchantPos == 2)
+		adder->add_merchant(32, 16);
+	if (doorPos == 2)
+		adder->add_door(840, 820);
 	maps.add_map(adder, 7, 6);
-	maps.get_maps()[7][6]->add_monsters({ create_Leever(),create_Leever() ,create_Leever() });
+	maps.get_maps()[7][6]->add_monsters({ create_TektiteRed() ,create_TektiteRed(), create_TektiteRed() });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/6_6.bmp" });
@@ -215,9 +232,14 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 						CRect(0,320,1024,450),CRect(896,450,1024,488),CRect(960,488,1024,550),
 						CRect(0,900,764,1024),CRect(896,832,1024,1024),CRect(960,768,1024,832), 
 						CRect(196,520,440,568),CRect(196,648,440,696),CRect(196,776,440,824),
-						CRect(516,584,696,632),CRect(516,712,696,760) });
+						CRect(516,584,696,632),CRect(516,712,696,760),
+						CRect(-20,320,4,1024) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	if (merchantPos == 3)
+		adder->add_merchant(32, 16);
+	if (doorPos == 3)
+		adder->add_door(454, 820);
 	maps.add_map(adder, 6, 6);
 
 	adder = new Map();
@@ -233,6 +255,10 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down	
+	if (merchantPos == 4)
+		adder->add_merchant(32, 32);
+	if (doorPos == 4)
+		adder->add_door(840, 820);
 	maps.add_map(adder, 6, 7);
 
 	adder = new Map();
@@ -252,60 +278,105 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 						CRect(1020,320,1050,1024),CRect(0,310,1024,330) });//w45 sw128
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	if (merchantPos == 5)
+		adder->add_merchant(32, 32);
+	if (doorPos == 5)
+		adder->add_door(764, 712);
 	maps.add_map(adder, 6, 8);
 
 	
 
-	/*
-	*/
 	//level 2 map set
+	merchantPos = rand() % 6;
+	doorPos = rand() % 6;
+	while (merchantPos == doorPos)
+	{
+		doorPos = rand() % 6;
+	}
+
 	adder = new Map();
 	adder->set_graph({ "resources/Map/2_9.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320)});
+	adder->add_colliders({ CRect(0,0,1024,320),
+						CRect(0,320,1024,448), CRect(0,892,1024,1024),
+						CRect(-20,320,4,1024) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
-	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	if (merchantPos == 0)
+		adder->add_merchant(32, 32);
+	if (doorPos == 0)
+		adder->add_door(840, 128);
 	maps.add_map(adder, 2, 9);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/2_10.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),
+						CRect(0,320,1024,448), CRect(0,892,128,1024), CRect(960,892,1024,1024)});
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	if (merchantPos == 1)
+		adder->add_merchant(32, 32);
+	if (doorPos == 1)
+		adder->add_door(448, 700);
 	maps.add_map(adder, 2, 10);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/2_11.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),
+						CRect(0,320,1024,448), CRect(0,892,64,1024), CRect(896,892,1024,1024) });
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
+	if (merchantPos == 2)
+		adder->add_merchant(32, 32);
+	if (doorPos == 2)
+		adder->add_door(448, 700);
 	maps.add_map(adder, 2, 11);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/2_12.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),
+						CRect(0,320,1024,448), CRect(768,448,1024,636),
+						CRect(384,512,640,576),CRect(320,576,706,770),
+						CRect(0,892,1024,1024),
+						CRect(1020,320,1040,1024), });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
+	if (merchantPos == 3)
+		adder->add_merchant(32, 176);
+	if (doorPos == 3)
+		adder->add_door(840, 880);
 	maps.add_map(adder, 2, 12);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/3_10.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),
+						CRect(0,320,128,1024),CRect(128,900,448,1024), CRect(576,900,1024,1024),
+						CRect(960,320,1024,440),
+						CRect(448,960,576,1024),});
 	adder->add_triggers({ CRect(998,0,1005,1024) });	//Right
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
+	if (merchantPos == 4)
+		adder->add_merchant(128, 32);
+	if (doorPos == 4)
+		adder->add_door(900, 512);
 	maps.add_map(adder, 3, 10);
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/3_11.bmp" });
 	adder->set_pos(0, 80, scale_all);
-	adder->add_colliders({ CRect(0,0,1024,320) });
+	adder->add_colliders({ CRect(0,0,1024,320),
+						CRect(0,320,64,440),CRect(0,900,764,1024),CRect(896,320,1024,1024),
+						CRect(764,960,896,1024), });
 	adder->add_triggers({ CRect(0,0,5,1024) });			//Left
 	adder->add_triggers({ CRect(0,320,1024,335) });		//Up
+	if (merchantPos == 5)
+		adder->add_merchant(128, 128);
+	if (doorPos == 5)
+		adder->add_door(900, 832);
 	maps.add_map(adder, 3, 11);
 
 	maps.change_map(7, 7);
@@ -365,7 +436,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		link.heal(1);
 		break;
 	case 0x53:	//s key
-		link.add_money(10);
+		link.add_money(20);
 		break;
 	case 0x44:	//D key
 		link.add_key(1);
@@ -433,25 +504,25 @@ void CGameStateRun::OnShow()
 	maps.show_UI(link.get_max_life(), link.get_life(), link.get_money(), link.get_key(), link.get_bomb());
 
 	link.showLayers(scale_all);
-	//show_CRect();
+	show_text();
+	show_CRect();
 
 }
 
-void show_text(int posX, int posY)
+//custom function
+void CGameStateRun::show_text()
 {
 	/*
+	*/
 	CDC *pDC = CDDraw::GetBackCDC();
 	//CFont *fp;
 
 	CTextDraw::ChangeFontLog(pDC, 21, "微軟正黑體", RGB(0, 0, 0), 800);
-	CTextDraw::Print(pDC, 237, 128, "link._posX=" + std::to_string(posX));
-	CTextDraw::Print(pDC, 237, 178, "link._posX=" + std::to_string(posY));
+	CTextDraw::Print(pDC, 100, 128, "Z: attack");
+	CTextDraw::Print(pDC, 100, 178, "X: buy key");
 
 	CDDraw::ReleaseBackCDC();
-	*/
 }
-
-//custom function
 void CGameStateRun::show_CRect() {
 	CDC *pDC = CDDraw::GetBackCDC();
 	
