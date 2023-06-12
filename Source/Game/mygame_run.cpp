@@ -505,7 +505,7 @@ void CGameStateRun::OnShow()
 
 	link.showLayers(scale_all);
 	show_text();
-	show_CRect();
+	//show_CRect();
 
 }
 
@@ -517,7 +517,7 @@ void CGameStateRun::show_text()
 	CDC *pDC = CDDraw::GetBackCDC();
 	//CFont *fp;
 
-	CTextDraw::ChangeFontLog(pDC, 21, "微軟正黑體", RGB(0, 0, 0), 800);
+	CTextDraw::ChangeFontLog(pDC, 21, "微軟正黑體", RGB(255, 255, 255), 800);
 	CTextDraw::Print(pDC, 100, 128, "Z: attack");
 	CTextDraw::Print(pDC, 100, 178, "X: buy key");
 
