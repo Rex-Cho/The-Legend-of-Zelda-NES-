@@ -58,7 +58,6 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="BigMap.cpp" />
-    <ClCompile Include="trigger.cpp" />
     <ClCompile Include="tektiteRed.cpp" />
     <ClCompile Include="leever.cpp" />
     <ClCompile Include="merchant.cpp" />
@@ -102,7 +101,6 @@
     <ClInclude Include="map.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="BigMap.h" />
-    <ClInclude Include="trigger.h" />
     <ClInclude Include="tektiteRed.h" />
     <ClInclude Include="leever.h" />
     <ClInclude Include="merchant.h" />

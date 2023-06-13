@@ -596,9 +596,17 @@ void CGameStateRun::show_CRect() {
 
 void CGameStateRun::to_next_level()
 {
-	link.set_position(128, 48);
-	link.heal(20);
-	maps.change_map(2, 10);
+	if (level == 0)
+	{
+		level = 1;
+		link.set_position(128, 48);
+		link.heal(20);
+		maps.change_map(2, 10);
+	}
+	else if (level == 1)
+	{
+		GotoGameState(GAME_STATE_OVER);
+	}
 }
 
 Monster* CGameStateRun::create_TektiteRed()

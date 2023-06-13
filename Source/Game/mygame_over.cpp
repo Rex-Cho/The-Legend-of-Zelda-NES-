@@ -19,15 +19,26 @@ CGameStateOver::CGameStateOver(CGame *g): CGameState(g)
 
 void CGameStateOver::OnMove()
 {
-	GotoGameState(GAME_STATE_INIT);
+	//GotoGameState(GAME_STATE_INIT);
 }
 
 void CGameStateOver::OnBeginState()
 {
 }
+void CGameStateOver::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+}
+void CGameStateOver::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	if (nChar != 0)
+	{
+		exit(1);
+	}
+}
 
 void CGameStateOver::OnInit()
 {
+	/*
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
 	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
@@ -43,9 +54,13 @@ void CGameStateOver::OnInit()
 	ShowInitProgress(100, "OK!");
 
 	Sleep(1000);
+	*/
+	win.LoadBitmapByString({"resources/game_win.bmp"});
+	win.SetTopLeft(0,0);
+	win.ShowBitmap();
 }
 
 void CGameStateOver::OnShow()
 {
-
+	win.ShowBitmap();
 }
