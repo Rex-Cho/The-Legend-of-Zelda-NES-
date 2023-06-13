@@ -19,6 +19,8 @@ namespace game_framework {
 		void set_hurt_animation(vector<string>) override;
 		void set_spawn_animation(vector<string>) override;
 		void AI(clock_t) override;
+
+		void set_max_life(int);
 	private:
 		void move(clock_t t, clock_t jump_time, int dir);
 

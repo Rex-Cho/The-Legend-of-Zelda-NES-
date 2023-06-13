@@ -33,6 +33,8 @@ namespace game_framework {
 		void set_ban_move(MOVEMENT_DIR, bool);
 		void set_decision_time(int);
 
+		void set_max_life(int);
+
 		//get function
 		MOVEMENT_DIR getFace();
 		clock_t get_hurt_time();

@@ -104,6 +104,13 @@ namespace game_framework {
 			break;
 		}
 	}
+	void Monster::set_max_life(int da)
+	{
+		if (da < 1)
+			return;
+		_max_life = da;
+		_life = _max_life;
+	}
 
 	//get functionW
 	MOVEMENT_DIR  Monster::getFace() { return _face; }

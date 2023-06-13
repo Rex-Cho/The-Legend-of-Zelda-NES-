@@ -241,6 +241,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	if (doorPos == 3)
 		adder->add_door(454, 820);
 	maps.add_map(adder, 6, 6);
+	maps.get_maps()[6][6]->add_monsters({ create_TektiteRed() ,create_TektiteRed(),create_TektiteRed(),create_TektiteRed() });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/6_7.bmp" });
@@ -260,6 +261,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	if (doorPos == 4)
 		adder->add_door(840, 820);
 	maps.add_map(adder, 6, 7);
+	maps.get_maps()[6][7]->add_monsters({ create_TektiteRed() ,create_TektiteRed() });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/6_8.bmp" });
@@ -283,6 +285,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	if (doorPos == 5)
 		adder->add_door(764, 712);
 	maps.add_map(adder, 6, 8);
+	maps.get_maps()[6][8]->add_monsters({ create_TektiteRed(),create_TektiteRed() });
 
 	
 
@@ -306,6 +309,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	if (doorPos == 0)
 		adder->add_door(840, 128);
 	maps.add_map(adder, 2, 9);
+	maps.get_maps()[2][9]->add_monsters({ create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue() });
+
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/2_10.bmp" });
@@ -331,9 +336,11 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	adder->add_triggers({ CRect(0,940,1024,1024) });	//Down
 	if (merchantPos == 2)
 		adder->add_merchant(32, 32);
+
 	if (doorPos == 2)
 		adder->add_door(448, 700);
 	maps.add_map(adder, 2, 11);
+	maps.get_maps()[2][11]->add_monsters({ create_TektiteBlue(),create_TektiteBlue() });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/2_12.bmp" });
@@ -349,6 +356,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	if (doorPos == 3)
 		adder->add_door(840, 880);
 	maps.add_map(adder, 2, 12);
+	maps.get_maps()[2][12]->add_monsters({ create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue() });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/3_10.bmp" });
@@ -364,6 +372,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	if (doorPos == 4)
 		adder->add_door(900, 512);
 	maps.add_map(adder, 3, 10);
+	maps.get_maps()[3][10]->add_monsters({ create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue() });
 
 	adder = new Map();
 	adder->set_graph({ "resources/Map/3_11.bmp" });
@@ -378,6 +387,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	if (doorPos == 5)
 		adder->add_door(900, 832);
 	maps.add_map(adder, 3, 11);
+	maps.get_maps()[3][11]->add_monsters({ create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue(),create_TektiteBlue() });
 
 	maps.change_map(7, 7);
 
@@ -616,6 +626,20 @@ Monster* CGameStateRun::create_TektiteRed()
 	mon->set_movement_animation({ "resources/enemies/tektite_r1.bmp", "resources/enemies/tektite_r2.bmp" });
 	mon->set_action_animation({ "resources/enemies/tektite_r2.bmp" });
 	mon->set_hurt_animation({ "resources/enemies/tektite_r1.bmp","resources/enemies/all_white.bmp" });
+	//mon.set_dead_animation({});
+	//mon.set_spawn_animation({});
+	vector<CRect> temp = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_colliders();
+	mon->spawn(temp);
+	return mon;
+}
+Monster* CGameStateRun::create_TektiteBlue()
+{
+	//TektiteRed mon;
+	Monster* mon = new TektiteRed();
+	mon->set_movement_animation({ "resources/enemies/tektite_b1.bmp", "resources/enemies/tektite_b2.bmp" });
+	mon->set_action_animation({ "resources/enemies/tektite_b2.bmp" });
+	mon->set_hurt_animation({ "resources/enemies/tektite_b1.bmp","resources/enemies/all_white.bmp" });
+	mon->set_max_life(5);
 	//mon.set_dead_animation({});
 	//mon.set_spawn_animation({});
 	vector<CRect> temp = maps.get_maps()[maps.get_posY()][maps.get_posX()]->get_colliders();
