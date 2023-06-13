@@ -516,7 +516,6 @@ void CGameStateRun::OnShow()
 	link.showLayers(scale_all);
 	show_text();
 	//show_CRect();
-
 }
 
 //custom function
