@@ -153,6 +153,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	CAudio::Instance()->Load(AUDIO_BGM, "resources/SE/Overworld_Theme.wav");
 	CAudio::Instance()->Load(AUDIO_ATTACK, "resources/SE/Sword_Zap.wav");
 	CAudio::Instance()->Load(AUDIO_WIN, "resources/SE/Win.wav");
+	CAudio::Instance()->Load(AUDIO_HURT, "resources/SE/Player_Hurt.wav");
 	CAudio::Instance()->Play(AUDIO_BGM, true);
 	//input init
 	move_keys.clear();

@@ -56,6 +56,7 @@ namespace game_framework {
 		AUDIO_BGM,				// 0
 		AUDIO_ATTACK,
 		AUDIO_WIN,
+		AUDIO_HURT,
 	};
 
 	static int scale_all = 4;

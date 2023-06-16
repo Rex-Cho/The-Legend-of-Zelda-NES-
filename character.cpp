@@ -504,6 +504,7 @@ namespace game_framework {
 		clock_t time = clock();
 		if (time < _hurt_time + _hurt_stop_time)
 		{
+			CAudio::Instance()->Play(AUDIO_HURT, false);
 			_can_move = false;
 			//play hurt animation
 			_body_layer.clear();
