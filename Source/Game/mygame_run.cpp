@@ -150,9 +150,10 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	//music
-	//CAudio *bgm = CAudio::Instance();
-	//bgm->Load(0, "resources/SE/The Legend of Zelda Cartoon Sound Effects Triforce Piece Obtained.wav");
-
+	CAudio::Instance()->Load(AUDIO_BGM, "resources/SE/Overworld_Theme.wav");
+	CAudio::Instance()->Load(AUDIO_ATTACK, "resources/SE/Sword_Zap.wav");
+	CAudio::Instance()->Load(AUDIO_WIN, "resources/SE/Win.wav");
+	CAudio::Instance()->Play(AUDIO_BGM, true);
 	//input init
 	move_keys.clear();
 
@@ -614,6 +615,8 @@ void CGameStateRun::to_next_level()
 	}
 	else if (level == 1)
 	{
+		CAudio::Instance()->Stop(AUDIO_BGM);
+		CAudio::Instance()->Play(AUDIO_WIN, true);
 		GotoGameState(GAME_STATE_OVER);
 	}
 }

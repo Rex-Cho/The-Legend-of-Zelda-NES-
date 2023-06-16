@@ -343,6 +343,7 @@ namespace game_framework {
 	{
 		if (clock() - _attack_time < _attack_duration)
 			return;
+		CAudio::Instance()->Play(AUDIO_ATTACK, false);
 		_attacking = true;
 		_walking = false;
 		_can_move = false;

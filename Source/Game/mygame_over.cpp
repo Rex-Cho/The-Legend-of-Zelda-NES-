@@ -38,6 +38,8 @@ void CGameStateOver::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateOver::OnInit()
 {
+	
+	
 	/*
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
